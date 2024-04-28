@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!-- Página de Formulário exclusivamente para testes de conexão com o banco de dados --> 
+<!-- ESSA PÁGINA NÃO SERÁ UTILIZADA NA VERSÃO FINAL--> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Item Perdido</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input, textarea {
+            padding: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reporte um item perdido</h1>
+    <form action="" method="">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" rows="5" required></textarea>
+
+        <label for="marca">Marca do Item:</label>
+        <input type="marca" id="marca" name="marca" required>
+
+        <label for="categoria">Tipo de item:</label>
+        <input type="categoria" id="categoria" name="categoria" required>
+
+        <label for="curso">Curso:</label>
+        <input type="curso" id="curso" name="curso" required>
+
+        <label for="periodo">Período:</label>
+        <select id="periodo" name="periodo" required>
+            <optgroup label="Período">
+                <option value="matutino">Matutino</option>
+                <option value="vespertino">Vespertino</option>
+                <option value="noturno">Noturno</option>
+            </optgroup>
+        </select>
+
+        <label for="cor">Cor do item:</label>
+        <input type="cor" id="cor" name="cor" required>
+
+        <label for="local">Local de perda:</label>
+        <input type="local" id="local" name="local" required>
+
+        <label for="data">Data da perda:</label>
+        <input type="date" id="dataPerda" name="dataperda" required>
+
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
