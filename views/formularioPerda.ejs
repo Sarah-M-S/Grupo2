@@ -41,9 +41,12 @@
 </head>
 <body>
     <h1>Reporte um item perdido</h1>
-    <form action="/confirmar" method="POST">
+    <form action="/confirmar" method="POST" onsubmit="return confirm('Tem certeza que deseja enviar o formulário?');">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" required>
+
+        <label for="tituloItem">Item:</label>
+        <input type=tituloItem" id="tituloItem" name="tituloItem" required>
 
         <label for="email">E-mail:</label>
         <input type="email" id="email" name="email" required>
@@ -74,6 +77,9 @@
 
         <label for="local">Local de perda:</label>
         <input type="local" id="local" name="local" required>
+
+        <label for="dataPerda">Data da perda:</label>
+        <input type= "date" id="dataPerda" name="dataPerda" required>
 
         <button type="submit">Enviar</button>
     </form>
