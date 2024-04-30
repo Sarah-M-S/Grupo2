@@ -6,6 +6,27 @@ const itemPerdido = require("./Model/ItemPerdido");
 const administrador = require("./admin/Administrador");
 const bodyParser = require("body-parser");
 
+const i18next = require('i18next')
+const en = require('./views/locales/en')
+const pt = require('./views/locales/pt')
+const zh = require('./views/locales/zh')
+
+i18next.init({
+  lng: 'zh',
+  debug: true,
+  load: 'languageOnly',
+  resources: {
+    en: en,
+    pt: pt,
+    zh: zh
+  }
+})
+
+res.render('formularioPerda', {
+  i18next
+});
+;
+
 
 
 //configs
