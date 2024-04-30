@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro Item Perdido</title>
+    <title><%= i18next.t('titulo')  %></title>
     <style>
         body {
             font-family: sans-serif;
@@ -40,48 +40,52 @@
     </style>
 </head>
 <body>
-    <h1>Reporte um item perdido</h1>
-    <form action="/confirmar" method="POST" onsubmit="return confirm('Tem certeza que deseja enviar o formulário?');">
-        <label for="nome">Nome:</label>
+    <button onclick="function switchLanguage() { window.location = '/?lng=en'; }">Mudar Idioma</button>
+    <h1><%= i18next.t('titulo')  %></h1>
+
+        <form action="/confirmar" method="POST" onsubmit="return confirm('Tem certeza que deseja enviar o formulário?');">
+        <label for="nome"><%= i18next.t('nome')  %></label>
         <input type="text" id="nome" name="nome" required>
 
-        <label for="tituloItem">Item:</label>
+        <label for="tituloItem"><%= i18next.t('item')  %></label>
         <input type=tituloItem" id="tituloItem" name="tituloItem" required>
 
-        <label for="email">E-mail:</label>
+        <label for="email"><%= i18next.t('email')  %></label>
         <input type="email" id="email" name="email" required>
 
-        <label for="descricao">Descrição:</label>
+        <label for="descricao"><%= i18next.t('descricao')  %></label>
         <textarea id="descricao" name="descricao" rows="5" required></textarea>
 
-        <label for="marca">Marca do Item:</label>
+        <label for="marca"><%= i18next.t('marcaItem')  %></label>
         <input type="marca" id="marca" name="marca" required>
 
-        <label for="categoria">Tipo de item:</label>
+        <label for="categoria"><%= i18next.t('tipoObjeto')  %></label>
         <input type="categoria" id="categoria" name="categoria" required>
 
-        <label for="curso">Curso:</label>
+        <label for="curso"><%= i18next.t('curso')  %></label>
         <input type="curso" id="curso" name="curso" required>
 
-        <label for="periodo">Período:</label>
+        <label for="periodo"><%= i18next.t('periodo')  %></label>
         <select id="periodo" name="periodo" required>
-            <optgroup label="Período">
-                <option value="matutino">Matutino</option>
-                <option value="vespertino">Vespertino</option>
-                <option value="noturno">Noturno</option>
+            <optgroup label="">
+                <option value="matutino"><%= i18next.t('matutino')  %></option>
+                <option value="vespertino"><%= i18next.t('vespertino')  %></option>
+                <option value="noturno"><%= i18next.t('noturno')  %></option>
             </optgroup>
         </select>
 
-        <label for="cor">Cor do item:</label>
+        <label for="cor"><%= i18next.t('cor')  %></label>
         <input type="cor" id="cor" name="cor" required>
 
-        <label for="local">Local de perda:</label>
+        <label for="local"><%= i18next.t('localPerda')  %></label>
         <input type="local" id="local" name="local" required>
 
-        <label for="dataPerda">Data da perda:</label>
+        <label for="dataPerda"><%= i18next.t('data')  %></label>
         <input type= "date" id="dataPerda" name="dataPerda" required>
 
-        <button type="submit">Enviar</button>
+        <button type="submit"><%= i18next.t('enviar')  %></button>
+        </form>
+        
     </form>
 </body>
 </html>

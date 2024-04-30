@@ -4,6 +4,24 @@ const sequelize = require ("sequelize");
 const app = express();
 const itemPerdido = require("./Model/ItemPerdido");
 const bodyParser = require("body-parser");
+const i18next = require('i18next')
+const en = require('./views/locales/en')
+const pt = require('./views/locales/pt')
+const zh = require('./views/locales/zh')
+
+
+
+i18next.init({
+  lng: 'zh',
+  debug: true,
+  load: 'languageOnly',
+  resources: {
+    en: en,
+    pt: pt,
+    zh: zh
+  }
+})
+
 
 //configs
 app.use(express.json());
@@ -14,8 +32,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //rotas
 app.get('/', (req, res) => {
-    res.render('formularioPerda');
-})
+    res.render('formularioPerda', {
+      i18next
+    });
+});
+
 
 app.post('/confirmar', (req, res) => {
 
@@ -55,5 +76,7 @@ itemPerdido.sync({ force: false }) // Cria as tabelas se não existirem (force: 
   .catch(err => {
     console.error('Erro ao criar tabelas:', err);
   });
+
+
 
 app.listen("8083");
