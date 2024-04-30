@@ -1,45 +1,33 @@
 //imports
 const express = require("express");
-const sequelize = require ("sequelize");
+const sequelize = require("sequelize");
 const app = express();
 const itemPerdido = require("./Model/ItemPerdido");
+const administrador = require("./admin/Administrador");
 const bodyParser = require("body-parser");
-const i18next = require('i18next')
-const en = require('./views/locales/en')
-const pt = require('./views/locales/pt')
-const zh = require('./views/locales/zh')
 
-
-
-i18next.init({
-  lng: 'zh',
-  debug: true,
-  load: 'languageOnly',
-  resources: {
-    en: en,
-    pt: pt,
-    zh: zh
-  }
-})
 
 
 //configs
 app.use(express.json());
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use('/', adminController)
 
 //rotas
 app.get('/', (req, res) => {
-    res.render('formularioPerda', {
-      i18next
-    });
+    res.render('formularioPerda');
+})
+
+app.post('/autenticar', (req, res)=>{
+  var username = req.body.username;
+  var password = req.body.password;
+ 
+  
 });
 
-
-app.post('/confirmar', (req, res) => {
-
+app.post("/confirmar", (req, res) => {
   var nome = req.body.nome;
   var tituloItem = req.body.tituloItem;
   var email = req.body.email;
@@ -52,29 +40,40 @@ app.post('/confirmar', (req, res) => {
   var local = req.body.local;
   var dataPerda = req.body.dataPerda;
 
-  itemPerdido.create({
-    nomePessoa: nome,
-    tituloItem: tituloItem,
-    email: email,
-    descricao: descricao,
-    categoria: categoria,
-    curso: curso,
-    periodo: periodo,
-    cor: cor,
-    local: local,
-    data: dataPerda,
-    marca: marca 
-}).then( res.redirect("/"))
+  itemPerdido
+    .create({
+      nomePessoa: nome,
+      tituloItem: tituloItem,
+      email: email,
+      descricao: descricao,
+      categoria: categoria,
+      curso: curso,
+      periodo: periodo,
+      cor: cor,
+      local: local,
+      data: dataPerda,
+      marca: marca,
+    })
+    .then(res.redirect("/"));
+});
 
-})
-
-
-itemPerdido.sync({ force: false }) // Cria as tabelas se não existirem (force: true)
+//sincronizando banco de dados com o ORM
+administrador
+  .sync({ force: false }) // Cria as tabelas se não existirem (force: true)
   .then(() => {
-    console.log('Tabelas criadas com sucesso.');
+    console.log("Tabelas criadas com sucesso.");
   })
-  .catch(err => {
-    console.error('Erro ao criar tabelas:', err);
+  .catch((err) => {
+    console.error("Erro ao criar tabelas:", err);
+  });
+
+itemPerdido
+  .sync({ force: false }) // Cria as tabelas se não existirem (force: true)
+  .then(() => {
+    console.log("Tabelas criadas com sucesso.");
+  })
+  .catch((err) => {
+    console.error("Erro ao criar tabelas:", err);
   });
 
 

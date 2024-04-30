@@ -10,13 +10,14 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
-    "i18next": "^23.11.3",
     "mariadb": "^3.3.0",
     "nodemon": "^3.1.0",
-    "sequelize": "^6.37.3"
+    "sequelize": "^6.37.3",
+    "sessions": "^0.0.2-7"
   }
 }

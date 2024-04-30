@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Retângulo no Centro</title>
+   
+</head>
+
+<body>
+    <h1>Listagem de Administradores </h1><br>
+    <% users.forEach(user=> { %>
+
+        Nome: <%= user.dataValues.nome %><br />
+            Email: <%= user.dataValues.email %><br />
+                Cargo:<%= user.dataValues.cargo %><br />
+                    Turno: <%= user.dataValues.turno %><br />
+                        Ativo: <%= user.dataValues.f_status %><br /> <br />
+
+                            <% }); %>
+</body>
+
+</html>
