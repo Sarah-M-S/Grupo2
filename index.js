@@ -12,7 +12,7 @@ const pt = require('./views/locales/pt')
 const zh = require('./views/locales/zh')
 
 i18next.init({
-  lng: 'zh',
+  lng: 'pt',
   debug: true,
   load: 'languageOnly',
   resources: {
