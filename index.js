@@ -22,11 +22,12 @@ i18next.init({
   }
 })
 
-res.render('formularioPerda', {
-  i18next
-});
-;
 
+app.get("/formularioPerda", (req, res) => {
+  res.render("formularioPerda"),{
+    i18next
+  };
+});
 
 
 //configs
