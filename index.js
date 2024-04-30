@@ -5,14 +5,22 @@ const app = express();
 const itemPerdido = require("./Model/ItemPerdido");
 const administrador = require("./admin/Administrador");
 const bodyParser = require("body-parser");
-
-const i18next = require('i18next')
+const adminController = require("./admin/AdminController")
+const i18next = require("i18next")
 const en = require('./views/locales/en')
 const pt = require('./views/locales/pt')
 const zh = require('./views/locales/zh')
 
+//configs
+app.use(express.json());
+app.set("view engine", "ejs");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/', adminController)
+
+
 i18next.init({
-  lng: 'pt',
+  lng: 'zh',
   debug: true,
   load: 'languageOnly',
   resources: {
@@ -23,30 +31,26 @@ i18next.init({
 })
 
 
+//rotas
+app.get("/", (req, res) => {
+
+  itemPerdido.findAll().then(itens =>{
+    res.render("home",{itens:itens})
+  })
+})
+
 app.get("/formularioPerda", (req, res) => {
-  res.render("formularioPerda"),{
-    i18next
-  };
+  res.render("formularioPerda", { i18next: i18next });
 });
 
-
-//configs
-app.use(express.json());
-app.set("view engine", "ejs");
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/', adminController)
-
-//rotas
-app.get('/', (req, res) => {
-    res.render('formularioPerda');
-})
 
 app.post('/autenticar', (req, res)=>{
   var username = req.body.username;
   var password = req.body.password;
- 
-  
+ });
+
+ app.post("/logar", (req, res) => {
+  res.render("login");
 });
 
 app.post("/confirmar", (req, res) => {
