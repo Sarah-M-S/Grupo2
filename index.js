@@ -20,7 +20,7 @@ app.use('/', adminController)
 
 
 i18next.init({
-  lng: 'zh',
+  lng: 'en',
   debug: true,
   load: 'languageOnly',
   resources: {
