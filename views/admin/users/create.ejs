@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulário de Administrador</title>
+</head>
+<body>
+
+<h2>Cadastro de Administrador</h2>
+
+<form action="/users/create" method="POST">
+  <label for="nome">Nome:</label><br>
+  <input type="text" id="nome" name="nome" required><br><br>
+
+  <label for="senha">senha:</label><br>
+  <input type="text" id="senha" name="senha" required><br><br>
+
+  <label for="email">E-mail:</label><br>
+  <input type="email" id="email" name="email" required><br><br>
+
+  <label for="cargo">Cargo:</label><br>
+  <input type="text" id="cargo" name="cargo" required><br><br>
+
+  <label for="turno">Turno:</label><br>
+  <input type="text" id="turno" name="turno"><br><br>
+
+  <label for="status">Status:</label><br>
+  <input type="radio" id="ativo" name="f_status" value="true" checked>
+  <label for="ativo">Ativo</label>
+  <input type="radio" id="inativo" name="f_status" value="false">
+  <label for="inativo">Inativo</label><br><br>
+
+  <input type="submit" value="Cadastrar">
+</form>
+
+</body>
+</html>
