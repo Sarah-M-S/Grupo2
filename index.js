@@ -20,7 +20,7 @@ app.use('/', adminController)
 
 
 i18next.init({
-  lng: 'en',
+  lng: 'pt',
   debug: true,
   load: 'languageOnly',
   resources: {
@@ -33,16 +33,25 @@ i18next.init({
 
 //rotas
 app.get("/", (req, res) => {
-
-  itemPerdido.findAll().then(itens =>{
+    itemPerdido.findAll().then(itens =>{
     res.render("home",{itens:itens})
   })
 })
 
 app.get("/formularioPerda", (req, res) => {
   res.render("formularioPerda", { i18next: i18next });
+  i18next.changeLanguage('pt');
 });
 
+app.get("/formularioPerda/en", (req, res) => {
+  res.render("formularioPerda", {i18next: i18next});
+  i18next.changeLanguage('en')
+})
+
+app.get("/formularioPerda/zh", (req, res) => {
+  res.render("formularioPerda", {i18next: i18next});
+  i18next.changeLanguage('zh')
+})
 
 app.post('/autenticar', (req, res)=>{
   var username = req.body.username;
@@ -50,7 +59,7 @@ app.post('/autenticar', (req, res)=>{
  });
 
  app.post("/logar", (req, res) => {
-  res.render("login");
+  res.render("login")
 });
 
 app.post("/confirmar", (req, res) => {

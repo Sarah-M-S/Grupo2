@@ -37,10 +37,45 @@
             border: none;
             cursor: pointer;
         }
+
+        /* Estilos para os botões de idioma */
+        .botoes-idioma {
+        position: fixed; /* Posiciona os botões no canto da tela */
+        top: 20px; /* Ajusta a distância do topo da tela */
+        right: 20px; /* Ajusta a distância da direita da tela */
+        display: flex; /* Organiza os botões em linha */
+        gap: 10px; /* Espaço entre os botões */
+        }
+
+        .botao-idioma {
+        background-color: #ccc; /* Cor de fundo dos botões */
+        border: none; /* Remove a borda padrão */
+        padding: 10px 15px; /* Ajuste o espaçamento interno dos botões */
+        cursor: pointer; /* Exibe o cursor como ponteiro ao passar o mouse */
+        font-size: 14px; /* Tamanho da fonte do texto nos botões */
+        text-decoration: none; /* Remove a decoração de texto */
+        color: #000; /* Cor do texto nos botões */
+        }
+
+        .botao-idioma:hover { /* Estilos para hover nos botões */
+        background-color: #aaa; /* Cor de fundo ao passar o mouse */
+        }
+
     </style>
 </head>
 <body>
-    <button onclick="function switchLanguage() { window.location = '/?lng=en'; }">Mudar Idioma</button>
+    <div class="botoes-idioma">
+        <a href="/formularioPerda/en">
+          <button class="botao-idioma">EN</button>
+        </a>
+        <a href="/formularioPerda/zh">
+          <button class="botao-idioma">CN</button>
+        </a>
+        <a href="/formularioPerda">
+          <button class="botao-idioma">BR</button>
+        </a>
+      </div>
+
     <h1><%= i18next.t('titulo')  %></h1>
 
         <form action="/confirmar" method="POST" onsubmit="return confirm('Tem certeza que deseja enviar o formulário?');">
@@ -86,6 +121,5 @@
         <button type="submit"><%= i18next.t('enviar')  %></button>
         </form>
         
-    </form>
 </body>
 </html>
