@@ -34,11 +34,11 @@ i18next.init({
 //rotas
 app.get("/", (req, res) => {
     itemPerdido.findAll().then(itens =>{
-    res.render("home", {itens:itens})
+    res.render("home",{itens:itens})
   })
 })
 
-//rotas do i18n
+
 app.get("/formularioPerda", (req, res) => {
   res.render("formularioPerda", { i18next: i18next });
   i18next.changeLanguage('pt');
