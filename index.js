@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', adminController)
 
-
+//objeto de inicialização do i18next
 i18next.init({
   lng: 'pt',
   debug: true,
@@ -37,6 +37,8 @@ app.get("/", (req, res) => {
     res.render("home",{itens:itens})
   })
 })
+
+//rotas do i18next
 
 app.get("/formularioPerda", (req, res) => {
   res.render("formularioPerda", { i18next: i18next });
