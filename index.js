@@ -38,8 +38,8 @@ app.get("/", (req, res) => {
   })
 })
 
-//rotas do i18next
 
+//rotas do i18next
 app.get("/formularioPerda", (req, res) => {
   res.render("formularioPerda", { i18next: i18next });
   i18next.changeLanguage('pt');
