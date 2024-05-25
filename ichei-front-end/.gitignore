@@ -21,3 +21,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+#lixo
+../app-teste/
+../dockermariadb/
+../nginx - teste - Copy/
+../nginx-node-db/
+../nginx/
+../ssh_keys/
