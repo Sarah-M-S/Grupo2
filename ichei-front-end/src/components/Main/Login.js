@@ -1,13 +1,14 @@
+import { render } from '@testing-library/react';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-        // Aqui você pode adicionar a lógica para validar o login
-        // e redirecionar o usuário para a página apropriada.
+    function handleFormSubmit() {
+        navigate("/admin");
     };
 
     return (
