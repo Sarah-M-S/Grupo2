@@ -1,7 +1,7 @@
 //Importações
 const express = require("express");
 const router = express.Router();
-const Administrador = require("./Administrador");
+const Administrador = require("../Model/Administrador");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
@@ -10,6 +10,7 @@ const i18next = require("i18next");
 const en = require("../views/locales/en");
 const pt = require("../views/locales/pt");
 const zh = require("../views/locales/zh");
+const itemCadastrado = require("../Model/itemCadastrado");
 //=================================================================================
 
 //Config da router
@@ -21,10 +22,15 @@ router.use(
 
 //Rotas da router
 
-//Painel admnistrativo
-router.get("/admin/home", (req, res) => {
+router.get("/admin/encontrados", (req, res) => {
+  itemCadastrado.findAll().then((itens) => {
+    res.json({ itens: itens });
+  });
+});
+
+router.get("/admin/perdidos", (req, res) => {
   itemPerdido.findAll().then((itens) => {
-    res.render("admin/system/adminPanel", { itens: itens });
+    res.json({ itens: itens });
   });
 });
 
@@ -83,7 +89,7 @@ router.post("/autenticar", (req, res) => {
           email: admin.email,
         };
 
-        res.redirect("/admin/home");
+        res.redirect("/admin/encontrados");
       } else {
         res.redirect("/logar");
       }
@@ -158,6 +164,32 @@ router.post("/users/edit", async (req, res) => {
   ).then(() => {
     res.redirect("/admin/home");
   });
+});
+
+//cadastrar item encontrado
+router.post("/cadastrarItem", (req, res) => {
+  var tituloItem = req.body.tituloItem;
+  var descricao = req.body.descricao;
+  var marca = req.body.marca;
+  var categoria = req.body.categoria;
+  var cor = req.body.cor;
+  var local = req.body.local;
+  var dataEncontro = req.body.dataEncontro;
+  var registrador = req.body.registrador;
+
+  itemCadastrado
+    .create({
+      tituloItem: tituloItem,
+      descricao: descricao,
+      categoria: categoria,
+      marca: marca,
+      cor: cor,
+      local: local,
+      dataCadastro: dataEncontro,
+      marca: marca,
+      registrador: registrador,
+    })
+    .then(res.redirect("/admin/home"));
 });
 
 module.exports = router;

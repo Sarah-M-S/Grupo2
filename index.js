@@ -2,7 +2,8 @@
 const express = require("express");
 const app = express();
 const itemPerdido = require("./Model/ItemPerdido");
-const administrador = require("./admin/Administrador");
+const itemCadastrado = require("./Model/itemCadastrado");
+const administrador = require("./Model/Administrador");
 const bodyParser = require("body-parser");
 const adminController = require("./admin/AdminController")
 const session = require("express-session")
@@ -39,8 +40,8 @@ i18next.init({
 //rotas
 // Pagina inicial
 app.get("/", (req, res) => {
-    itemPerdido.findAll().then(itens =>{
-    res.render("home",{itens:itens})
+    itemCadastrado.findAll().then(itens =>{
+    res.json({itens:itens})
   })
 })
 
@@ -131,6 +132,16 @@ itemPerdido
   .catch((err) => {
     console.error("Erro ao criar tabelas:", err);
   });
+
+  itemCadastrado
+  .sync({ force: false }) // Cria as tabelas se não existirem (force: true)
+  .then(() => {
+    console.log("Tabelas criadas com sucesso.");
+  })
+  .catch((err) => {
+    console.error("Erro ao criar tabelas:", err);
+  });
+
 
 
 
