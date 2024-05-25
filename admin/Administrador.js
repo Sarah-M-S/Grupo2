@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../Model/connection');
+const connector = require('../Model/connection');
 
-const administrador = sequelize.define('administrador', {
+const administrador = connector.sequelize.define('administrador', {
 id: {
     type: DataTypes.INTEGER,
     primaryKey: true,

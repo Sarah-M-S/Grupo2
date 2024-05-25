@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #c7bfbf;
+            color: #fff;
+            padding: 10px;
+            text-align: right;
+        }
+
+        header button:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<h3>Editar usuário</h3>
+<br>
+<form action="/users/edit/" method="POST">
+    <label for="nome">Nome:</label><br>
+    <input type="nome" name="nome" id="nome" placeholder="<%= user.nome %>">
+    <br>
+    <label for="email">Email:</label><br>
+    <input type="email" name="email" id="email" placeholder="<%= user.email %>">
+    <br>
+    <label for="Senha">Senha:</label><br>
+    <input type="password" name="password" id="password" placeholder="**********">
+    <br>
+    <label for="cargo">Cargo:</label><br>
+    <input type="cargo" name="cargo" id="cargo" placeholder="<%= user.cargo %>">
+    <br>
+    <label for="turno">Turno:</label><br>
+    <input type="turno" name="turno" id="turno" placeholder="<%= user.turno %>">
+    <br>
+    <label for="status">Status:</label><br>
+    <input type="radio" id="ativo" name="f_status" value="true" checked>
+    <label for="ativo">Ativo</label>
+    <input type="radio" id="inativo" name="f_status" value="false">
+    <label for="inativo">Inativo</label><br><br>
+    <input type="hidden" name="idUser" value="<%= user.id %>">
+    <button type="submit">Cadastrar</button>
+</form>
+
+
+</html>

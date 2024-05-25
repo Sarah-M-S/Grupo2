@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('./connection');
+const connector = require('./connection');
 
-const itemPerdido = sequelize.define('itemPerdido', {
+const itemPerdido = connector.sequelize.define('itemPerdido', {
 id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
