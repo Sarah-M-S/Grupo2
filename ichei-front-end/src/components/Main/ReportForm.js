@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Report_Form = () => {
+const ReportForm = () => {
     const [formValues, setFormValues] = useState({
         name: '',
         email: '',
@@ -123,4 +123,4 @@ const Report_Form = () => {
     );
 };
 
-export default Report_Form;
+export default ReportForm;

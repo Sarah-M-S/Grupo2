@@ -1,11 +1,9 @@
 import './App.css';
-import Main from './components/Main';
-import Add_Object from './components/Add_Object';
-import Report_Form from './components/Report_Form'
-import Found from './components/Found';
+import Main from './components/Main/Main';
+import ReportForm from './components/Main/ReportForm'
 import Login from './components/Login';
-import Report from './components/Report'
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import List from './components/Main/List';
 
 const App = () => {
   const foundObjects = [
@@ -15,18 +13,24 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>TESTE</h1>
-      <BrowserRouter>
-        <ul>
-          <li><Link to="/">Página Inicial</Link></li>
-          <li><Link to="/report_form">Reportar Perda</Link></li>
-          <li><Link to="/login">Login</Link></li>
-        </ul>
+    
+    <BrowserRouter>
 
+      <nav>
+        <Link to="/list"> Página Inicial </Link>
+        <Link to="/login"> Login </Link>
+      </nav>
+
+
+  
         <Routes>
-          <Route path='/' element={<Main objects={foundObjects}/>}></Route>
-          <Route path='/report_form' element={<Report_Form/>}></Route>
-          <Route path='/login' element={<Login/>}></Route>
+        
+          <Route path='/' element={<Main />}>
+            <Route path='/list' element={<List objects={foundObjects} />}></Route>
+            <Route path='report_form' element={<ReportForm />}></Route>
+          </Route>
+
+          <Route path='/login' element={<Login />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,9 +1,7 @@
-const Main = ({ objects }) => {
+const List = ({ objects }) => {
     return (
 
         <div>
-            <button type="button" disabled>Lista</button>
-            <button type="button" disabled>Mapa</button>
             <table>
                 <thead>
                     <tr>
@@ -28,4 +26,4 @@ const Main = ({ objects }) => {
 };
 
 
-export default Main;
+export default List;
