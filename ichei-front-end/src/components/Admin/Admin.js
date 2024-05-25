@@ -6,8 +6,7 @@ const Admin = ({ }) => {
 
         <div>
             <header>AREA ADMIN</header>
-
-
+            
             <div>
             <Link to="found"><button type="button">ENCONTRADOS</button></Link>
             <Link to="report"><button type="button">REPORTES</button></Link>
