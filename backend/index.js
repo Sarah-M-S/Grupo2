@@ -82,18 +82,18 @@ app.get("/formularioPerda/zh", (req, res) => {
 });
 
 //rota envio perda banco
-app.post("/confirmar", (req, res) => {
-  var nome = req.body.nome;
-  var tituloItem = req.body.tituloItem;
-  var email = req.body.email;
-  var descricao = req.body.descricao;
-  var marca = req.body.marca;
-  var categoria = req.body.categoria;
-  var curso = req.body.curso;
-  var periodo = req.body.periodo;
-  var cor = req.body.cor;
-  var local = req.body.local;
-  var dataPerda = req.body.dataPerda;
+app.post("/cadastrarPerda", (req, res) => {
+  var nome = req.body.itemPerdido.nome;
+  var tituloItem = req.body.itemPerdido.tituloItem;
+  var email = req.body.itemPerdido.email;
+  var descricao = req.body.itemPerdido.descricao;
+  var marca = req.body.itemPerdido.marca;
+  var categoria = req.body.itemPerdido.categoria;
+  var curso = req.body.itemPerdido.curso;
+  var periodo = req.body.itemPerdido.periodo;
+  var cor = req.body.itemPerdido.cor;
+  var local = req.body.itemPerdido.local;
+  var dataPerda = req.body.itemPerdido.dataPerda;
 
   itemPerdido
     .create({

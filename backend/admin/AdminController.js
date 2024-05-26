@@ -2,7 +2,6 @@
 const express = require("express");
 const router = express.Router();
 const Administrador = require("../Model/Administrador");
-const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const itemPerdido = require("../Model/ItemPerdido");
@@ -21,40 +20,6 @@ router.use(
 //=================================================================================
 
 //Rotas da router
-
-router.post("/teste", (req, res) => {
-  const {
-    tituloItem,
-    descricao,
-    marca,
-    categoria,
-    cor,
-    local,
-    dataEncontro,
-    registrador
-  } = req.body; // Desestruturando o objeto diretamente do corpo da requisição
-
-  console.log(req.body.itemCadastrado.tituloItem)
-
-  itemCadastrado
-    .create({
-      tituloItem: req.body.itemCadastrado.tituloItem,
-      descricao: req.body.itemCadastrado.descricao,
-      marca: req.body.itemCadastrado.marca,
-      categoria: req.body.itemCadastrado.categoria,
-      cor: req.body.itemCadastrado.cor,
-      local: req.body.itemCadastrado.local,
-      dataCadastro: req.body.itemCadastrado.dataEncontro,
-      registrador: req.body.itemCadastrado.registrador,
-    })
-    .then(res.redirect("/admin/home"))
-    .catch(err => {
-      console.error(err);
-      res.status(500).send("Erro ao cadastrar item");
-    });
-});
-
-
 
 router.get("/admin/encontrados", (req, res) => {
   itemCadastrado.findAll().then((itens) => {
@@ -133,7 +98,7 @@ router.post("/autenticar", (req, res) => {
   });
 });
 
-// cadastra item encontrado
+// reporta item perdido
 router.get("/admin/formularioReporte", (req, res) => {
   res.render("admin/system/formularioReporte", { i18next: i18next });
   i18next.changeLanguage("pt");
