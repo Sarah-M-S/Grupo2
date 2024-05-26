@@ -3,7 +3,6 @@ const express = require("express");
 const cors = require('cors')
 const router = express.Router();
 const Administrador = require("../Model/Administrador");
-const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const itemPerdido = require("../Model/ItemPerdido");
@@ -101,7 +100,7 @@ router.post("/autenticar", (req, res) => {
   });
 });
 
-// cadastra item encontrado
+// reporta item perdido
 router.get("/admin/formularioReporte", (req, res) => {
   res.render("admin/system/formularioReporte", { i18next: i18next });
   i18next.changeLanguage("pt");
