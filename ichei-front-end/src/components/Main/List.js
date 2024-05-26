@@ -1,28 +1,57 @@
-const List = ({ objects }) => {
-    return (
+import React from "react";
 
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Objeto</th>
-                        <th>Local</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {objects.map((object, index) => (
-                        <tr key={index}>
-                            <td>{object.name}</td>
-                            <td>{object.local}</td>
-                            <td>{object.data}</td>
+
+class List extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            objects: []
+        }
+    }
+
+    componentDidMount() {
+        fetch("http://localhost:8083/")
+        .then(res => res.json())
+        .then(data => {
+            this.setState({ objects : data.itens })
+        })
+        
+    }
+
+    componentWillUnmount() {
+        console.log(this.state.objects)
+    }
+
+
+
+    render() {
+        return (
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Objeto</th>
+                            <th>Local</th>
+                            <th>Data</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {this.state.objects.map((object, index) => (
+                            <tr key={index}>
+                                <td>{object.tituloItem}</td>
+                                <td>{object.local}</td>
+                                <td>{object.dataCadastro}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
-    );
+        );
+    }
+
 };
 
 

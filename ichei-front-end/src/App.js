@@ -29,7 +29,7 @@ const App = () => {
         <Routes>
 
           <Route path='/' element={<Main />}>
-            <Route path='/list' element={<List objects={foundObjects} />}></Route>
+            <Route path='/list' element={<List />}></Route>
             <Route path='report_form' element={<ReportForm />}></Route>
           </Route>
 
