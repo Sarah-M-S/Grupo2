@@ -1,10 +1,12 @@
+import './Style/Found.css';
+
 const Found = ({ objects }) => {
     return (
-        <div>
-            <table>
+        <div className="lista-objetos-encontrado">
+            <table className="tabela-objetos-encontrado">
                 <thead>
                     <tr>
-                        <th>Objeto</th>
+                        <th>Nome</th>
                         <th>Local</th>
                         <th>Data</th>
                     </tr>

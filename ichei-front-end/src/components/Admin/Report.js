@@ -1,9 +1,12 @@
+import './Style/Report.css';
+
 const Report = ({ reports }) => {
     return (
-        <div>
-            <table>
+        <div className="lista-objetos-reporte">
+            <table className="tabela-objetos-reporte">
                 <thead>
                     <tr>
+                        <th>Nome</th>
                         <th>Objeto</th>
                         <th>Local</th>
                         <th>Data</th>

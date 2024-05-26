@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './Style/ObjectForm.css';
 function Add_Object(){
     const [formValues, setFormValues] = useState({
         object: '',
@@ -25,79 +25,80 @@ function Add_Object(){
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div className="container-formulario-objeto-admin">
+        <form className="formulario-objeto-admin" onSubmit={handleSubmit}>
             <label>
-                Objeto:
                 <input
                     type="text"
                     name="object"
+                    className="objeto"
                     value={formValues.object}
                     onChange={handleChange}
+                    placeholder='Objeto'
                 />
             </label>
-            <br />
+
             <label>
-                Cor:
                 <input
                     type="text"
                     name="color"
+                    className="cor-objeto-admin"
                     value={formValues.color}
                     onChange={handleChange}
+                    placeholder='Cor'
                 />
             </label>
-            <br />
+
             <label>
-                Marca:
                 <input
                     type="text"
                     name="brand"
+                    className="marca-objeto-admin"
                     value={formValues.brand}
                     onChange={handleChange}
+                    placeholder='Marca'
                 />
             </label>
-            <br />
+
             <label>
-                Detalhes:
-                <input
+                <textarea
                     type="text"
                     name="details"
+                    className='detalhe-objeto-admin'
                     value={formValues.details}
                     onChange={handleChange}
+                    placeholder='Detalhes'
                 />
             </label>
-            <br />
+
+            
             <label>
-                Detalhes:
-                <input
-                    type="text"
-                    name="details"
-                    value={formValues.details}
-                    onChange={handleChange}
-                />
-            </label>
-            <br/>
-            <label>
-                Data:
                 <input
                     type="date"
                     name="data"
+                    className='data-objeto-admin'
                     value={formValues.data}
                     onChange={handleChange}
                 />
             </label>
-            <br/>
+
+
+
             <label>
-                Local:
                 <input
                     type="text"
                     name="local"
+                    className='local-objeto-admin'
                     value={formValues.local}
                     onChange={handleChange}
+                    placeholder='Local'
                 />
             </label>
-            <br/>
-            <button type="submit">Enviar</button>
+
+
+            <button className="btn-enviar-objeto-admin" type="submit">Enviar</button>
         </form>
+        </div>
     )
 }
 
