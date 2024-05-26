@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Reportar Item achado
+    </title>
+    
+</head>
+
+<body>
+    
+    <h1>Reporte um item encontrado</h1>
+
+    <form action="/cadastrarItem" method="POST" onsubmit="return confirm('Tem certeza que deseja enviar o formulário?');">
+
+        <label for="tituloItem">Titulo Item:</label><br>
+        <input type=tituloItem" id="tituloItem" name="tituloItem" required><br>
+
+        <label for="descricao">Descrição:</label><br>
+        <textarea id="descricao" name="descricao" rows="5" required></textarea>
+        <br>
+        <label for="marca">Marca:</label><br>
+        <input type="marca" id="marca" name="marca">
+        <br>
+        <label for="categoria">Categoria</label><br>
+        <input type="categoria" id="categoria" name="categoria" required>
+        <br>
+        <label for="cor">Cor</label>
+        <br>
+        <input type="cor" id="cor" name="cor" required>
+        <br>
+        <label for="local">Local encontro:</label>
+        <br>
+        <input type="local" id="local" name="local" required>
+        <br>
+        <label for="dataEncontro">Data Encontro:</label>
+        <br>
+        <input type="date" id="dataEncontro" name="dataEncontro" required>
+        <br>
+        <label for="registrador">Registrado por:</label>
+        <br>
+        <input type="registrador" id="registrador" name="registrador" required>
+        <br>
+        <button type="submit">Enviar:</button>
+        <br>
+    </form>
+
+</body>
+
+</html>

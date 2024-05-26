@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial</title>
+    <title>Painel Administrativo</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,21 +31,23 @@
 
 <body>
     <header>
-        <form action="/logar" method="GET">
-            <button type="submit">Login Admin</button>
+        <form action="/admin/users/list" method="GET">
+            <button type="submit">Gerenciar Usuários</button>
         </form>
     </header>
 
     <div class="container">
-        <h1>Bem-vindo ao Ichei</h1>
-        
-        <form action="/formularioPerda" method="GET">
-            <button type="submit">Perdi um item</button>
+        <h1>Painel Administrativo</h1>
+
+        <form action="/admin/formularioReporte" method="GET">
+            <button type="submit">Reportar Item</button>
         </form>
 
-        <h1>Ultimos itens Encontrados </h1><br>
+        <h1>Ultimos itens perdidos </h1><br>
     <% itens.forEach(item=> { %>
         Item: <%= item.dataValues.tituloItem %><br />
+            Descricao: <%= item.dataValues.descricao %><br />
+                Categoria:<%= item.dataValues.categoria %><br />
                     Data da Perda: <%= item.dataValues.data %><br /><br />
                             <% }); %>
     </div>

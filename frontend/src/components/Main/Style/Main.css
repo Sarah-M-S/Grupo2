@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+/*GLOBAL*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(./img/background.png);
+    background-size: cover;
+}
+
+
+/*CABECALHO*/
+nav.cabecalho {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 39px;
+    background-color: white;
+    padding: 20px 30px 20px 30px;
+}
+
+img.logo-ichei-cabecalho{
+    width: 70px;
+}
+
+a.pagina-inicial, a.pagina-login{
+    text-decoration: none;
+    color:#051816;
+    font-weight: 700;
+    font-family: "Raleway", sans-serif;
+    font-size: 16pt;
+}
+
+a.pagina-inicial:hover, a.pagina-login:hover{
+    color:#8CC19D;
+}
+
+/*MENU*/
+.container-menu {
+    margin-top: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    flex-direction: column;
+}
+
+.container-menu .menu{
+    display: flex;
+    gap: 30px;
+}
+
+button.btn-lista, button.btn-reportar-perda {
+    font-family: "Raleway", sans-serif;
+    color: #051816;
+    font-weight: 700;
+    border-radius: 100px;
+    background-color: white;
+    font-size: 14pt;
+    padding: 24px;
+    width: 220px;
+}
+
+button.btn-mapa{
+    color:#D6D6D6;
+    border-radius: 100px;
+    background-color: white;
+    font-size: 14pt;
+    padding: 24px;
+    width: 220px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+}
+

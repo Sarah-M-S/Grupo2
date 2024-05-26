@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+/*GLOBAL*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*TABELA LISTA OBJETO - USUARIO*/
+.lista-objetos {
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px;
+    width: 38%;
+}
+
+.lista-objetos table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.lista-objetos th, .lista-objetos td {
+    padding: 20px 10px 20px 10px;
+    text-align: left;
+    border-bottom: 1px solid #051816;
+}
+
+.lista-objetos th{
+    color:#051816;
+    font-weight: 700;
+    font-family: "Raleway", sans-serif;
+    font-size: 16pt;
+}

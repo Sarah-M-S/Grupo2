@@ -1,0 +1,25 @@
+
+.lista-objetos-encontrado {
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px;
+    width: 97%;
+    margin-top: 31px;
+}
+.lista-objetos-encontrado table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.lista-objetos-encontrado th, .lista-objetos-encontrado td {
+    padding: 20px 10px 20px 10px;
+    text-align: left;
+    border-bottom: 1px solid #051816;
+}
+
+.lista-objetos-encontrado th{
+    color:#051816;
+    font-weight: 700;
+    font-family: "Raleway", sans-serif;
+    font-size: 16pt;
+}

@@ -1,0 +1,25 @@
+.lista-objetos-reporte {
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px;
+    width: 97%;
+    margin-top: 31px;
+}
+
+.lista-objetos-reporte table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.lista-objetos-reporte th, .lista-objetos-reporte td, .lista-objetos-reporte tr{
+    padding: 20px 10px 20px 10px;
+    text-align: left;
+    border-bottom: 1px solid #051816;
+}
+
+.lista-objetos-reporte th{
+    color:#051816;
+    font-weight: 700;
+    font-family: "Raleway", sans-serif;
+    font-size: 16pt;
+}

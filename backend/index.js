@@ -1,15 +1,19 @@
-//imports
+//importacoes
 const express = require("express");
-const sequelize = require("sequelize");
 const app = express();
 const itemPerdido = require("./Model/ItemPerdido");
-const administrador = require("./admin/Administrador");
+const itemCadastrado = require("./Model/itemCadastrado");
+const administrador = require("./Model/Administrador");
 const bodyParser = require("body-parser");
 const adminController = require("./admin/AdminController")
+const session = require("express-session")
 const i18next = require("i18next")
 const en = require('./views/locales/en')
 const pt = require('./views/locales/pt')
-const zh = require('./views/locales/zh')
+const zh = require('./views/locales/zh');
+const { where } = require("sequelize");
+
+//=================================================================================
 
 //configs
 app.use(express.json());
@@ -17,6 +21,8 @@ app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', adminController)
+app.use(session({ secret: "miasdknndsalininadnh", cookie: { maxAge:30000 }
+}))
 
 //objeto de inicialização do i18next
 i18next.init({
@@ -29,16 +35,28 @@ i18next.init({
     zh: zh
   }
 })
-
+//=================================================================================
 
 //rotas
+// Pagina inicial
 app.get("/", (req, res) => {
-    itemPerdido.findAll().then(itens =>{
-    res.render("home",{itens:itens})
+    itemCadastrado.findAll().then(itens =>{
+    res.json({itens:itens})
   })
 })
 
+app.get("/session", (req, res)=>{
+  req.session.nome = "Funciona meu nome"
+  res.send("ok")
+})
 
+app.get("/leitura", (req, res)=>{
+  res.json({
+    nome: req.session.nome
+  })
+})
+
+//formularios de perda
 //rotas do i18next
 app.get("/formularioPerda", (req, res) => {
   res.render("formularioPerda", { i18next: i18next });
@@ -51,19 +69,17 @@ app.get("/formularioPerda/en", (req, res) => {
 })
 
 app.get("/formularioPerda/zh", (req, res) => {
-  res.render("formularioPerda", {i18next: i18next});
-  i18next.changeLanguage('zh')
-})
+  res.render("formularioPerda", { i18next: i18next });
+  i18next.changeLanguage("zh");
+});
 
-app.post('/autenticar', (req, res)=>{
-  var username = req.body.username;
-  var password = req.body.password;
- });
 
- app.post("/logar", (req, res) => {
+//rota botão login
+ app.get("/logar", (req, res) => {
   res.render("login")
 });
 
+//rota envio perda banco
 app.post("/confirmar", (req, res) => {
   var nome = req.body.nome;
   var tituloItem = req.body.tituloItem;
@@ -94,6 +110,10 @@ app.post("/confirmar", (req, res) => {
     .then(res.redirect("/"));
 });
 
+
+
+//=================================================================================
+
 //sincronizando banco de dados com o ORM
 administrador
   .sync({ force: false }) // Cria as tabelas se não existirem (force: true)
@@ -112,6 +132,16 @@ itemPerdido
   .catch((err) => {
     console.error("Erro ao criar tabelas:", err);
   });
+
+  itemCadastrado
+  .sync({ force: false }) // Cria as tabelas se não existirem (force: true)
+  .then(() => {
+    console.log("Tabelas criadas com sucesso.");
+  })
+  .catch((err) => {
+    console.error("Erro ao criar tabelas:", err);
+  });
+
 
 
 
