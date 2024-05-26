@@ -34,18 +34,20 @@ router.post("/teste", (req, res) => {
     registrador
   } = req.body; // Desestruturando o objeto diretamente do corpo da requisição
 
+  console.log(req.body.itemCadastrado.tituloItem)
+
   itemCadastrado
     .create({
-      tituloItem,
-      descricao,
-      categoria,
-      marca,
-      cor,
-      local,
-      dataCadastro: dataEncontro,
-      registrador
+      tituloItem: req.body.itemCadastrado.tituloItem,
+      descricao: req.body.itemCadastrado.descricao,
+      marca: req.body.itemCadastrado.marca,
+      categoria: req.body.itemCadastrado.categoria,
+      cor: req.body.itemCadastrado.cor,
+      local: req.body.itemCadastrado.local,
+      dataCadastro: req.body.itemCadastrado.dataEncontro,
+      registrador: req.body.itemCadastrado.registrador,
     })
-    .then(() => res.redirect("/admin/home"))
+    .then(res.redirect("/admin/home"))
     .catch(err => {
       console.error(err);
       res.status(500).send("Erro ao cadastrar item");
@@ -200,14 +202,14 @@ router.post("/users/edit", async (req, res) => {
 
 //cadastrar item encontrado
 router.post("/cadastrarItem", (req, res) => {
-  var tituloItem = req.body.tituloItem;
-  var descricao = req.body.descricao;
-  var marca = req.body.marca;
-  var categoria = req.body.categoria;
-  var cor = req.body.cor;
-  var local = req.body.local;
-  var dataEncontro = req.body.dataEncontro;
-  var registrador = req.body.registrador;
+  var tituloItem = req.body.itemCadastrado.tituloItem;
+  var descricao = req.body.itemCadastrado.descricao;
+  var marca = req.body.itemCadastrado.marca;
+  var categoria = req.body.itemCadastrado.categoria;
+  var cor = req.body.itemCadastrado.cor;
+  var local = req.body.itemCadastrado.local;
+  var dataEncontro = req.body.itemCadastrado.dataEncontro;
+  var registrador = req.body.itemCadastrado.registrador;
 
   itemCadastrado
     .create({
