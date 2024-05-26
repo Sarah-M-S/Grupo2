@@ -22,6 +22,38 @@ router.use(
 
 //Rotas da router
 
+router.post("/teste", (req, res) => {
+  const {
+    tituloItem,
+    descricao,
+    marca,
+    categoria,
+    cor,
+    local,
+    dataEncontro,
+    registrador
+  } = req.body; // Desestruturando o objeto diretamente do corpo da requisição
+
+  itemCadastrado
+    .create({
+      tituloItem,
+      descricao,
+      categoria,
+      marca,
+      cor,
+      local,
+      dataCadastro: dataEncontro,
+      registrador
+    })
+    .then(() => res.redirect("/admin/home"))
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Erro ao cadastrar item");
+    });
+});
+
+
+
 router.get("/admin/encontrados", (req, res) => {
   itemCadastrado.findAll().then((itens) => {
     res.json({ itens: itens });
