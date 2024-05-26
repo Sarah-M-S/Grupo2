@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+/*GLOBAL*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(./img/background.png);
+    background-size: cover;
+}
+
+/*FORMULARIO REPORTE*/
+
+.container-formulario {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 104px;
+    align-items: center;
+    background: #e7e7e7;
+    width: 58%;
+    padding: 74px 43px 74px 43px;
+    border-radius: 68px;
+    margin-bottom: 60px;
+}
+
+.container-logo-perda{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    width: 26%;
+
+}
+
+img.logo-ichei-formulario {
+    width: 100%;
+}
+
+h1.titulo-reportar-perda{
+    color:#051816;
+    font-size: 24pt;
+    font-weight: 700;
+    font-family: "Raleway", sans-serif;
+}
+
+
+
+form.formulario {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 48px;
+    border-radius: 68px;
+    width: 52%;
+}
+
+.formulario label, .formulario input {
+    width: 100%;
+}
+
+.formulario input{
+    padding: 15px 30px 12px 30px;
+    background-color: #A5DEBB;
+    border: none;
+    border-radius: 68px;
+    color:#051816;
+    font-size: 12pt;
+    font-weight: 700;
+    font-family: "Raleway", sans-serif;
+    margin-bottom: 20px;
+}
+.formulario input::placeholder{
+    color:#051816;
+    font-size: 12pt;
+    font-weight: 700;
+    font-family: "Raleway", sans-serif;
+}
+
+textarea.detalhe {
+    padding: 15px 30px 12px 30px;
+    background-color: #A5DEBB;
+    border: none;
+    border-radius: 20px;
+    color:#051816;
+    font-size: 12pt;
+    font-weight: 700;
+    font-family: "Raleway", sans-serif;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 100px;
+}
+
+textarea.detalhe::placeholder{
+    color:#051816;
+}
+
+.enviar{
+    padding: 9px 30px 9px 30px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    color:#051816;
+    font-size: 25px;
+    border-radius: 68px;
+    border-color:1px solid #051816;
+}
+
+.enviar:hover{
+    background-color: #051816;
+    color: #A5DEBB;
+}

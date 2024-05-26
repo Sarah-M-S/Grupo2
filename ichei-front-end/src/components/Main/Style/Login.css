@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+
+/*LOGIN*/
+.content-funcionario{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container-funcionario {
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 48px;
+    border-radius: 68px;
+}
+
+.logo-funcionario{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.titulo-funcionario{
+    font-family: "Raleway", sans-serif;
+    color: #051816;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.inputs-login{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.input-usuario, .input-senha{
+    width: 100%;
+    padding: 10px 30px 10px 30px;
+    background-color: #A5DEBB;
+    border: none;
+    border-radius: 68px;
+    font-size: 14pt;
+    font-weight: 700;
+    font-family: "Raleway", sans-serif;
+}
+
+.input-usuario::placeholder, .input-senha::placeholder{
+    color:#051816;
+}
+
+.btn-esqueceu-senha{
+    width: 100%;
+    text-align: left;
+    border: none;
+    background-color: white;
+    font-size: 11pt;
+    margin-top: 24px;
+    color:#051816;
+    font-weight: 700;
+    font-family: "Raleway", sans-serif;
+    margin-bottom: 24px;
+}
+
+.container-entrar {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-entrar {
+    padding: 6px 15px 6px 15px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    color: #051816;
+    font-size: 20px;
+    border-radius: 68px;
+    width: 63%;
+}
+
+.btn-entrar:hover{
+    background-color: #051816;
+    color: #A5DEBB;
+    cursor:pointer;
+}
+
+button.faq {
+    text-align: left;
+    border: none;
+    background-color: white;
+    font-size: 11pt;
+    margin-top: 24px;
+    color: #051816;
+    font-weight: 700;
+    font-family: "Raleway", sans-serif;
+    margin-bottom: 24px;
+}
+
+.rodape {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+img.cookie {
+    width: 12%;
+}
+
+

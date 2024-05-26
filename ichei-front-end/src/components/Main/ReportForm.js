@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+import './Style/ReportForm.css';
+import logo from './Style/img/logo-ichei.png';
 const ReportForm = () => {
     const [formValues, setFormValues] = useState({
         name: '',
@@ -27,79 +28,49 @@ const ReportForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div className="container-formulario">
+        
+        <div className="container-logo-perda">
+            <img className="logo-ichei-formulario" src={logo} alt="logo-ichei" />
+            <h1 className="titulo-reportar-perda">Reportar Perda</h1>
+        </div>
+
+        <form className="formulario" onSubmit={handleSubmit}>
             <label>
-                Nome:
                 <input
                     type="text"
                     name="name"
+                    className="nome"
                     value={formValues.name}
                     onChange={handleChange}
+                    placeholder='Nome'
                 />
             </label>
-            <br />
+
+
             <label>
-                Email:
                 <input
                     type="email"
                     name="email"
+                    className="email"
                     value={formValues.email}
                     onChange={handleChange}
+                    placeholder='Email'
                 />
             </label>
-            <br />
+
             <label>
-                Objeto:
                 <input
                     type="text"
-                    name="object"
-                    value={formValues.object}
+                    name="local"
+                    className='local'
+                    value={formValues.local}
                     onChange={handleChange}
+                    placeholder='Local'
                 />
             </label>
-            <br />
+
             <label>
-                Cor:
-                <input
-                    type="text"
-                    name="color"
-                    value={formValues.color}
-                    onChange={handleChange}
-                />
-            </label>
-            <br />
-            <label>
-                Marca:
-                <input
-                    type="text"
-                    name="brand"
-                    value={formValues.brand}
-                    onChange={handleChange}
-                />
-            </label>
-            <br />
-            <label>
-                Detalhes:
-                <input
-                    type="text"
-                    name="details"
-                    value={formValues.details}
-                    onChange={handleChange}
-                />
-            </label>
-            <br />
-            <label>
-                Detalhes:
-                <input
-                    type="text"
-                    name="details"
-                    value={formValues.details}
-                    onChange={handleChange}
-                />
-            </label>
-            <br/>
-            <label>
-                Data:
                 <input
                     type="date"
                     name="data"
@@ -107,19 +78,58 @@ const ReportForm = () => {
                     onChange={handleChange}
                 />
             </label>
-            <br/>
+
             <label>
-                Local:
                 <input
                     type="text"
-                    name="local"
-                    value={formValues.local}
+                    name="object"
+                    className="objeto"
+                    value={formValues.object}
                     onChange={handleChange}
+                    placeholder='Objeto'
                 />
             </label>
-            <br/>
-            <button type="submit">Enviar</button>
+
+            <label>
+                <input
+                    type="text"
+                    name="color"
+                    className='cor'
+                    value={formValues.color}
+                    onChange={handleChange}
+                    placeholder='Cor'
+                />
+            </label>
+
+            <label>
+                <input
+                    type="text"
+                    name="brand"
+                    className='marca'
+                    value={formValues.brand}
+                    onChange={handleChange}
+                    placeholder='Marca'
+                />
+            </label>
+
+            <label>
+                <textarea
+                    type="text"
+                    name="details"
+                    className="detalhe"
+                    value={formValues.details}
+                    onChange={handleChange}
+                    placeholder='Detalhes'
+                />
+            </label>
+
+            
+
+
+
+            <button className="enviar"type="submit">Enviar</button>
         </form>
+        </div>
     );
 };
 
