@@ -35,7 +35,7 @@ const App = () => {
 
           <Route path='/login' element={<Login />}></Route>
           <Route path='/admin' element={<Admin />}>
-            <Route path='add_object' element={<ObjectForm />}></Route>
+            <Route path='objectForm' element={<ObjectForm />}></Route>
             <Route path='found' element={<Found objects={foundObjects}/>}></Route>
             <Route path='report' element={<Report reports={incomeReports}/>}></Route>
 

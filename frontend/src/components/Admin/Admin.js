@@ -18,7 +18,7 @@ const Admin = ({ }) => {
             <div className="menu-admin-links">
                 <Link to="found"><button className="btn-encontrados" type="button">ENCONTRADOS</button></Link>
                 <Link to="report"><button className="btn-reportes" type="button">REPORTES</button></Link>
-                <Link to="add_object"><button className="btn-add-objeto" type="button">ADICIONAR OBJETO</button></Link>
+                <Link to="objectForm"><button className="btn-add-objeto" type="button">ADICIONAR OBJETO</button></Link>
             
             <Outlet />
             </div>

@@ -1,5 +1,6 @@
 //Importações
 const express = require("express");
+const cors = require('cors')
 const router = express.Router();
 const Administrador = require("../Model/Administrador");
 const bodyParser = require("body-parser");
@@ -14,46 +15,13 @@ const itemCadastrado = require("../Model/itemCadastrado");
 //=================================================================================
 
 //Config da router
+router.use(cors())
 router.use(
   session({ secret: "miasdknndsalininadnh", cookie: { maxAge: 30000 } })
 );
-
 //=================================================================================
 
 //Rotas da router
-
-router.post("/teste", (req, res) => {
-  const {
-    tituloItem,
-    descricao,
-    marca,
-    categoria,
-    cor,
-    local,
-    dataEncontro,
-    registrador
-  } = req.body; // Desestruturando o objeto diretamente do corpo da requisição
-
-  console.log(req.body.itemCadastrado.tituloItem)
-
-  itemCadastrado
-    .create({
-      tituloItem: req.body.itemCadastrado.tituloItem,
-      descricao: req.body.itemCadastrado.descricao,
-      marca: req.body.itemCadastrado.marca,
-      categoria: req.body.itemCadastrado.categoria,
-      cor: req.body.itemCadastrado.cor,
-      local: req.body.itemCadastrado.local,
-      dataCadastro: req.body.itemCadastrado.dataEncontro,
-      registrador: req.body.itemCadastrado.registrador,
-    })
-    .then(res.redirect("/admin/home"))
-    .catch(err => {
-      console.error(err);
-      res.status(500).send("Erro ao cadastrar item");
-    });
-});
-
 
 
 router.get("/admin/encontrados", (req, res) => {
