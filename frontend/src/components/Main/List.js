@@ -1,31 +1,56 @@
+import React from "react";
 import './Style/List.css';
 
+class List extends React.Component {
 
-const List = ({ objects }) => {
-    return (
+    constructor(props) {
+        super(props);
 
-        <div className="lista-objetos">
+        this.state = {
+            objects: []
+        }
+    }
+
+    componentDidMount() {
+        fetch("http://localhost:8083/")
+        .then(res => res.json())
+        .then(data => {
+            this.setState({ objects : data.itens })
+        })
+        
+    }
+
+    componentWillUnmount() {
+    }
+
+
+
+    render() {
+        return (
+            <div className="lista-objetos">
             <table className="tabela-objetos">
-                <thead>
-                    <tr>
-                        <th>Objeto</th>
-                        <th>Local</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {this.state.objects.map((object, index) => (
+                    <thead>
+                        <tr>
+                            <th>Objeto</th>
+                            <th>Local</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.objects.map((object, index) => (
                             <tr key={index}>
                                 <td>{object.tituloItem}</td>
                                 <td>{object.local}</td>
                                 <td>{object.dataCadastro}</td>
                             </tr>
                         ))}
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
 
-    );
+        );
+    }
+
 };
 
 

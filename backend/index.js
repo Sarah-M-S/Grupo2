@@ -1,5 +1,6 @@
 //importacoes
 const express = require("express");
+const cors = require('cors')
 const app = express();
 const itemPerdido = require("./Model/ItemPerdido");
 const itemCadastrado = require("./Model/itemCadastrado");
@@ -23,6 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', adminController)
 app.use(session({ secret: "miasdknndsalininadnh", cookie: { maxAge:30000 }
 }))
+app.use(cors())
 
 //objeto de inicialização do i18next
 i18next.init({
