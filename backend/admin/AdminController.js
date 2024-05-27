@@ -11,6 +11,7 @@ const en = require("../views/locales/en");
 const pt = require("../views/locales/pt");
 const zh = require("../views/locales/zh");
 const itemCadastrado = require("../Model/itemCadastrado");
+const adminAuth =  require("../middleware/adminAuth")
 //=================================================================================
 
 //Config da router
@@ -68,7 +69,7 @@ router.post("/users/create", (req, res) => {
 });
 
 // listagem de admins
-router.get("/admin/users/list", (req, res) => {
+router.get("/admin/users/list", adminAuth, (req, res) => {
   Administrador.findAll().then((users) => {
     res.render("admin/users/listUsers", { users: users });
   });
@@ -91,7 +92,9 @@ router.post("/autenticar", (req, res) => {
 
         req.session.token = "icheiToken";
 
-        res.json({ token: req.session.token });
+        res.res.status(200).send('Autenticado');;
+
+
       } else {
         res.status(401).send("Acesso Negado");
       }
