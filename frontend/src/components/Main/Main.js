@@ -20,6 +20,7 @@ const Main = ({}) => {
                 <button type="button" className="btn-mapa" disabled>{t("mapa")}</button>
                 <Link to="report_form"><button className="btn-reportar-perda" type="button">{t("reportarPerda")}</button></Link>
                 </div>
+                
                 <Outlet />
             </div>
 
