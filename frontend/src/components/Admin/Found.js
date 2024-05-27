@@ -1,32 +1,58 @@
 import './Style/Found.css';
-import { useTranslation } from "react-i18next";
+import React from "react";
 
-const Found = ({ objects }) => {
-    const { t } = useTranslation();
-    return (
-        <div className="lista-objetos-encontrado">
-            <table className="tabela-objetos-encontrado">
-                <thead>
-                    <tr>
-                        <th>{t("objetoNome")}</th>
-                        <th>{t("objetoLocal")}</th>
-                        <th>{t("objetoData")}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {objects.map((object, index) => (
-                        <tr key={index}>
-                            <td>{object.name}</td>
-                            <td>{object.local}</td>
-                            <td>{object.data}</td>
+class Found extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            objects: []
+        }
+    }
+
+    componentDidMount() {
+        fetch("http://localhost:8083/")
+        .then(res => res.json())
+        .then(data => {
+            this.setState({ objects : data.itens })
+        })
+        
+    }
+
+    componentWillUnmount() {
+    }
+
+
+
+    render() {
+        return (
+            <div className="lista-objetos">
+            <table className="tabela-objetos">
+                    <thead>
+                        <tr>
+                            <th>Objeto</th>
+                            <th>Local</th>
+                            <th>Data</th>
+
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {this.state.objects.map((object, index) => (
+                            <tr key={index}>
+                                <td>{object.tituloItem}</td>
+                                <td>{object.local}</td>
+                                <td>{object.dataCadastro}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
-    )
-}
+        );
+    }
+
+};
 
 
 export default Found;

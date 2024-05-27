@@ -18,9 +18,11 @@ const Admin = ({ }) => {
             <div className="menu-admin">
             
             <div className="menu-admin-links">
+
                 <Link to="found"><button className="btn-encontrados" type="button">{t("objetosEncontrados")}</button></Link>
                 <Link to="report"><button className="btn-reportes" type="button">{t("objetosReportados")}</button></Link>
                 <Link to="add_object"><button className="btn-add-objeto" type="button">{t("adicionarObjeto")}</button></Link>
+
             
             <Outlet />
             </div>

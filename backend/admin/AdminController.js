@@ -1,8 +1,8 @@
 //Importações
 const express = require("express");
+const cors = require("cors");
 const router = express.Router();
 const Administrador = require("../Model/Administrador");
-const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const itemPerdido = require("../Model/ItemPerdido");
@@ -11,48 +11,17 @@ const en = require("../views/locales/en");
 const pt = require("../views/locales/pt");
 const zh = require("../views/locales/zh");
 const itemCadastrado = require("../Model/itemCadastrado");
+const adminAuth =  require("../middleware/adminAuth")
 //=================================================================================
 
 //Config da router
+router.use(cors());
 router.use(
   session({ secret: "miasdknndsalininadnh", cookie: { maxAge: 30000 } })
 );
-
 //=================================================================================
 
 //Rotas da router
-
-router.post("/teste", (req, res) => {
-  const {
-    tituloItem,
-    descricao,
-    marca,
-    categoria,
-    cor,
-    local,
-    dataEncontro,
-    registrador
-  } = req.body; // Desestruturando o objeto diretamente do corpo da requisição
-
-  itemCadastrado
-    .create({
-      tituloItem,
-      descricao,
-      categoria,
-      marca,
-      cor,
-      local,
-      dataCadastro: dataEncontro,
-      registrador
-    })
-    .then(() => res.redirect("/admin/home"))
-    .catch(err => {
-      console.error(err);
-      res.status(500).send("Erro ao cadastrar item");
-    });
-});
-
-
 
 router.get("/admin/encontrados", (req, res) => {
   itemCadastrado.findAll().then((itens) => {
@@ -100,7 +69,7 @@ router.post("/users/create", (req, res) => {
 });
 
 // listagem de admins
-router.get("/admin/users/list", (req, res) => {
+router.get("/admin/users/list", adminAuth, (req, res) => {
   Administrador.findAll().then((users) => {
     res.render("admin/users/listUsers", { users: users });
   });
@@ -121,17 +90,21 @@ router.post("/autenticar", (req, res) => {
           email: admin.email,
         };
 
-        res.redirect("/admin/encontrados");
+        req.session.token = "icheiToken";
+
+        res.res.status(200).send('Autenticado');;
+
+
       } else {
-        res.redirect("/logar");
+        res.status(401).send("Acesso Negado");
       }
     } else {
-      res.redirect("/logar");
+      res.status(401).send("Acesso Negado");
     }
   });
 });
 
-// cadastra item encontrado
+// reporta item perdido
 router.get("/admin/formularioReporte", (req, res) => {
   res.render("admin/system/formularioReporte", { i18next: i18next });
   i18next.changeLanguage("pt");
@@ -200,14 +173,16 @@ router.post("/users/edit", async (req, res) => {
 
 //cadastrar item encontrado
 router.post("/cadastrarItem", (req, res) => {
-  var tituloItem = req.body.tituloItem;
-  var descricao = req.body.descricao;
-  var marca = req.body.marca;
-  var categoria = req.body.categoria;
-  var cor = req.body.cor;
-  var local = req.body.local;
-  var dataEncontro = req.body.dataEncontro;
-  var registrador = req.body.registrador;
+  console.log(req.body);
+
+  var tituloItem = req.body.itemCadastrado.tituloItem;
+  var descricao = req.body.itemCadastrado.descricao;
+  var marca = req.body.itemCadastrado.marca;
+  var categoria = req.body.itemCadastrado.categoria;
+  var cor = req.body.itemCadastrado.cor;
+  var local = req.body.itemCadastrado.local;
+  var dataCadastro = req.body.itemCadastrado.dataCadastro;
+  var registrador = req.body.itemCadastrado.registrador;
 
   itemCadastrado
     .create({
@@ -217,7 +192,7 @@ router.post("/cadastrarItem", (req, res) => {
       marca: marca,
       cor: cor,
       local: local,
-      dataCadastro: dataEncontro,
+      dataCadastro: dataCadastro,
       marca: marca,
       registrador: registrador,
     })
