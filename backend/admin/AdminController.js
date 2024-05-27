@@ -1,6 +1,6 @@
 //Importações
 const express = require("express");
-const cors = require('cors')
+const cors = require("cors");
 const router = express.Router();
 const Administrador = require("../Model/Administrador");
 const bcrypt = require("bcryptjs");
@@ -14,14 +14,13 @@ const itemCadastrado = require("../Model/itemCadastrado");
 //=================================================================================
 
 //Config da router
-router.use(cors())
+router.use(cors());
 router.use(
   session({ secret: "miasdknndsalininadnh", cookie: { maxAge: 30000 } })
 );
 //=================================================================================
 
 //Rotas da router
-
 
 router.get("/admin/encontrados", (req, res) => {
   itemCadastrado.findAll().then((itens) => {
@@ -90,12 +89,14 @@ router.post("/autenticar", (req, res) => {
           email: admin.email,
         };
 
-        res.redirect("/admin/encontrados");
+        req.session.token = "icheiToken";
+
+        res.json({ token: req.session.token });
       } else {
-        res.redirect("/logar");
+        res.status(401).send("Acesso Negado");
       }
     } else {
-      res.redirect("/logar");
+      res.status(401).send("Acesso Negado");
     }
   });
 });
@@ -169,7 +170,6 @@ router.post("/users/edit", async (req, res) => {
 
 //cadastrar item encontrado
 router.post("/cadastrarItem", (req, res) => {
-
   console.log(req.body);
 
   var tituloItem = req.body.itemCadastrado.tituloItem;
@@ -180,8 +180,6 @@ router.post("/cadastrarItem", (req, res) => {
   var local = req.body.itemCadastrado.local;
   var dataCadastro = req.body.itemCadastrado.dataCadastro;
   var registrador = req.body.itemCadastrado.registrador;
-
-  
 
   itemCadastrado
     .create({
