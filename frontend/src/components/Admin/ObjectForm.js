@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './Style/ObjectForm.css';
+import { useTranslation } from "react-i18next";
+
 function Add_Object(){
     const [formValues, setFormValues] = useState({
         object: '',
@@ -24,6 +26,8 @@ function Add_Object(){
         console.log('Dados do formulário:', formValues);
     };
 
+    const { t } = useTranslation();
+
     return (
         <div className="container-formulario-objeto-admin">
         <form className="formulario-objeto-admin" onSubmit={handleSubmit}>
@@ -34,7 +38,7 @@ function Add_Object(){
                     className="objeto"
                     value={formValues.object}
                     onChange={handleChange}
-                    placeholder='Objeto'
+                    placeholder={t("objetoNome")}
                 />
             </label>
 
@@ -45,7 +49,7 @@ function Add_Object(){
                     className="cor-objeto-admin"
                     value={formValues.color}
                     onChange={handleChange}
-                    placeholder='Cor'
+                    placeholder={t("objetoCor")}
                 />
             </label>
 
@@ -56,7 +60,7 @@ function Add_Object(){
                     className="marca-objeto-admin"
                     value={formValues.brand}
                     onChange={handleChange}
-                    placeholder='Marca'
+                    placeholder={t("objetoMarca")}
                 />
             </label>
 
@@ -67,7 +71,7 @@ function Add_Object(){
                     className='detalhe-objeto-admin'
                     value={formValues.details}
                     onChange={handleChange}
-                    placeholder='Detalhes'
+                    placeholder={t("objetoDetalhes")}
                 />
             </label>
 
@@ -91,12 +95,12 @@ function Add_Object(){
                     className='local-objeto-admin'
                     value={formValues.local}
                     onChange={handleChange}
-                    placeholder='Local'
+                    placeholder={t("objetoLocal")}
                 />
             </label>
 
 
-            <button className="btn-enviar-objeto-admin" type="submit">Enviar</button>
+            <button className="btn-enviar-objeto-admin" type="submit">{t("enviar")}</button>
         </form>
         </div>
     )

@@ -1,15 +1,17 @@
 import './Style/Report.css';
+import { useTranslation } from "react-i18next";
 
 const Report = ({ reports }) => {
+    const { t } = useTranslation();
     return (
         <div className="lista-objetos-reporte">
             <table className="tabela-objetos-reporte">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Objeto</th>
-                        <th>Local</th>
-                        <th>Data</th>
+                        <th>{t("pessoaNome")}</th>
+                        <th>{t("objetoNome")}</th>
+                        <th>{t("objetoLocal")}</th>
+                        <th>{t("objetoData")}</th>
                     </tr>
                 </thead>
                 <tbody>

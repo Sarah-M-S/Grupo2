@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './Style/ReportForm.css';
 import logo from './Style/img/logo-ichei.png';
+import { useTranslation } from "react-i18next";
+
+
 const ReportForm = () => {
     const [formValues, setFormValues] = useState({
         name: '',
@@ -26,13 +29,14 @@ const ReportForm = () => {
         // Aqui você pode enviar os dados para o servidor ou fazer outras ações necessárias
         console.log('Dados do formulário:', formValues);
     };
+    const { t } = useTranslation();
 
     return (
         <div className="container-formulario">
         
         <div className="container-logo-perda">
             <img className="logo-ichei-formulario" src={logo} alt="logo-ichei" />
-            <h1 className="titulo-reportar-perda">Reportar Perda</h1>
+            <h1 className="titulo-reportar-perda">{t("reportarPerda")}</h1>
         </div>
 
         <form className="formulario" onSubmit={handleSubmit}>
@@ -43,7 +47,7 @@ const ReportForm = () => {
                     className="nome"
                     value={formValues.name}
                     onChange={handleChange}
-                    placeholder='Nome'
+                    placeholder={t("pessoaNome")}
                 />
             </label>
 
@@ -55,7 +59,7 @@ const ReportForm = () => {
                     className="email"
                     value={formValues.email}
                     onChange={handleChange}
-                    placeholder='Email'
+                    placeholder={t("email")}
                 />
             </label>
 
@@ -66,7 +70,7 @@ const ReportForm = () => {
                     className='local'
                     value={formValues.local}
                     onChange={handleChange}
-                    placeholder='Local'
+                    placeholder={t("objetoLocal")}
                 />
             </label>
 
@@ -86,7 +90,7 @@ const ReportForm = () => {
                     className="objeto"
                     value={formValues.object}
                     onChange={handleChange}
-                    placeholder='Objeto'
+                    placeholder={t("objetoNome")}
                 />
             </label>
 
@@ -97,7 +101,7 @@ const ReportForm = () => {
                     className='cor'
                     value={formValues.color}
                     onChange={handleChange}
-                    placeholder='Cor'
+                    placeholder={t("objetoCor")}
                 />
             </label>
 
@@ -108,7 +112,7 @@ const ReportForm = () => {
                     className='marca'
                     value={formValues.brand}
                     onChange={handleChange}
-                    placeholder='Marca'
+                    placeholder={t("objetoMarca")}
                 />
             </label>
 
@@ -119,7 +123,7 @@ const ReportForm = () => {
                     className="detalhe"
                     value={formValues.details}
                     onChange={handleChange}
-                    placeholder='Detalhes'
+                    placeholder={t("objetoDetalhes")}
                 />
             </label>
 
@@ -127,7 +131,7 @@ const ReportForm = () => {
 
 
 
-            <button className="enviar"type="submit">Enviar</button>
+            <button className="enviar"type="submit">{t("enviar")}</button>
         </form>
         </div>
     );

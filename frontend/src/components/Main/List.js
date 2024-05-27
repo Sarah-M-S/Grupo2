@@ -1,6 +1,6 @@
 import React from "react";
 import './Style/List.css';
-
+import { useTranslation } from "react-i18next";
 class List extends React.Component {
 
     constructor(props) {
@@ -22,8 +22,6 @@ class List extends React.Component {
 
     componentWillUnmount() {
     }
-
-
 
     render() {
         return (

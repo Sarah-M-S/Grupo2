@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import './Style/Login.css';
 import cookie from './Style/img/cookie.png';
 import logo from './Style/img/logo-ichei.png';
+import { useTranslation } from "react-i18next";
 
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     function handleFormSubmit() {
         navigate("/admin");
@@ -22,7 +24,7 @@ function Login() {
                 
             <div className="logo-funcionario">
                 <img className="logo-ichei-funcionario" src={logo} alt="logo-ichei" />
-                <h1 className="titulo-funcionario">Área do Funcionário</h1>
+                <h1 className="titulo-funcionario">{t("areaAdmin")}</h1>
             </div>
 
             <div className="inputs-login">
@@ -33,7 +35,7 @@ function Login() {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
-                        placeholder='Usuário'
+                        placeholder={t("usuario")}
                     />
 
                     <input
@@ -43,16 +45,16 @@ function Login() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        placeholder='Senha'
+                        placeholder={t("senha")}
                     />
                 </div>
 
                 <div>
-                    <button className="btn-esqueceu-senha">Esqueci a Minha Senha</button>
+                    <button className="btn-esqueceu-senha">{t("esqueciSenha")}</button>
                 </div>
 
                 <div className="container-entrar">
-                    <button className="btn-entrar" type="submit">Entrar</button>
+                    <button className="btn-entrar" type="submit">{t("enviar")}</button>
                 </div>
 
             </form>

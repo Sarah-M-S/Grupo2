@@ -1,0 +1,26 @@
+{
+    "translation":{
+        "areaAdmin": "管理员专区",
+        "objetosEncontrados": "找到的物品",
+        "objetosReportados": "举报项目",
+        "adicionarObjeto": "新增项目",
+        "objetoNome": "对象名称",
+        "objetoLocal": "地方",
+        "objetoData": "日期",
+        "objetoCor": "颜色",
+        "objetoMarca": "品牌",
+        "objetoDetalhes": "细节",
+        "enviar": "提交",
+        "pessoaNome": "姓名",
+        "usuario": "用户",
+        "senha": "密码",
+        "esqueciSenha": "我忘记了我的密码",
+        "paginaInicial": "主页",
+        "login": "登录",
+        "lista": "列表",
+        "mapa": "地图",
+        "reportarPerda": "报告丢失物品",
+        "email": "电子邮件",
+        "escolherIdioma": "选择你的语言"
+    }
+}
