@@ -3,14 +3,17 @@ import './Style/ReportForm.css';
 import logo from './Style/img/logo-ichei.png';
 const ReportForm = () => {
     const [formValues, setFormValues] = useState({
-        name: '',
+        nome: '',
+        tituloItem: '',
         email: '',
-        object: '',
-        color: '',
-        brand: '',
-        details: '',
-        data: '',
+        descricao: '',
+        marca: '',
+        categoria: '',
+        curso: '',
+        periodo: '',
+        cor: '',
         local: '',
+        dataPerda: '',
     });
 
     const handleChange = (e) => {
@@ -23,8 +26,40 @@ const ReportForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Aqui você pode enviar os dados para o servidor ou fazer outras ações necessárias
-        console.log('Dados do formulário:', formValues);
+        const itemPerdido = {
+            "itemPerdido": {
+                nome: formValues.nome,
+                tituloItem: formValues.tituloItem,
+                email: formValues.email,
+                descricao: formValues.descricao,
+                marca: formValues.marca,
+                categoria: formValues.categoria,
+                curso: formValues.curso,
+                periodo: formValues.periodo,
+                cor: formValues.cor,
+                local: formValues.local,
+                dataPerda: formValues.dataPerda,
+            }
+        };
+
+        console.log(itemPerdido);
+        fetch('http://localhost:8083/cadastrarPerda', {
+            method: 'POST',
+            body: JSON.stringify(itemPerdido),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Resposta do servidor:', data);
+            })
+            .catch((error) => {
+                console.error('Erro na requisição:', error.message);
+            });
+
+
+
     };
 
     return (
@@ -39,9 +74,9 @@ const ReportForm = () => {
             <label>
                 <input
                     type="text"
-                    name="name"
+                    name="nome"
                     className="nome"
-                    value={formValues.name}
+                    value={formValues.nome}
                     onChange={handleChange}
                     placeholder='Nome'
                 />
@@ -50,9 +85,20 @@ const ReportForm = () => {
 
             <label>
                 <input
+                    type="text"
+                    name="tituloItem"
+                    className="email"
+                    value={formValues.tituloItem}
+                    onChange={handleChange}
+                    placeholder='Titulo Item'
+                />
+            </label>
+
+            <label>
+                <input
                     type="email"
                     name="email"
-                    className="email"
+                    className='email'
                     value={formValues.email}
                     onChange={handleChange}
                     placeholder='Email'
@@ -60,42 +106,66 @@ const ReportForm = () => {
             </label>
 
             <label>
-                <input
+                <textarea
                     type="text"
-                    name="local"
-                    className='local'
-                    value={formValues.local}
+                    name="descricao"
+                    className="detalhe"
+                    value={formValues.descricao}
                     onChange={handleChange}
-                    placeholder='Local'
-                />
-            </label>
-
-            <label>
-                <input
-                    type="date"
-                    name="data"
-                    value={formValues.data}
-                    onChange={handleChange}
+                    placeholder='Descrição'
                 />
             </label>
 
             <label>
                 <input
                     type="text"
-                    name="object"
-                    className="objeto"
-                    value={formValues.object}
-                    onChange={handleChange}
-                    placeholder='Objeto'
-                />
-            </label>
-
-            <label>
-                <input
-                    type="text"
-                    name="color"
+                    name="marca"
                     className='cor'
-                    value={formValues.color}
+                    value={formValues.marca}
+                    onChange={handleChange}
+                    placeholder='Marca'
+                />
+            </label>
+
+            <label>
+                <input
+                    type="text"
+                    name="categoria"
+                    className='marca'
+                    value={formValues.categoria}
+                    onChange={handleChange}
+                    placeholder='Categoria'
+                />
+            </label>
+
+            <label>
+                <input
+                    type="text"
+                    name="curso"
+                    className="detalhe"
+                    value={formValues.curso}
+                    onChange={handleChange}
+                    placeholder='Curso'
+                />
+            </label>
+
+            <label>
+                <input
+                    type="text"
+                    name="periodo"
+                    className='cor'
+                    value={formValues.periodo}
+                    onChange={handleChange}
+                    placeholder='Período'
+                />
+            </label>
+
+            <label>
+                <input
+                    type="text"
+                    name="cor"
+                    className='marca'
+                    value={formValues.cor}
                     onChange={handleChange}
                     placeholder='Cor'
                 />
@@ -104,27 +174,23 @@ const ReportForm = () => {
             <label>
                 <input
                     type="text"
-                    name="brand"
-                    className='marca'
-                    value={formValues.brand}
-                    onChange={handleChange}
-                    placeholder='Marca'
-                />
-            </label>
-
-            <label>
-                <textarea
-                    type="text"
-                    name="details"
+                    name="local"
                     className="detalhe"
-                    value={formValues.details}
+                    value={formValues.local}
                     onChange={handleChange}
-                    placeholder='Detalhes'
+                    placeholder='Local'
                 />
             </label>
 
             
-
+            <label>
+                <input
+                    type="date"
+                    name="dataPerda"
+                    value={formValues.dataPerda}
+                    onChange={handleChange}
+                />
+            </label>
 
 
             <button className="enviar"type="submit">Enviar</button>

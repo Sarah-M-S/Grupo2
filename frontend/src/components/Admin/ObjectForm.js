@@ -36,8 +36,6 @@ function ObjectForm() {
 
         };
 
-        // Aqui você pode enviar o objeto itemPerdido para o servidor ou fazer outras ações necessárias
-        console.log(itemCadastrado);
         fetch('http://localhost:8083/cadastrarItem', {
             method: 'POST',
             body: JSON.stringify(itemCadastrado),
