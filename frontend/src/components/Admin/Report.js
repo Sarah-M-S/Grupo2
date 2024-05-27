@@ -34,6 +34,7 @@ class Report extends React.Component {
                             <th>Objeto</th>
                             <th>Local</th>
                             <th>Data</th>
+
                         </tr>
                     </thead>
                     <tbody>

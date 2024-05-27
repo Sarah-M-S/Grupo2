@@ -1,0 +1,26 @@
+{
+    "translation":{
+        "areaAdmin": "Área do Administrador",
+        "objetosEncontrados": "Objetos Encontrados",
+        "objetosReportados": "Objetos Reportados",
+        "adicionarObjeto": "Adicionar Objeto",
+        "objetoNome": "Objeto",
+        "objetoLocal": "Local",
+        "objetoData": "Data",
+        "objetoCor": "Cor",
+        "objetoMarca": "Marca",
+        "objetoDetalhes": "Detalhes",
+        "enviar": "Enviar",
+        "pessoaNome": "Nome",
+        "usuario": "Usuário",
+        "senha": "Senha",
+        "esqueciSenha": "Esqueci minha senha",
+        "paginaInicial": "Página Inicial",
+        "login": "Login",
+        "lista": "Lista",
+        "mapa": "Mapa",
+        "reportarPerda": "Reportar Perda",
+        "email": "Email",
+        "escolherIdioma": "Escolha seu Idioma"
+    }
+}

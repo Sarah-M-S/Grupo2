@@ -1,0 +1,26 @@
+{
+    "translation":{
+        "areaAdmin": "Admin Area",
+        "objetosEncontrados": "Found Items",
+        "objetosReportados": "Reported Items",
+        "adicionarObjeto": "Add Item",
+        "objetoNome": "Object Type",
+        "objetoLocal": "Place",
+        "objetoData": "Date",
+        "objetoCor": "Color",
+        "objetoMarca": "Brand",
+        "objetoDetalhes": "Details",
+        "enviar": "Submit",
+        "pessoaNome": "Name",
+        "usuario": "User",
+        "senha": "Password",
+        "esqueciSenha": "Forgot my password",
+        "paginaInicial": "Home",
+        "login": "Login",
+        "lista": "List",
+        "mapa": "Map",
+        "reportarPerda": "Report Lost Item",
+        "email": "Email",
+        "escolherIdioma": "Choose your language"
+    }
+}

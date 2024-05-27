@@ -1,0 +1,20 @@
+.languageSwitcher button {
+    background: none;
+    border: none;
+    padding: 5px; /* Add optional padding for spacing around the content */
+    cursor: pointer; /* Indicate clickable behavior */
+  }
+  
+  .languageSwitcher button img {
+    /* Optional styling for the flag image */
+    width: 40px; /* Adjust width as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 5px; /* Add space between flag and text */
+  }
+  
+  .languageSwitcher button span {
+    /* Optional styling for the language text */
+    font-weight: bold;
+    color: inherit; /* Inherit color from parent element */
+  }
+  

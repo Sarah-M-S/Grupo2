@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import './Style/ObjectForm.css';
+
+import { useTranslation } from "react-i18next";
+
+
+
 function ObjectForm() {
+
     const [formValues, setFormValues] = useState({
         tituloItem: '',
         descricao: '',
@@ -52,6 +58,8 @@ function ObjectForm() {
             });
     };
 
+    const { t } = useTranslation();
+
     return (
         <div className="container-formulario-objeto-admin">
             <form className="formulario-objeto-admin" onSubmit={handleSubmit}>
@@ -62,7 +70,7 @@ function ObjectForm() {
                         className="objeto"
                         value={formValues.tituloItem}
                         onChange={handleChange}
-                        placeholder='Titulo Item'
+                        placeholder={t("objetoNome")}
                     />
                 </label>
 
@@ -73,7 +81,7 @@ function ObjectForm() {
                         className="detalhe-objeto-admin"
                         value={formValues.descricao}
                         onChange={handleChange}
-                        placeholder='Descrição'
+                        placeholder={t("objetoDetalhes")}
                     />
                 </label>
 
@@ -84,7 +92,7 @@ function ObjectForm() {
                         className="marca-objeto-admin"
                         value={formValues.marca}
                         onChange={handleChange}
-                        placeholder='Marca'
+                        placeholder={t("objetoMarca")}
                     />
                 </label>
 
@@ -117,7 +125,7 @@ function ObjectForm() {
                         className='detalhe-objeto-admin'
                         value={formValues.local}
                         onChange={handleChange}
-                        placeholder='Local'
+                        placeholder={t("objetoLocal")}
                     />
                 </label>
 
@@ -130,8 +138,6 @@ function ObjectForm() {
                         onChange={handleChange}
                     />
                 </label>
-
-
 
                 <label>
                     <input
