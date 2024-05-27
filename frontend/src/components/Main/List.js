@@ -1,55 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './Style/List.css';
 import { useTranslation } from "react-i18next";
-class List extends React.Component {
 
-    constructor(props) {
-        super(props);
+function List() {
+    const [objects, setObjects] = useState([]);
+    const { t } = useTranslation();
 
-        this.state = {
-            objects: []
-        }
-    }
-
-    componentDidMount() {
+    useEffect(() => {
         fetch("http://localhost:8083/")
-        .then(res => res.json())
-        .then(data => {
-            this.setState({ objects : data.itens })
-        })
-        
-    }
+            .then(res => res.json())
+            .then(data => {
+                setObjects(data.itens);
+            });
+    }, []);
 
-    componentWillUnmount() {
-    }
-
-    render() {
-        return (
-            <div className="lista-objetos">
+    return (
+        <div className="lista-objetos">
             <table className="tabela-objetos">
-                    <thead>
-                        <tr>
-                            <th>Objeto</th>
-                            <th>Local</th>
-                            <th>Data</th>
+                <thead>
+                    <tr>
+                        <th>Objeto</th>
+                        <th>Local</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {objects.map((object, index) => (
+                        <tr key={index}>
+                            <td>{object.tituloItem}</td>
+                            <td>{object.local}</td>
+                            <td>{object.dataCadastro}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.objects.map((object, index) => (
-                            <tr key={index}>
-                                <td>{object.tituloItem}</td>
-                                <td>{object.local}</td>
-                                <td>{object.dataCadastro}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-
-        );
-    }
-
-};
-
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+}
 
 export default List;
