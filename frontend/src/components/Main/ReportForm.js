@@ -112,10 +112,8 @@ const ReportForm = () => {
             
 
             <label>
-                <input
-                    type="date"
-                    name="data"
-                    value={formValues.data}
+                <textarea
+                    type="text"
                     name="descricao"
                     className="detalhe"
                     value={formValues.descricao}
@@ -127,7 +125,6 @@ const ReportForm = () => {
             <label>
                 <input
                     type="text"
-                    name="color"
                     name="marca"
                     className='cor'
                     value={formValues.marca}
@@ -181,10 +178,10 @@ const ReportForm = () => {
             </label>
 
             <label>
-                <textarea
+                <input
                     type="text"
                     name="local"
-                    className='local'
+                    className='detalhe'
                     value={formValues.local}
                     onChange={handleChange}
                     placeholder={t("objetoLocal")}

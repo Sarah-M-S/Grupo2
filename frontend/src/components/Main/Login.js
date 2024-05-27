@@ -40,13 +40,12 @@ function Login() {
 
     return (
         <div className="content-funcionario">
-<<<<<<< HEAD
             <div className="container-funcionario">
                 <form className="login-funcionario" onSubmit={handleFormSubmit}>
 
                     <div className="logo-funcionario">
                         <img className="logo-ichei-funcionario" src={logo} alt="logo-ichei" />
-                        <h1 className="titulo-funcionario">Área do Funcionário</h1>
+                        <h1 className="titulo-funcionario">{t("areaAdmin")}</h1>
                     </div>
 
                     <div className="inputs-login">
@@ -57,7 +56,7 @@ function Login() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            placeholder='Email'
+                            placeholder={t("usuario")}
                         />
 
                         <input
@@ -67,16 +66,16 @@ function Login() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            placeholder='Senha'
+                            placeholder={t("senha")}
                         />
                     </div>
 
                     <div>
-                        <button className="btn-esqueceu-senha">Esqueci a Minha Senha</button>
+                        <button className="btn-esqueceu-senha">{t("esqueciSenha")}</button>
                     </div>
 
                     <div className="container-entrar">
-                        <button className="btn-entrar" type="submit">Entrar</button>
+                        <button className="btn-entrar" type="submit">{t("enviar")}</button>
                     </div>
 
                 </form>
@@ -87,51 +86,7 @@ function Login() {
                 </div>
             </div>
 
-=======
-        <div className="container-funcionario">
-            <form className="login-funcionario"onSubmit={handleFormSubmit}>
-                
-            <div className="logo-funcionario">
-                <img className="logo-ichei-funcionario" src={logo} alt="logo-ichei" />
-                <h1 className="titulo-funcionario">{t("areaAdmin")}</h1>
-            </div>
 
-            <div className="inputs-login">
-                    <input
-                        type="text"
-                        name="username"
-                        className="input-usuario"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                        placeholder={t("usuario")}
-                    />
-
-                    <input
-                        type="password"
-                        name="password"
-                        className="input-senha"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        placeholder={t("senha")}
-                    />
-                </div>
-
-                <div>
-                    <button className="btn-esqueceu-senha">{t("esqueciSenha")}</button>
-                </div>
-
-                <div className="container-entrar">
-                    <button className="btn-entrar" type="submit">{t("enviar")}</button>
-                </div>
-
-            </form>
-        
-        <div className="rodape">
-            <img className="cookie" src={cookie} alt="cookie" />
-            <button className="faq">FAQ</button>            
->>>>>>> 71024e73ddb92895d1453a48769c6f7c997ada10
         </div>
 
     );
