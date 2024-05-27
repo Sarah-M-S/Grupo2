@@ -93,7 +93,7 @@ router.post("/autenticar", (req, res) => {
 
         req.session.token = "icheiToken";
 
-        res.res.status(200).send('Autenticado');;
+        res.status(200).send('Autenticado');;
 
 
       } else {

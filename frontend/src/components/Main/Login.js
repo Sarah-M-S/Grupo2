@@ -27,9 +27,17 @@ function Login() {
                 'Content-Type': 'application/json',
             },
         })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log('Resposta do servidor:', data);
+            .then((response) => {
+                if (response.status === 200) {
+                    // Autenticação bem-sucedida, redirecione para a rota "/admin"
+                    navigate("/admin");
+                } else if (response.status === 401) {
+                    // Credenciais inválidas, exiba um alerta
+                    alert('Credenciais inválidas. Verifique seu nome de usuário e senha.');
+                } else {
+                    // Outros códigos de status (opcional: trate conforme necessário)
+                    console.error('Erro na requisição:', response.status);
+                }
             })
             .catch((error) => {
                 console.error('Erro na requisição:', error.message);
