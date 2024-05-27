@@ -22,21 +22,25 @@ function ObjectForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const itemPerdido = {
-            tituloItem: formValues.tituloItem,
-            descricao: formValues.descricao,
-            marca: formValues.marca,
-            categoria: formValues.categoria,
-            cor: formValues.cor,
-            local: formValues.local,
-            dataCadastro: formValues.dataCadastro,
-            registrador: formValues.registrador,
+        const itemCadastrado = {
+            "itemCadastrado": {
+                tituloItem: formValues.tituloItem,
+                descricao: formValues.descricao,
+                marca: formValues.marca,
+                categoria: formValues.categoria,
+                cor: formValues.cor,
+                local: formValues.local,
+                dataCadastro: formValues.dataCadastro,
+                registrador: formValues.registrador,
+            }
+
         };
 
         // Aqui você pode enviar o objeto itemPerdido para o servidor ou fazer outras ações necessárias
+        console.log(itemCadastrado);
         fetch('http://localhost:8083/cadastrarItem', {
             method: 'POST',
-            body: JSON.stringify(itemPerdido),
+            body: JSON.stringify(itemCadastrado),
             headers: {
                 'Content-Type': 'application/json',
             },

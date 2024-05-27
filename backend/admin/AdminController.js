@@ -169,14 +169,19 @@ router.post("/users/edit", async (req, res) => {
 
 //cadastrar item encontrado
 router.post("/cadastrarItem", (req, res) => {
+
+  console.log(req.body);
+
   var tituloItem = req.body.itemCadastrado.tituloItem;
   var descricao = req.body.itemCadastrado.descricao;
   var marca = req.body.itemCadastrado.marca;
   var categoria = req.body.itemCadastrado.categoria;
   var cor = req.body.itemCadastrado.cor;
   var local = req.body.itemCadastrado.local;
-  var dataEncontro = req.body.itemCadastrado.dataEncontro;
+  var dataCadastro = req.body.itemCadastrado.dataCadastro;
   var registrador = req.body.itemCadastrado.registrador;
+
+  
 
   itemCadastrado
     .create({
@@ -186,7 +191,7 @@ router.post("/cadastrarItem", (req, res) => {
       marca: marca,
       cor: cor,
       local: local,
-      dataCadastro: dataEncontro,
+      dataCadastro: dataCadastro,
       marca: marca,
       registrador: registrador,
     })
