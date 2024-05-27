@@ -8,6 +8,8 @@ import Admin from './components/Admin/Admin';
 import ObjectForm from './components/Admin/ObjectForm';
 import Found from './components/Admin/Found';
 import Report from './components/Admin/Report';
+import LanguageSwitcher from './components/LanguageSwitcher';
+import styles from './components/LanguageSwitcher/styles.css'
 
 const App = () => {
 
@@ -24,6 +26,9 @@ const App = () => {
 
   return (
     <div className="App">
+
+        <LanguageSwitcher/>
+
 
       <BrowserRouter>
         <Routes>
