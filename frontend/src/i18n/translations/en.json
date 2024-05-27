@@ -4,7 +4,7 @@
         "objetosEncontrados": "Found Items",
         "objetosReportados": "Reported Items",
         "adicionarObjeto": "Add Item",
-        "objetoNome": "Object Type",
+        "objetoNome": "Object Name",
         "objetoLocal": "Place",
         "objetoData": "Date",
         "objetoCor": "Color",
@@ -21,6 +21,9 @@
         "mapa": "Map",
         "reportarPerda": "Report Lost Item",
         "email": "Email",
-        "escolherIdioma": "Choose your language"
+        "escolherIdioma": "Choose your language",
+        "objetoCategoria": "Object Type",
+        "curso": "Course",
+        "turno": "Time Period"
     }
 }

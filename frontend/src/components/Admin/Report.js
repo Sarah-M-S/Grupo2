@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import './Style/Report.css';
+import { useTranslation } from "react-i18next";
 
 function Report() {
     const [reports, setReports] = useState([]);
+    const { t } = useTranslation();
 
     useEffect(() => {
         fetch("http://localhost:8083/admin/perdidos")
@@ -17,10 +19,10 @@ function Report() {
             <table className="tabela-objetos-reporte">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Objeto</th>
-                        <th>Local</th>
-                        <th>Data</th>
+                        <th>{t("pessoaNome")}</th>
+                        <th>{t("objetoNome")}</th>
+                        <th>{t("objetoLocal")}</th>
+                        <th>{t("objetoData")}</th>
                     </tr>
                 </thead>
                 <tbody>

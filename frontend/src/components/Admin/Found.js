@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import './Style/Found.css';
+import { useTranslation } from "react-i18next";
 
 function Found() {
     const [objects, setObjects] = useState([]);
+    const { t } = useTranslation();
 
     useEffect(() => {
         fetch("http://localhost:8083/")
@@ -17,9 +19,9 @@ function Found() {
             <table className="tabela-objetos">
                 <thead>
                     <tr>
-                        <th>Objeto</th>
-                        <th>Local</th>
-                        <th>Data</th>
+                        <th>{t("objetoNome")}</th>
+                        <th>{t("objetoLocal")}</th>
+                        <th>{t("objetoData")}</th>
                     </tr>
                 </thead>
                 <tbody>

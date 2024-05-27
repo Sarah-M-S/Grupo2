@@ -19,9 +19,9 @@ function List() {
             <table className="tabela-objetos">
                 <thead>
                     <tr>
-                        <th>Objeto</th>
-                        <th>Local</th>
-                        <th>Data</th>
+                        <th>{t("objetoNome")}</th>
+                        <th>{t("objetoLocal")}</th>
+                        <th>{t("objetoData")}</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -21,6 +21,9 @@
         "mapa": "地图",
         "reportarPerda": "报告丢失物品",
         "email": "电子邮件",
-        "escolherIdioma": "选择你的语言"
+        "escolherIdioma": "选择你的语言",
+        "objetoCategoria": "对象类别",
+        "curso": "课程",
+        "turno": "时期"
     }
 }

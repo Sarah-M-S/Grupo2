@@ -94,7 +94,7 @@ const ReportForm = () => {
                     className="email"
                     value={formValues.tituloItem}
                     onChange={handleChange}
-                    placeholder='Titulo Item'
+                    placeholder={t("objetoNome")}
                 />
             </label>
 
@@ -140,7 +140,7 @@ const ReportForm = () => {
                     className='marca'
                     value={formValues.categoria}
                     onChange={handleChange}
-                    placeholder='Categoria'
+                    placeholder={t("objetoCategoria")}
                 />
             </label>
 
@@ -151,7 +151,7 @@ const ReportForm = () => {
                     className="detalhe"
                     value={formValues.curso}
                     onChange={handleChange}
-                    placeholder='Curso'
+                    placeholder={t("curso")}
                 />
             </label>
 
@@ -162,7 +162,7 @@ const ReportForm = () => {
                     className='cor'
                     value={formValues.periodo}
                     onChange={handleChange}
-                    placeholder='Período'
+                    placeholder={t("turno")}
                 />
             </label>
 

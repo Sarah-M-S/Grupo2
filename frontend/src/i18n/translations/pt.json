@@ -21,6 +21,9 @@
         "mapa": "Mapa",
         "reportarPerda": "Reportar Perda",
         "email": "Email",
-        "escolherIdioma": "Escolha seu Idioma"
+        "escolherIdioma": "Escolha seu Idioma",
+        "objetoCategoria": "Categoria",
+        "curso": "Curso",
+        "turno": "Turno"
     }
 }
