@@ -77,6 +77,7 @@ router.get("/admin/users/list", adminAuth, (req, res) => {
 
 //autenticacao de login admins
 router.post("/autenticar", (req, res) => {
+  console.log(req.body);
   var email = req.body.email;
   var password = req.body.password;
 
