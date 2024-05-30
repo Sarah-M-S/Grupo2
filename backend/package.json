@@ -15,10 +15,12 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
+    "env": "^0.0.2",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "i18next": "^23.11.3",
     "mariadb": "^3.3.0",
+    "nodemailer": "^6.9.13",
     "nodemon": "^3.1.0",
     "sequelize": "^6.37.3",
     "sessions": "^0.0.2-7"

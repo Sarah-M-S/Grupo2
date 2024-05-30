@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const connector = require('./connection');
 
+
 const itemPerdido = connector.sequelize.define('itemPerdido', {
 id: {
     type: DataTypes.INTEGER,
@@ -57,5 +58,6 @@ id: {
     allowNull: true
   },
 });
+
 
 module.exports = itemPerdido;

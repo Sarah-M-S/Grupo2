@@ -12,7 +12,9 @@ const i18next = require("i18next")
 const en = require('./views/locales/en')
 const pt = require('./views/locales/pt')
 const zh = require('./views/locales/zh');
-const { where } = require("sequelize");
+const nodemailer = require('nodemailer')
+const dotenv = require('dotenv');
+dotenv.config();
 
 //=================================================================================
 
@@ -110,6 +112,33 @@ app.post("/cadastrarPerda", (req, res) => {
       marca: marca,
     })
     .then(res.redirect("/"));
+
+    //Nodemailer config
+  
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      port: 465,
+      secure: true,
+      auth: {
+          user: process.env.MAIL_USERNAME,
+          pass: process.env.MAIL_PASSWORD
+      }
+    });
+    
+    const mailOptions = {
+      from: 'grupo2pi1a5@gmail.com',
+      to: req.body.itemPerdido.email,
+      subject: `iChei - Item perdido reportado ${req.body.itemPerdido.tituloItem}`,
+      text: `Olá ${req.body.itemPerdido.nome}.\nVocê reportou a perda do item ${req.body.itemPerdido.tituloItem} no iChei.\nEstamos monitorando os itens devolvidos e faremos o possível para fazer com que você encontre o que perdeu.\nEm breve receberá notícias e atualizações sobre ${req.body.itemPerdido.tituloItem}\nEquipe iChei`
+    }
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email enviado: ' + info.response);
+      }
+    });
 });
 
 
@@ -143,8 +172,5 @@ itemPerdido
   .catch((err) => {
     console.error("Erro ao criar tabelas:", err);
   });
-
-
-
 
 app.listen("8083");
