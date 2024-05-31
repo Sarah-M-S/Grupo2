@@ -128,9 +128,20 @@ app.post("/cadastrarPerda", (req, res) => {
     const mailOptions = {
       from: 'grupo2pi1a5@gmail.com',
       to: req.body.itemPerdido.email,
-      subject: `iChei - Item perdido reportado ${req.body.itemPerdido.tituloItem}`,
-      text: `Olá ${req.body.itemPerdido.nome}.\nVocê reportou a perda do item ${req.body.itemPerdido.tituloItem} no iChei.\nEstamos monitorando os itens devolvidos e faremos o possível para fazer com que você encontre o que perdeu.\nEm breve receberá notícias e atualizações sobre ${req.body.itemPerdido.tituloItem}\nEquipe iChei`
-    }
+      subject: `iChei - Item perdido reportado: ${req.body.itemPerdido.tituloItem}`,
+      html: `<p>Olá ${req.body.itemPerdido.nome}</p>
+              <p>Você reportou a perda do item ${req.body.itemPerdido.tituloItem} no iChei.</p>
+              <p>Estamos monitorando os itens devolvidos e faremos o possível para fazer com que você encontre o que perdeu.</p>
+              <p>Em breve você receberá atualizações sobre ${req.body.itemPerdido.tituloItem}</p>
+              <p>Equipe iChei</p>
+              <img src="cid:logo@cid" alt="Logo" style="width: 20%; height: 20%;" />`, 
+      attachments: [
+        {
+            filename: 'logo.png', // nome do arquivo
+            path: './logo.png', // caminho para o arquivo
+            cid: 'logo@cid', // cid: identificador para a imagem
+        },
+], }
     
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
