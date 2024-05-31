@@ -9,6 +9,7 @@ const Admin = ({ }) => {
         
 
         <div className="container-admin">
+
             <header>
                 <img className="logo-ichei-admin-cabecalho" src={logo} alt="logo-ichei" />
                 <h1 className="titulo-admin">{t("areaAdmin")}</h1>

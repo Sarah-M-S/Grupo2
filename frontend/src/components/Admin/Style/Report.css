@@ -23,3 +23,31 @@
     font-family: "Raleway", sans-serif;
     font-size: 16pt;
 }
+
+/*RESPONSIVO*/
+
+
+@media only screen and (max-width: 779px) {
+    .lista-objetos-reporte {
+        padding: 20px;
+        background-color: white;
+        border-radius: 20px;
+        width: 100%;
+        margin-top: 31px;
+    }
+    .lista-objetos-reporte th {
+        color: #051816;
+        font-weight: 700;
+        font-family: "Raleway", sans-serif;
+        font-size: 12pt;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    .lista-objetos-reporte th {
+        color: #051816;
+        font-weight: 700;
+        font-family: "Raleway", sans-serif;
+        font-size: 9pt;
+    }
+}

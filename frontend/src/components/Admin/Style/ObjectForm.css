@@ -9,7 +9,7 @@ form.formulario-objeto-admin {
     background-color: white;
     padding: 53px;
     border-radius: 68px;
-    width: 74%;
+    width: 100%;
     margin-top: 65px;
 }
 
@@ -66,4 +66,24 @@ textarea.detalhe-objeto-admin::placeholder{
 .btn-enviar-objeto-admin:hover{
     background-color: #051816;
     color: #A5DEBB;
+}
+
+/*RESPONSIVIDADE*/
+
+@media only screen and (max-width: 980px) {
+    .container-formulario-objeto-admin {
+        width: 86%;
+    }
+}
+
+@media only screen and (max-width: 339px) {
+    form.formulario-objeto-admin {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        padding: 36px;
+        border-radius: 68px;
+        width: 100%;
+        margin-top: 65px;
+    }
 }

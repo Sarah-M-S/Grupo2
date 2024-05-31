@@ -46,3 +46,40 @@ img.logo-ichei-admin-cabecalho{
     color: #A5DEBB;
     cursor:pointer;
 }
+
+
+/*RESPONSIVIDADE*/
+
+@media only screen and (max-width: 980px) {
+    .menu-admin-links {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        width: 100%;
+        align-items: center;
+    }
+}
+
+@media only screen and (max-width: 710px) {
+    .menu-admin-links {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        align-items: center;
+    }
+}
+
+
+@media only screen and (max-width: 345px) {
+    img.logo-ichei-admin-cabecalho {
+        width: 50px;
+    }
+    .titulo-admin {
+        color: #18050f;
+        font-weight: 700;
+        font-family: "Raleway", sans-serif;
+        font-size: 20pt;
+    }
+}
+
+

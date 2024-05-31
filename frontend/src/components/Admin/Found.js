@@ -15,8 +15,8 @@ function Found() {
     }, []);
 
     return (
-        <div className="lista-objetos">
-            <table className="tabela-objetos">
+        <div className="lista-objetos-encontrado">
+            <table className="tabela-objetos-encontrado">
                 <thead>
                     <tr>
                         <th>{t("objetoNome")}</th>

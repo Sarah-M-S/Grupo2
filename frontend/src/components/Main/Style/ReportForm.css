@@ -15,14 +15,13 @@ body {
 /*FORMULARIO REPORTE*/
 
 .container-formulario {
-    width: 100%;
+    width: 95%;
     display: flex;
     justify-content: center;
     flex-direction: row;
     gap: 104px;
     align-items: center;
     background: #e7e7e7;
-    width: 58%;
     padding: 74px 43px 74px 43px;
     border-radius: 68px;
     margin-bottom: 60px;
@@ -57,7 +56,7 @@ form.formulario {
     background-color: white;
     padding: 48px;
     border-radius: 68px;
-    width: 52%;
+    width: 66%;
 }
 
 .formulario label, .formulario input {
@@ -113,4 +112,94 @@ textarea.detalhe::placeholder{
 .enviar:hover{
     background-color: #051816;
     color: #A5DEBB;
+}
+
+/*RESPONSIVIDADE*/
+
+@media only screen and (max-width: 1152px) {
+    h1.titulo-reportar-perda {
+        color: #051816;
+        font-size: 22pt;
+        font-weight: 700;
+        font-family: "Raleway", sans-serif;
+    }
+}
+@media only screen and (max-width: 980px) {
+    .container-logo-perda {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        width: 40%;
+    }
+    .container-formulario {
+        width: 75%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 104px;
+        align-items: center;
+        background: #e7e7e7;
+        padding: 74px 43px 74px 43px;
+        border-radius: 68px;
+        margin-bottom: 60px;
+    }
+    form.formulario {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        padding: 48px;
+        border-radius: 68px;
+        width: 94%;
+    }
+
+}
+
+@media only screen and (max-width: 710px) {
+    .container-logo-perda {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        width: 54%;
+    }
+}
+
+
+@media only screen and (max-width: 550px) {
+    .container-formulario {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 104px;
+        align-items: center;
+        background: #e7e7e7;
+        padding: 74px 43px 74px 43px;
+        border-radius: 68px;
+        margin-bottom: 60px;
+    }
+    form.formulario {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        padding: 48px;
+        border-radius: 68px;
+        width: 100%;
+    }
+}
+
+
+
+@media only screen and (max-width: 360px) {
+form.formulario {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 32px;
+    border-radius: 68px;
+    width: 100%;
+}
 }

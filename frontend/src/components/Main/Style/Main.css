@@ -76,3 +76,30 @@ button.btn-mapa{
     font-weight: 700;
 }
 
+/*RESPONSIVIDADE*/
+@media only screen and (max-width: 980px) {
+body {
+    background-image: url(./img/background.png);
+    background-size: cover !important;
+    min-height: 1000px !important;
+}
+}
+
+
+@media only screen and (max-width: 710px) {
+    div {
+        width: 100%;
+    }
+    .container-menu .menu {
+        display: flex;
+        gap: 30px;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media only screen and (max-width: 314px) {
+    img.logo-ichei-cabecalho {
+        width: 41px;
+    }
+}

@@ -32,3 +32,48 @@
     font-family: "Raleway", sans-serif;
     font-size: 16pt;
 }
+
+/*RESPONSIVIDADE*/
+
+@media only screen and (max-width: 1386px) {
+    .lista-objetos {
+        padding: 20px;
+        background-color: white;
+        border-radius: 20px;
+        width: 51%;
+    }
+
+}
+
+@media only screen and (max-width: 1290px) {
+    body{
+        min-height: 1000px !important;
+    }
+    .lista-objetos {
+        padding: 20px;
+        background-color: white;
+        border-radius: 20px;
+        width: 72%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .lista-objetos {
+        padding: 20px;
+        background-color: white;
+        border-radius: 20px;
+        width: 93%;
+    }
+    .lista-objetos th, .lista-objetos td {
+        padding: 10px 10px 10px 10px;
+        text-align: left;
+        border-bottom: 1px solid #051816;
+    }
+    .lista-objetos th {
+        color: #051816;
+        font-weight: 700;
+        font-family: "Raleway", sans-serif;
+        font-size: 12pt;
+        width: 100%;
+    }
+}
