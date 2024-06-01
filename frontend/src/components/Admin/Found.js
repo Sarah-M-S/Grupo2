@@ -11,7 +11,9 @@ function Found() {
             .then(res => res.json())
             .then(data => {
                 setObjects(data.itens);
+                
             });
+            
     }, []);
 
     return (

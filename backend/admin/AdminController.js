@@ -12,6 +12,9 @@ const pt = require("../views/locales/pt");
 const zh = require("../views/locales/zh");
 const itemCadastrado = require("../Model/itemCadastrado");
 const adminAuth =  require("../middleware/adminAuth")
+const jwt = require('jsonwebtoken')
+const config = require("../config/auth.config")
+
 //=================================================================================
 
 //Config da router
@@ -23,13 +26,13 @@ router.use(
 
 //Rotas da router
 
-router.get("/admin/encontrados", adminAuth, (req, res) => {
+router.get("/admin/encontrados", (req, res) => {
   itemCadastrado.findAll().then((itens) => {
     res.json({ itens: itens });
   });
 });
 
-router.get("/admin/perdidos", adminAuth, (req, res) => {
+router.get("/admin/perdidos", (req, res) => {
   itemPerdido.findAll().then((itens) => {
     res.json({ itens: itens });
   });
@@ -68,6 +71,11 @@ router.post("/users/create", (req, res) => {
     });
 });
 
+//checagem do token
+router.get("/admin", adminAuth, (req, res) => {
+  return res.json({authenticated:true})
+})
+
 // listagem de admins
 router.get("/admin/users/list", adminAuth, (req, res) => {
   Administrador.findAll().then((users) => {
@@ -90,10 +98,18 @@ router.post("/autenticar", (req, res) => {
           id: admin.id,
           email: admin.email,
         };
+        
+        const token = jwt.sign({ id: admin.id },
+          config.secret,
+          {
+            algorithm: 'HS256',
+            allowInsecureKeySizes: true,
+            expiresIn: 86400, // 24 hours
+          });
 
-        req.session.token = "icheiToken";
-
-        res.status(200).send('Autenticado');;
+        res.status(200).send({
+          accessToken : token,
+        });
 
 
       } else {
@@ -173,7 +189,7 @@ router.post("/users/edit", async (req, res) => {
 });
 
 //cadastrar item encontrado
-router.post("/cadastrarItem", adminAuth, (req, res) => {
+router.post("/cadastrarItem", (req, res) => {
   console.log(req.body);
 
   var tituloItem = req.body.itemCadastrado.tituloItem;

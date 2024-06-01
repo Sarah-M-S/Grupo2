@@ -1,7 +1,7 @@
 import './App.css';
 import Main from './components/Main/Main';
 import ReportForm from './components/Main/ReportForm'
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import List from './components/Main/List';
 import Login from './components/Main/Login';
 import Admin from './components/Admin/Admin';
@@ -16,7 +16,7 @@ const App = () => {
   return (
     <div className="App">
 
-      <LanguageSwitcher />
+        <LanguageSwitcher/>
 
 
       <BrowserRouter>
