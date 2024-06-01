@@ -23,13 +23,13 @@ router.use(
 
 //Rotas da router
 
-router.get("/admin/encontrados", (req, res) => {
+router.get("/admin/encontrados", adminAuth, (req, res) => {
   itemCadastrado.findAll().then((itens) => {
     res.json({ itens: itens });
   });
 });
 
-router.get("/admin/perdidos", (req, res) => {
+router.get("/admin/perdidos", adminAuth, (req, res) => {
   itemPerdido.findAll().then((itens) => {
     res.json({ itens: itens });
   });
@@ -173,7 +173,7 @@ router.post("/users/edit", async (req, res) => {
 });
 
 //cadastrar item encontrado
-router.post("/cadastrarItem", (req, res) => {
+router.post("/cadastrarItem", adminAuth, (req, res) => {
   console.log(req.body);
 
   var tituloItem = req.body.itemCadastrado.tituloItem;
