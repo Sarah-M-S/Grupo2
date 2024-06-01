@@ -11,9 +11,12 @@ const en = require("../views/locales/en");
 const pt = require("../views/locales/pt");
 const zh = require("../views/locales/zh");
 const itemCadastrado = require("../Model/itemCadastrado");
-const adminAuth =  require("../middleware/adminAuth")
-const jwt = require('jsonwebtoken')
-const config = require("../config/auth.config")
+const adminAuth = require("../middleware/adminAuth");
+const jwt = require("jsonwebtoken");
+const config = require("../config/auth.config");
+const { where } = require("sequelize");
+const { json, raw } = require("body-parser");
+const nodemailer = require("nodemailer");
 
 //=================================================================================
 
@@ -73,8 +76,8 @@ router.post("/users/create", (req, res) => {
 
 //checagem do token
 router.get("/admin", adminAuth, (req, res) => {
-  return res.json({authenticated:true})
-})
+  return res.json({ authenticated: true });
+});
 
 // listagem de admins
 router.get("/admin/users/list", adminAuth, (req, res) => {
@@ -98,20 +101,16 @@ router.post("/autenticar", (req, res) => {
           id: admin.id,
           email: admin.email,
         };
-        
-        const token = jwt.sign({ id: admin.id },
-          config.secret,
-          {
-            algorithm: 'HS256',
-            allowInsecureKeySizes: true,
-            expiresIn: 86400, // 24 hours
-          });
 
-        res.status(200).send({
-          accessToken : token,
+        const token = jwt.sign({ id: admin.id }, config.secret, {
+          algorithm: "HS256",
+          allowInsecureKeySizes: true,
+          expiresIn: 86400, // 24 hours
         });
 
-
+        res.status(200).send({
+          accessToken: token,
+        });
       } else {
         res.status(401).send("Acesso Negado");
       }
@@ -190,8 +189,6 @@ router.post("/users/edit", async (req, res) => {
 
 //cadastrar item encontrado
 router.post("/cadastrarItem", (req, res) => {
-  console.log(req.body);
-
   var tituloItem = req.body.itemCadastrado.tituloItem;
   var descricao = req.body.itemCadastrado.descricao;
   var marca = req.body.itemCadastrado.marca;
@@ -213,7 +210,60 @@ router.post("/cadastrarItem", (req, res) => {
       marca: marca,
       registrador: registrador,
     })
-    .then(res.redirect("/admin/home"));
+    .then(
+      itemPerdido
+        .findAll({
+          raw: true,
+          where: {
+            categoria: categoria,
+          },
+        })
+        .then((itens) => {
+
+           //nodmailer config
+           let transporter = nodemailer.createTransport({
+            service: "gmail",
+            port: 465,
+            secure: true,
+            auth: {
+              user: "grupo2pi1a5@gmail.com",
+              pass: "djkt axge nvgo rjcr",
+            },
+          });
+
+          itens.forEach((item) => {
+
+            const mailOptions = {
+              from: "grupo2pi1a5@gmail.com",
+              to: item.email,
+              subject: `iChei - Notificação: item semelhante encontrado ${item.tituloItem}`,
+              html: `<p>Olá ${item.nomePessoa}</p>
+          <p>Você reportou a perda do item ${item.tituloItem} no ichei-app.com.</p>
+          <p>Um item dessa mesma categoria foi encontrado.</p>
+          <p>Verifique a lista de itens encontrados no site, ou vá até o departamento de achados e perdidos.</p>
+          <p>Equipe iChei</p>
+          <img src="cid:logo@cid" alt="Logo" style="width: 20%; height: 20%;" />`,
+              attachments: [
+                {
+                  filename: "logo.png", // nome do arquivo
+                  path: "./logo.png", // caminho para o arquivo
+                  cid: "logo@cid", // cid: identificador para a imagem
+                },
+              ],
+            };
+    
+            transporter.sendMail(mailOptions, function(error, info){
+              if (error) {
+                console.log(error);
+              } else {
+                console.log('Email enviado: ' + info.response);
+              }
+            });
+
+          });
+        })
+        .then(res.redirect("/admin/home"))
+    );
 });
 
 module.exports = router;

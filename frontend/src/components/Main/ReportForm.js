@@ -134,15 +134,24 @@ const ReportForm = () => {
             </label>
 
             <label>
-                <input
-                    type="text"
-                    name="categoria"
-                    className='marca'
-                    value={formValues.categoria}
-                    onChange={handleChange}
-                    placeholder={t("objetoCategoria")}
-                />
-            </label>
+          <select
+            name="categoria"
+            className="detalhe-objeto-admin"
+            value={formValues.categoria}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              {t("objetoCategoria")}
+            </option>
+            <option value="roupa">Roupas</option>
+            <option value="acessorio">Acessórios</option>
+            <option value="documento">Carteiras/Documentos/Cartões</option>
+            <option value="garrafa">Garrafas</option>
+            <option value="caderno">Cadernos/Livros/Agendas</option>
+            <option value="guardachuva">Guarda chuva</option>
+            <option value="outros">Outros</option>
+          </select>
+        </label>
 
             <label>
                 <input

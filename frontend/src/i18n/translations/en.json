@@ -24,6 +24,8 @@
         "escolherIdioma": "Choose your language",
         "objetoCategoria": "Object Type",
         "curso": "Course",
-        "turno": "Time Period"
+        "turno": "Time Period",
+        "registrador": "Registered by"
+        
     }
 }

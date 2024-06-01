@@ -21,7 +21,7 @@ form.formulario-objeto-admin {
     padding: 15px 30px 12px 30px;
     background-color: #A5DEBB;
     border: none;
-    border-radius: 68px;
+    border-radius: 70px;
     color:#051816;
     font-size: 12pt;
     font-weight: 700;
@@ -35,18 +35,18 @@ form.formulario-objeto-admin {
     font-family: "Raleway", sans-serif;
 }
 
-textarea.detalhe-objeto-admin {
+.detalhe-objeto-admin {
     padding: 15px 30px 12px 30px;
     background-color: #A5DEBB;
     border: none;
-    border-radius: 20px;
+    border-radius: 70px;
     color:#051816;
     font-size: 12pt;
     font-weight: 700;
     font-family: "Raleway", sans-serif;
     margin-bottom: 20px;
     width: 100%;
-    height: 100px;
+    height: 50px;
 }
 
 textarea.detalhe-objeto-admin::placeholder{
@@ -59,7 +59,7 @@ textarea.detalhe-objeto-admin::placeholder{
     font-weight: 700;
     color:#051816;
     font-size: 25px;
-    border-radius: 68px;
+    border-radius: 70px;
     border-color:1px solid #051816;
 }
 

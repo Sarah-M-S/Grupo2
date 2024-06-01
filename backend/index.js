@@ -13,12 +13,13 @@ const en = require('./views/locales/en')
 const pt = require('./views/locales/pt')
 const zh = require('./views/locales/zh');
 const nodemailer = require('nodemailer')
-const dotenv = require('dotenv');
-dotenv.config();
+//const dotenv = require('dotenv');
+
 
 //=================================================================================
 
 //configs
+//dotenv.config();
 app.use(express.json());
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
@@ -120,8 +121,8 @@ app.post("/cadastrarPerda", (req, res) => {
       port: 465,
       secure: true,
       auth: {
-          user: process.env.MAIL_USERNAME,
-          pass: process.env.MAIL_PASSWORD
+          user: 'grupo2pi1a5@gmail.com',
+          pass: 'djkt axge nvgo rjcr'
       }
     });
     
