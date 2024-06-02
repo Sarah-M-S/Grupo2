@@ -15,7 +15,7 @@ body {
 /*FORMULARIO REPORTE*/
 
 .container-formulario {
-    width: 95%;
+    width: 69%;
     display: flex;
     justify-content: center;
     flex-direction: row;

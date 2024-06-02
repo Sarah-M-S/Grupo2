@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "./Style/ObjectForm.css";
-
+import InputMask from 'react-input-mask';
 import { useTranslation } from "react-i18next";
 
 function ObjectForm() {
+  
+
   const [formValues, setFormValues] = useState({
     tituloItem: "",
     descricao: "",
@@ -135,8 +137,9 @@ function ObjectForm() {
         </label>
 
         <label>
-          <input
-            type="date"
+        <InputMask 
+            mask="99/99/9999"
+            placeholder={"00/00/0000"}
             name="dataCadastro"
             className="data-objeto-admin"
             value={formValues.dataCadastro}

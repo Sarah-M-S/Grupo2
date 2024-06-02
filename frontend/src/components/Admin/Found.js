@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import './Style/Found.css';
 import { useTranslation } from "react-i18next";
 
+
 function Found() {
     const [objects, setObjects] = useState([]);
     const { t } = useTranslation();

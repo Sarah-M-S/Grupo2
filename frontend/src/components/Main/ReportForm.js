@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import './Style/ReportForm.css';
 import logo from './Style/img/logo-ichei.png';
 import { useTranslation } from "react-i18next";
+import InputMask from 'react-input-mask';
+
+
 
 
 const ReportForm = () => {
+
     const [formValues, setFormValues] = useState({
         nome: '',
         tituloItem: '',
@@ -19,13 +23,21 @@ const ReportForm = () => {
         dataPerda: '',
     });
 
+
+
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues((prevValues) => ({
             ...prevValues,
             [name]: value,
-        }));
-    };
+        }
+    ))
+
+};
+
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -44,6 +56,10 @@ const ReportForm = () => {
                 dataPerda: formValues.dataPerda,
             }
         };
+
+
+        /*VALIDACAO*/
+        
 
         console.log(itemPerdido);
         fetch('http://localhost:8083/cadastrarPerda', {
@@ -66,13 +82,18 @@ const ReportForm = () => {
     };
     const { t } = useTranslation();
 
+
+
+
     return (
+        
         <div className="container-formulario">
         
         <div className="container-logo-perda">
             <img className="logo-ichei-formulario" src={logo} alt="logo-ichei" />
             <h1 className="titulo-reportar-perda">{t("reportarPerda")}</h1>
         </div>
+        
 
         <form className="formulario" onSubmit={handleSubmit}>
             <label>
@@ -83,8 +104,13 @@ const ReportForm = () => {
                     value={formValues.nome}
                     onChange={handleChange}
                     placeholder={t("pessoaNome")}
+                    maxLength={50}
+                    required
+                    
                 />
+                
             </label>
+
 
 
             <label>
@@ -95,8 +121,12 @@ const ReportForm = () => {
                     value={formValues.tituloItem}
                     onChange={handleChange}
                     placeholder={t("objetoNome")}
+                    maxLength={50}
+                    required
                 />
             </label>
+
+
 
             <label>
                 <input
@@ -106,6 +136,8 @@ const ReportForm = () => {
                     value={formValues.email}
                     onChange={handleChange}
                     placeholder={t("email")}
+                    maxLength={50}
+                    required
                 />
             </label>
 
@@ -119,6 +151,8 @@ const ReportForm = () => {
                     value={formValues.descricao}
                     onChange={handleChange}
                     placeholder={t("objetoDetalhes")}
+                    maxLength={100}
+                    required
                 />
             </label>
 
@@ -130,18 +164,21 @@ const ReportForm = () => {
                     value={formValues.marca}
                     onChange={handleChange}
                     placeholder={t("objetoMarca")}
+                    maxLength={50}
+                    required
                 />
             </label>
 
             <label>
-          <select
+        <select
             name="categoria"
             className="detalhe-objeto-admin"
             value={formValues.categoria}
             onChange={handleChange}
-          >
+            required
+        >
             <option value="" disabled>
-              {t("objetoCategoria")}
+            {t("objetoCategoria")}
             </option>
             <option value="roupa">Roupas</option>
             <option value="acessorio">Acessórios</option>
@@ -150,7 +187,7 @@ const ReportForm = () => {
             <option value="caderno">Cadernos/Livros/Agendas</option>
             <option value="guardachuva">Guarda chuva</option>
             <option value="outros">Outros</option>
-          </select>
+        </select>
         </label>
 
             <label>
@@ -161,6 +198,8 @@ const ReportForm = () => {
                     value={formValues.curso}
                     onChange={handleChange}
                     placeholder={t("curso")}
+                    maxLength={50}
+                    required
                 />
             </label>
 
@@ -172,6 +211,8 @@ const ReportForm = () => {
                     value={formValues.periodo}
                     onChange={handleChange}
                     placeholder={t("turno")}
+                    maxLength={20}
+                    required
                 />
             </label>
 
@@ -183,6 +224,8 @@ const ReportForm = () => {
                     value={formValues.cor}
                     onChange={handleChange}
                     placeholder={t("objetoCor")}
+                    maxLength={20}
+                    required
                 />
             </label>
 
@@ -194,20 +237,27 @@ const ReportForm = () => {
                     value={formValues.local}
                     onChange={handleChange}
                     placeholder={t("objetoLocal")}
+                    maxLength={20}
+                    required
                 />
             </label>
 
             <label>
-                <input
-                    type="date"
+            <InputMask 
+                    mask="99/99/9999" 
                     name="dataPerda"
+                    placeholder={"00/00/0000"}
                     value={formValues.dataPerda}
                     onChange={handleChange}
+                    maxLength={20}
+                    required
                 />
             </label>
 
 
-            <button className="enviar"type="submit">{t("enviar")}</button>
+            <button className="enviar" type="submit">{t("enviar")}</button>
+            
+            
         </form>
         </div>
     );

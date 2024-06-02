@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import './Style/Report.css';
 import { useTranslation } from "react-i18next";
 
+
 function Report() {
     const [reports, setReports] = useState([]);
     const { t } = useTranslation();
