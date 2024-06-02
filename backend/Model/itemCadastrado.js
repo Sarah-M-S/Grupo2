@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const connector = require("./connection");
+const moment = require("moment");
 
 const itemCadastrado = connector.sequelize.define("itemCadastrado", {
   id: {
@@ -34,6 +35,10 @@ const itemCadastrado = connector.sequelize.define("itemCadastrado", {
   dataCadastro: {
     type: DataTypes.DATE,
     allowNull: false,
+    get() {
+      // Use moment.js para formatar a data
+      return moment(this.getDataValue('dataCadastro')).format('DD/MM/YYYY');
+    }
   },
   statusItem: {
     type: DataTypes.STRING,

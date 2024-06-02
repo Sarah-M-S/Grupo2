@@ -2,6 +2,20 @@
     display: flex;
     justify-content: center;
 }
+/*MENSAGEM SUCESSO*/
+p#mensagem-sucesso {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: #19D26B;
+    font-size: 24pt;
+    font-weight: 700;
+    border: 1px solid #19D26B;
+    margin: 19px;
+    font-family: "Raleway", sans-serif;
+}
+
 
 form.formulario-objeto-admin {
     display: flex;

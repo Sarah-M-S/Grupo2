@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './Style/Report.css';
 import { useTranslation } from "react-i18next";
-
+import { format } from "date-fns";
 
 function Report() {
     const [reports, setReports] = useState([]);
@@ -32,7 +32,8 @@ function Report() {
                             <td>{report.nomePessoa}</td>
                             <td>{report.tituloItem}</td>
                             <td>{report.local}</td>
-                            <td>{report.data}</td>
+                            <td>{format(new Date(report.data), 'dd/MM/yyyy')}</td>
+
                         </tr>
                     ))}
                 </tbody>

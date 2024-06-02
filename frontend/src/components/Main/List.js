@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import './Style/List.css';
 import { useTranslation } from "react-i18next";
+import { format } from "date-fns";
+
 
 function List() {
     const [objects, setObjects] = useState([]);
@@ -29,7 +31,7 @@ function List() {
                         <tr key={index}>
                             <td>{object.tituloItem}</td>
                             <td>{object.local}</td>
-                            <td>{object.dataCadastro}</td>
+                            <td>{format(new Date(object.dataCadastro), 'dd/MM/yyyy')}</td>
                         </tr>
                     ))}
                 </tbody>

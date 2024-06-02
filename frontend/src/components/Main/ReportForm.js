@@ -7,6 +7,7 @@ import InputMask from 'react-input-mask';
 
 
 
+
 const ReportForm = () => {
 
     const [formValues, setFormValues] = useState({
@@ -23,7 +24,7 @@ const ReportForm = () => {
         dataPerda: '',
     });
 
-
+    const [envioSucesso, setEnvioSucesso] = useState(false);
 
 
     const handleChange = (e) => {
@@ -41,6 +42,7 @@ const ReportForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        
         const itemPerdido = {
             "itemPerdido": {
                 nome: formValues.nome,
@@ -58,7 +60,6 @@ const ReportForm = () => {
         };
 
 
-        /*VALIDACAO*/
         
 
         console.log(itemPerdido);
@@ -72,6 +73,7 @@ const ReportForm = () => {
             .then((response) => response.json())
             .then((data) => {
                 console.log('Resposta do servidor:', data);
+                setEnvioSucesso(true);
             })
             .catch((error) => {
                 console.error('Erro na requisição:', error.message);
@@ -96,6 +98,8 @@ const ReportForm = () => {
         
 
         <form className="formulario" onSubmit={handleSubmit}>
+        {envioSucesso && <p id="mensagem-sucesso">Envio realizado com sucesso!</p>}
+
             <label>
                 <input
                     type="text"

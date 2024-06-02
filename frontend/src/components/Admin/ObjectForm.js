@@ -3,6 +3,7 @@ import "./Style/ObjectForm.css";
 import InputMask from 'react-input-mask';
 import { useTranslation } from "react-i18next";
 
+
 function ObjectForm() {
   
 
@@ -16,6 +17,8 @@ function ObjectForm() {
     dataCadastro: "",
     registrador: "",
   });
+
+  const [envioSucesso, setEnvioSucesso] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,6 +53,7 @@ function ObjectForm() {
       .then((response) => response.json())
       .then((data) => {
         console.log("Resposta do servidor:", data);
+        setEnvioSucesso(true);
       })
       .catch((error) => {
         console.error("Erro na requisição:", error.message);
@@ -61,6 +65,8 @@ function ObjectForm() {
   return (
     <div className="container-formulario-objeto-admin">
       <form className="formulario-objeto-admin" onSubmit={handleSubmit}>
+      {envioSucesso && <p id="mensagem-sucesso">Envio realizado com sucesso!</p>}
+
         <label>
           <input
             type="text"
@@ -69,6 +75,8 @@ function ObjectForm() {
             value={formValues.tituloItem}
             onChange={handleChange}
             placeholder={t("objetoNome")}
+            maxLength={50}
+            required
           />
         </label>
 
@@ -80,6 +88,8 @@ function ObjectForm() {
             value={formValues.descricao}
             onChange={handleChange}
             placeholder={t("objetoDetalhes")}
+            maxLength={50}
+            required
           />
         </label>
 
@@ -91,7 +101,8 @@ function ObjectForm() {
             value={formValues.marca}
             onChange={handleChange}
             placeholder={t("objetoMarca")}
-          />
+            maxLength={50}
+            required          />
         </label>
 
         <label>
@@ -100,6 +111,7 @@ function ObjectForm() {
             className="detalhe-objeto-admin"
             value={formValues.categoria}
             onChange={handleChange}
+            required
           >
             <option value="" disabled>
               {t("objetoCategoria")}
@@ -122,6 +134,8 @@ function ObjectForm() {
             value={formValues.cor}
             onChange={handleChange}
             placeholder={t("objetoCor")}
+            maxLength={50}
+            required
           />
         </label>
 
@@ -133,6 +147,8 @@ function ObjectForm() {
             value={formValues.local}
             onChange={handleChange}
             placeholder={t("objetoLocal")}
+            maxLength={50}
+            required
           />
         </label>
 
@@ -144,6 +160,8 @@ function ObjectForm() {
             className="data-objeto-admin"
             value={formValues.dataCadastro}
             onChange={handleChange}
+            maxLength={50}
+            required
           />
         </label>
 
@@ -155,6 +173,8 @@ function ObjectForm() {
             value={formValues.registrador}
             onChange={handleChange}
             placeholder={t("registrador")}
+            maxLength={50}
+            required
           />
         </label>
 

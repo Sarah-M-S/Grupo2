@@ -33,6 +33,7 @@ function Found() {
                             <td>{object.tituloItem}</td>
                             <td>{object.local}</td>
                             <td>{object.dataCadastro}</td>
+                            
                         </tr>
                     ))}
                 </tbody>
