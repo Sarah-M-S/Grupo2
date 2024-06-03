@@ -18,6 +18,7 @@ function ObjectForm() {
     registrador: "",
   });
 
+  
   const [envioSucesso, setEnvioSucesso] = useState(false);
 
   const handleChange = (e) => {
@@ -30,6 +31,7 @@ function ObjectForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const itemCadastrado = {
       itemCadastrado: {
         tituloItem: formValues.tituloItem,
@@ -43,6 +45,7 @@ function ObjectForm() {
       },
     };
 
+
     fetch("http://localhost:8083/cadastrarItem", {
       method: "POST",
       body: JSON.stringify(itemCadastrado),
@@ -50,10 +53,12 @@ function ObjectForm() {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
+      /*.then((response) => response.json())*/
       .then((data) => {
         console.log("Resposta do servidor:", data);
         setEnvioSucesso(true);
+        
+        
       })
       .catch((error) => {
         console.error("Erro na requisição:", error.message);
@@ -182,6 +187,8 @@ function ObjectForm() {
           {t("enviar")}
         </button>
       </form>
+
+
     </div>
   );
 }

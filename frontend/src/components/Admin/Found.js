@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './Style/Found.css';
 import { useTranslation } from "react-i18next";
+import { format } from "date-fns";
 
 
 function Found() {
@@ -32,7 +33,7 @@ function Found() {
                         <tr key={index}>
                             <td>{object.tituloItem}</td>
                             <td>{object.local}</td>
-                            <td>{object.dataCadastro}</td>
+                            <td>{format(new Date(object.dataCadastro), 'dd/MM/yyyy')}</td>
                             
                         </tr>
                     ))}

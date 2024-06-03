@@ -1,5 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
+/*LANGUAGE*/
+.languageSwitcher {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.languageSwitcher button {
+    background: #f0f8ff00;
+    border: 0px;
+}
+
+.languageSwitcher img {
+    width: 50px;
+}
+
+
+
+
+
+
 /*GLOBAL*/
 *{
     margin: 0;
