@@ -45,10 +45,17 @@ i18next.init({
 //rotas
 // Pagina inicial
 app.get("/", (req, res) => {
-    itemCadastrado.findAll().then(itens =>{
-    res.json({itens:itens})
-  })
-})
+  itemCadastrado.findAll({
+      order: [
+          ['dataCadastro', 'Desc'] // Change 'ASC' to 'DESC' for descending order
+      ]
+  }).then(itens => {
+      res.json({ itens: itens });
+  }).catch(error => {
+      res.status(500).json({ error: error.message });
+  });
+});
+
 
 app.get("/session", (req, res)=>{
   req.session.nome = "Funciona meu nome"

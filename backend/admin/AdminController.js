@@ -30,16 +30,30 @@ router.use(
 //Rotas da router
 
 router.get("/admin/encontrados", (req, res) => {
-  itemCadastrado.findAll().then((itens) => {
+  itemCadastrado.findAll({
+    order: [
+      ['dataCadastro', 'Desc'] // Change 'ASC' to 'DESC' for descending order
+    ]
+  }).then((itens) => {
     res.json({ itens: itens });
+  }).catch((error) => {
+    res.status(500).json({ error: error.message });
   });
 });
 
+
 router.get("/admin/perdidos", (req, res) => {
-  itemPerdido.findAll().then((itens) => {
+  itemPerdido.findAll({
+    order: [
+      ['data', 'DESC'] // Change 'ASC' to 'DESC' for descending order
+    ]
+  }).then((itens) => {
     res.json({ itens: itens });
+  }).catch((error) => {
+    res.status(500).json({ error: error.message });
   });
 });
+
 
 //formulario criacao admin
 router.get("/admin/users/create", (req, res) => {
