@@ -86,31 +86,6 @@ function ObjectForm() {
         </label>
 
         <label>
-          <textarea
-            type="text"
-            name="descricao"
-            className="detalhe-objeto-admin"
-            value={formValues.descricao}
-            onChange={handleChange}
-            placeholder={t("objetoDetalhes")}
-            maxLength={50}
-            required
-          />
-        </label>
-
-        <label>
-          <input
-            type="text"
-            name="marca"
-            className="marca-objeto-admin"
-            value={formValues.marca}
-            onChange={handleChange}
-            placeholder={t("objetoMarca")}
-            maxLength={50}
-            required          />
-        </label>
-
-        <label>
           <select
             name="categoria"
             className="detalhe-objeto-admin"
@@ -131,6 +106,20 @@ function ObjectForm() {
           </select>
         </label>
 
+
+
+        <label>
+          <input
+            type="text"
+            name="marca"
+            className="marca-objeto-admin"
+            value={formValues.marca}
+            onChange={handleChange}
+            placeholder={t("objetoMarca")}
+            maxLength={50}
+            required          />
+        </label>
+
         <label>
           <input
             type="text"
@@ -139,6 +128,34 @@ function ObjectForm() {
             value={formValues.cor}
             onChange={handleChange}
             placeholder={t("objetoCor")}
+            maxLength={50}
+            required
+          />
+        </label>
+
+
+
+        <label>
+          <textarea
+            type="text"
+            name="descricao"
+            className="detalhe-objeto-admin"
+            value={formValues.descricao}
+            onChange={handleChange}
+            placeholder={t("objetoDetalhes")}
+            maxLength={50}
+            required
+          />
+        </label>
+
+        <label>
+        <InputMask 
+            mask="99/99/9999"
+            placeholder={"00/00/0000"}
+            name="dataCadastro"
+            className="data-objeto-admin"
+            value={formValues.dataCadastro}
+            onChange={handleChange}
             maxLength={50}
             required
           />
@@ -157,18 +174,6 @@ function ObjectForm() {
           />
         </label>
 
-        <label>
-        <InputMask 
-            mask="99/99/9999"
-            placeholder={"00/00/0000"}
-            name="dataCadastro"
-            className="data-objeto-admin"
-            value={formValues.dataCadastro}
-            onChange={handleChange}
-            maxLength={50}
-            required
-          />
-        </label>
 
         <label>
           <input

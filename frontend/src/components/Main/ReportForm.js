@@ -115,23 +115,6 @@ const ReportForm = () => {
                 
             </label>
 
-
-
-            <label>
-                <input
-                    type="text"
-                    name="tituloItem"
-                    className="email"
-                    value={formValues.tituloItem}
-                    onChange={handleChange}
-                    placeholder={t("objetoNome")}
-                    maxLength={50}
-                    required
-                />
-            </label>
-
-
-
             <label>
                 <input
                     type="email"
@@ -144,55 +127,6 @@ const ReportForm = () => {
                     required
                 />
             </label>
-
-            
-
-            <label>
-                <textarea
-                    type="text"
-                    name="descricao"
-                    className="detalhe"
-                    value={formValues.descricao}
-                    onChange={handleChange}
-                    placeholder={t("objetoDetalhes")}
-                    maxLength={100}
-                    required
-                />
-            </label>
-
-            <label>
-                <input
-                    type="text"
-                    name="marca"
-                    className='cor'
-                    value={formValues.marca}
-                    onChange={handleChange}
-                    placeholder={t("objetoMarca")}
-                    maxLength={50}
-                    required
-                />
-            </label>
-
-            <label>
-        <select
-            name="categoria"
-            className="detalhe-objeto-admin"
-            value={formValues.categoria}
-            onChange={handleChange}
-            required
-        >
-            <option value="" disabled>
-            {t("objetoCategoria")}
-            </option>
-            <option value="roupa">Roupas</option>
-            <option value="acessorio">Acessórios</option>
-            <option value="documento">Carteiras/Documentos/Cartões</option>
-            <option value="garrafa">Garrafas</option>
-            <option value="caderno">Cadernos/Livros/Agendas</option>
-            <option value="guardachuva">Guarda chuva</option>
-            <option value="outros">Outros</option>
-        </select>
-        </label>
 
             <label>
                 <input
@@ -207,6 +141,7 @@ const ReportForm = () => {
                 />
             </label>
 
+
             <label>
                 <input
                     type="text"
@@ -216,6 +151,20 @@ const ReportForm = () => {
                     onChange={handleChange}
                     placeholder={t("turno")}
                     maxLength={20}
+                    required
+                />
+            </label>
+
+
+            <label>
+                <input
+                    type="text"
+                    name="tituloItem"
+                    className="email"
+                    value={formValues.tituloItem}
+                    onChange={handleChange}
+                    placeholder={t("objetoNome")}
+                    maxLength={50}
                     required
                 />
             </label>
@@ -236,6 +185,53 @@ const ReportForm = () => {
             <label>
                 <input
                     type="text"
+                    name="marca"
+                    className='cor'
+                    value={formValues.marca}
+                    onChange={handleChange}
+                    placeholder={t("objetoMarca")}
+                    maxLength={50}
+                    required
+                />
+            </label>
+    
+            <label>
+        <select
+            name="categoria"
+            className="detalhe-objeto-admin"
+            value={formValues.categoria}
+            onChange={handleChange}
+            required
+        >
+            <option value="" disabled>
+            {t("objetoCategoria")}
+            </option>
+            <option value="roupa">Roupas</option>
+            <option value="acessorio">Acessórios</option>
+            <option value="documento">Carteiras/Documentos/Cartões</option>
+            <option value="garrafa">Garrafas</option>
+            <option value="caderno">Cadernos/Livros/Agendas</option>
+            <option value="guardachuva">Guarda chuva</option>
+            <option value="outros">Outros</option>
+        </select>
+        </label>
+        
+
+        <label>
+            <InputMask 
+                    mask="99/99/9999" 
+                    name="dataPerda"
+                    placeholder={"00/00/0000"}
+                    value={formValues.dataPerda}
+                    onChange={handleChange}
+                    maxLength={20}
+                    required
+                />
+            </label>
+
+            <label>
+                <input
+                    type="text"
                     name="local"
                     className='detalhe'
                     value={formValues.local}
@@ -246,14 +242,16 @@ const ReportForm = () => {
                 />
             </label>
 
+
             <label>
-            <InputMask 
-                    mask="99/99/9999" 
-                    name="dataPerda"
-                    placeholder={"00/00/0000"}
-                    value={formValues.dataPerda}
+                <textarea
+                    type="text"
+                    name="descricao"
+                    className="detalhe"
+                    value={formValues.descricao}
                     onChange={handleChange}
-                    maxLength={20}
+                    placeholder={t("objetoDetalhes")}
+                    maxLength={100}
                     required
                 />
             </label>
