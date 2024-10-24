@@ -9,6 +9,7 @@ import ObjectForm from './components/Admin/ObjectForm';
 import Found from './components/Admin/Found';
 import Report from './components/Admin/Report';
 import LanguageSwitcher from './components/LanguageSwitcher';
+import Home from './pages/home/Home';
 
 
 
@@ -22,6 +23,8 @@ const App = () => {
 
       <BrowserRouter>
         <Routes>
+
+          <Route path='/home' element={<Home/>}></Route>
 
           <Route path='/' element={<Main />}>
             <Route path='/list' element={<List />}></Route>

@@ -105,11 +105,13 @@ router.post("/autenticar", (req, res) => {
   console.log(req.body);
   var email = req.body.email;
   var password = req.body.password;
+  console.log(email + " " + password)
 
   Administrador.findOne({ where: { email: email } }).then((admin) => {
+
     if (admin != undefined) {
       var correct = bcrypt.compareSync(password, admin.senha);
-
+      console.log(correct)
       if (correct) {
         req.session.admin = {
           id: admin.id,
