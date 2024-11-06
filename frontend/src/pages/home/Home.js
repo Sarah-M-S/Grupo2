@@ -66,7 +66,7 @@ function Home() {
               onClick={handleFaq}
               className="text-[120%] font-semibold">FAQ</p>
             </button>
-            <button>
+            <button className="pr-16">
               <p 
               onClick={handleWhoWeAre}
               className="text-[120%] font-semibold">Quem Somos</p>

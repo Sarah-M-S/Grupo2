@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Success from "../register/Success";
+import Success from "../success/Success";
 
 export default function EditProfile() {
   const [formData, setFormData] = useState({
@@ -33,7 +33,9 @@ export default function EditProfile() {
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
 
-        {sent && <Success message={"Suas informações foram atualizadas com sucesso!"}/>}
+        {sent && <Success 
+        message={"Suas informações foram atualizadas com sucesso!"}
+        route={"/mainPage"}/>}
 
         {!sent &&
 

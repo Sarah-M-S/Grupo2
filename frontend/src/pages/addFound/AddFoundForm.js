@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Success from "../register/Success";
+import Success from "../success/Success";
 
 export default function AddFoundForm() {
   const [formData, setFormData] = useState({
@@ -36,7 +36,9 @@ export default function AddFoundForm() {
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
-        {sent && <Success message={"Objeto adicionado com sucesso!"}/>}
+        {sent && <Success 
+        message={"Objeto adicionado com sucesso!"}
+        route={"/mainPage"}/>}
 
         {!sent && (
           <div className="flex flex-col w-full max-w-md space-y-8 bg-white rounded-3xl py-16 px-8 md:w-[30%]">

@@ -6,7 +6,7 @@ import ObjectForm from "./ObjectForm";
 import ObjectDetails from "./ObjectDetails";
 import PlaceDate from "./PlaceDate";
 import DataConfirm from "./DataConfirm";
-import Success from "./Success";
+import Success from "../success/Success";
 import BackwardButton from "./RestartButton";
 import FinalizeButton from "./FinalizeButton"
 
@@ -51,7 +51,9 @@ export default function ReportFormPage() {
       case 4:
         return <DataConfirm onRestart={handleRestart} onNext={handleFinalize} dataToConfirm={formData}/>;
       case 5:
-        return <Success />;
+        return <Success 
+        message={"Seu reporte foi enviado com Sucesso! Seguiremos te informando por email."}
+        route={"/mainPage"}/>;
       default:
         return <Disclaimer onNext={handleNext} />;
     }
