@@ -21,6 +21,7 @@ import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import WhoWeAre from "./pages/home/whoWeAre/WhoWeAre";
 import Faq from "./pages/home/faq/Faq";
 import Cookies from "./pages/home/cookies/Cookies";
+import AddFoundForm from "./pages/addFound/AddFoundForm";
 
 const App = () => {
   return (
@@ -46,6 +47,8 @@ const App = () => {
           <Route path="/mainPage" element={<MainPage />}></Route>
           <Route path="/reportForm" element={<ReportFormPage />}></Route>
           <Route path="/editProfile" element={<EditProfile />}></Route>
+          <Route path="/addFound" element={<AddFoundForm />}></Route>
+
 
 
 

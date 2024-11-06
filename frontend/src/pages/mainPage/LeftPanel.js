@@ -15,6 +15,10 @@ export default function LeftPanel({ state, onDisplayChange }) {
     navigate("/editProfile");
   };
 
+  const handleAddFound = () => {
+    navigate("/addFound");
+  };
+
   const handleHelp = () => {
     // IMPLEMENTAR LOGOUT
     navigate("/help");
@@ -68,6 +72,13 @@ export default function LeftPanel({ state, onDisplayChange }) {
             }`}
           >
             Lista de Usuários
+          </button>
+
+          <button
+            onClick={handleAddFound}
+            className="font-semibold text-emerald-950 text-lg"
+          >
+            Adicionar Achado
           </button>
 
           <button

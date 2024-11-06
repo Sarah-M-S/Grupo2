@@ -33,7 +33,7 @@ export default function EditProfile() {
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
 
-        {sent && <Success />}
+        {sent && <Success message={"Suas informações foram atualizadas com sucesso!"}/>}
 
         {!sent &&
 
