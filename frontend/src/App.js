@@ -32,6 +32,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           {/* Novas rotas */}
+          
           <Route path="/" element={<Home />}></Route>
           <Route path="/loginPage" element={<LoginPage />}></Route>
           <Route path="/register" element={<Register />}></Route>
@@ -42,7 +43,6 @@ const App = () => {
           <Route path="/cookies" element={<Cookies />}></Route>
 
 
-
           {/* Novas rotas que devem ser protegidas no login */}
           <Route path="/mainPage" element={<MainPage />}></Route>
           <Route path="/reportForm" element={<ReportFormPage />}></Route>
@@ -50,9 +50,6 @@ const App = () => {
           <Route path="/addFound" element={<AddFoundForm />}></Route>
 
 
-
-
- 
           {/* Antigas rotas */}
 
           {/* <Route path="/" element={<Main />}>

@@ -38,7 +38,7 @@ const Admin = () => {
     }, []); // Executa apenas uma vez, após a montagem do componente
 
     if (loading) {
-        return <div>Loading...</div>;  // Você pode personalizar este carregamento
+        return <div>Loading...</div>;  
     }
 
     return (

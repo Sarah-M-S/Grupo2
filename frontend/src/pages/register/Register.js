@@ -1,13 +1,30 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import useRegister from "../../hooks/useRegister";
 
 export default function Register() {
-  const navigate = useNavigate()
+  const { registerUser, loading, error } = useRegister();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    course: "",
+    shift: "",
+    password: "",
+    passwordConfirm: "",
+  });
 
-  const handleRegister = () => {
-    navigate("/mainPage")
-  }
+  const handleRegister = (e) => {
+    e.preventDefault();
+    registerUser(formData);
+  };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
@@ -23,6 +40,8 @@ export default function Register() {
             <input
               type="text"
               name="name"
+              value={formData.name}
+              onChange={handleChange}
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
               placeholder="Nome Completo"
@@ -31,6 +50,8 @@ export default function Register() {
             <input
               type="text"
               name="email"
+              value={formData.email}
+              onChange={handleChange}
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
               placeholder="Email"
@@ -39,6 +60,8 @@ export default function Register() {
             <input
               type="phone-number"
               name="phone"
+              value={formData.phone}
+              onChange={handleChange}
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
               placeholder="Telefone"
@@ -47,22 +70,33 @@ export default function Register() {
             <input
               type="text"
               name="course"
+              value={formData.course}
+              onChange={handleChange}
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
               placeholder="Curso"
             />
 
-            <input
-              type="text"
-              name="time"
-              className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
-              required
-              placeholder="Turno"
-            />
+            <select
+              className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
+              name="shift"
+              value={formData.shift}
+              onChange={handleChange}
+            >
+              <option value="" disabled hidden>
+                Turno
+              </option>
+              <option value="manha">Manhã</option>
+              <option value="tarde">Tarde</option>
+              <option value="noite">Noite</option>
+              <option value="integral">Integral</option>
+            </select>
 
             <input
               type="password"
               name="password"
+              value={formData.password}
+              onChange={handleChange}
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
               placeholder="Senha"
@@ -70,7 +104,9 @@ export default function Register() {
 
             <input
               type="password"
-              name="password"
+              name="passwordConfirm"
+              value={formData.passwordConfirm}
+              onChange={handleChange}
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
               placeholder="Confirmação de Senha "
@@ -78,12 +114,23 @@ export default function Register() {
           </div>
 
           <div className="flex flex-row justify-between">
-            
-            <button 
-            onClick={handleRegister}
-            className="bg-emerald-950 rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-500">
-              Cadastrar
-            </button>
+            {!loading && (
+              <button
+                onClick={handleRegister}
+                className="bg-emerald-950 rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-500"
+              >
+                Cadastrar
+              </button>
+            )}
+            {loading && (
+              <button
+                className="bg-emerald-950 rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-500"
+                disabled
+              >
+                loading
+              </button>
+            )}
+            {error && <p>{error}</p>}
           </div>
         </div>
       </div>

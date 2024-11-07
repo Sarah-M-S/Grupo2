@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import logo from "../images/dark-logo.png";
 import profile from "../images/profile.png";
 import { useNavigate } from "react-router-dom";
+import { useLogout } from "../../hooks/useLogout";
 
 export default function LeftPanel({ state, onDisplayChange }) {
+  const { logout } = useLogout();
   const navigate = useNavigate();
 
   const handleReportForm = () => {
@@ -22,11 +24,6 @@ export default function LeftPanel({ state, onDisplayChange }) {
   const handleHelp = () => {
     // IMPLEMENTAR LOGOUT
     navigate("/help");
-  };
-
-  const handleLogout = () => {
-    // IMPLEMENTAR LOGOUT
-    navigate("/");
   };
 
   const handleDisplay = (key) => {
@@ -97,7 +94,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
 
         <div className="flex flex-row space-x-4 h-[30%] items-end">
           <button onClick={handleHelp}>Ajuda</button>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={logout}>Logout</button>
         </div>
       </div>
     </div>

@@ -1,0 +1,82 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Eduardo Ramos",
+      "email": "eduardoramos@gmail.com",
+      "senha": "123",
+      "telephone": "+5511949803682",
+      "shift": {
+        "id": "3",
+        "tittle": "nocturnal"
+      },
+      "course": {
+        "id": "1",
+        "name": "System Analysis and Development",
+        "shift": "3"
+      },
+      "admin": true,
+      "status": "active"
+    },
+    {
+      "id": "2",
+      "name": "Laura Sabino",
+      "email": "laurasabino@gmail.com",
+      "senha": "123",
+      "telephone": "+5511949803682",
+      "shift": {
+        "id": "1",
+        "tittle": "morning"
+      },
+      "course": {
+        "id": "2",
+        "name": "Architecture",
+        "shift": "1"
+      },
+      "admin": true,
+      "status": "active"
+    },
+    {
+      "id": "3e2a",
+      "name": "Grupo Dois",
+      "email": "grupo2pi1a5@gmail.com",
+      "phone": "11949803682",
+      "course": "123",
+      "shift": "tarde",
+      "password": "123",
+      "passwordConfirm": "123",
+      "token": "123",
+      "admin": true
+    },
+    {
+      "id": "e90f",
+      "name": "Grupo Dois",
+      "email": "grupo2pi1a5@gmail.com",
+      "phone": "11949803682",
+      "course": "123",
+      "shift": "",
+      "password": "123",
+      "passwordConfirm": "123"
+    },
+    {
+      "id": "a9f3",
+      "name": "Grupo Dois",
+      "email": "grupo2pi1a5@gmail.com",
+      "phone": "11949803682",
+      "course": "123",
+      "shift": "",
+      "password": "12",
+      "passwordConfirm": "123"
+    },
+    {
+      "id": "b9c5",
+      "name": "Grupo Dois",
+      "email": "grupo2pi1a5@gmail.com",
+      "phone": "11949803682",
+      "course": "123",
+      "shift": "",
+      "password": "",
+      "passwordConfirm": ""
+    }
+  ]
+}
