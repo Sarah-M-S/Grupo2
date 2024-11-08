@@ -8,7 +8,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function LeftPanel({ state, onDisplayChange }) {
   const { logout } = useLogout();
-  const { user } = useAuthContext()
+  const { payload } = useAuthContext();
   const navigate = useNavigate();
 
   const handleReportForm = () => {
@@ -40,7 +40,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
         <div className="flex flex-col items-center space-y-4">
           <img src={profile} />
           <h3 className="font-semibold text-emerald-950 text-xl">
-            Fulano Ciclano
+            {payload.user.nome}
           </h3>
         </div>
 
@@ -54,30 +54,36 @@ export default function LeftPanel({ state, onDisplayChange }) {
             Lista de Achados
           </button>
 
-          <button
-            onClick={() => handleDisplay("reports")}
-            className={`font-semibold text-emerald-950 text-lg ${
-              state === "reports" ? "underline text-emerald-500" : ""
-            }`}
-          >
-            Lista de Reportes
-          </button>
+          {payload.user.cargo === "ADMIN" && (
+            <button
+              onClick={() => handleDisplay("reports")}
+              className={`font-semibold text-emerald-950 text-lg ${
+                state === "reports" ? "underline text-emerald-500" : ""
+              }`}
+            >
+              Lista de Reportes
+            </button>
+          )}
 
-          <button
-            onClick={() => handleDisplay("users")}
-            className={`font-semibold text-emerald-950 text-lg ${
-              state === "users" ? "underline text-emerald-500" : ""
-            }`}
-          >
-            Lista de Usuários
-          </button>
+          {payload.user.cargo === "ADMIN" && (
+            <button
+              onClick={() => handleDisplay("users")}
+              className={`font-semibold text-emerald-950 text-lg ${
+                state === "users" ? "underline text-emerald-500" : ""
+              }`}
+            >
+              Lista de Usuários
+            </button>
+          )}
 
-          <button
-            onClick={handleAddFound}
-            className="font-semibold text-emerald-950 text-lg"
-          >
-            Adicionar Achado
-          </button>
+          {payload.user.cargo === "ADMIN" && (
+            <button
+              onClick={handleAddFound}
+              className="font-semibold text-emerald-950 text-lg"
+            >
+              Adicionar Achado
+            </button>
+          )}
 
           <button
             onClick={handleReportForm}

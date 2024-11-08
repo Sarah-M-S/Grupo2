@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
 
 export default function LoginPage() {
-  const { login, error, loading } = useLogin()
+  const buttonRef = useRef(null);
+  const { login, error, loading } = useLogin();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
-  })
+    password: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +28,23 @@ export default function LoginPage() {
     login(formData.email, formData.password);
   };
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        buttonRef.current.click();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+
   
+
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
@@ -68,6 +85,7 @@ export default function LoginPage() {
               Esqueci minha senha
             </button>
             <button
+              ref={buttonRef}
               onClick={handleLogin}
               className="bg-emerald-950 rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-500"
             >

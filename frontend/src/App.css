@@ -1,0 +1,30 @@
+/*GLOBAL*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(./img/background.png);
+    background-size: cover;
+}
+
+/*LANGUAGE*/
+.languageSwitcher {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.languageSwitcher button {
+    background: #f0f8ff00;
+    border: 0px;
+}
+
+.languageSwitcher img {
+    width: 50px;
+}

@@ -1,13 +1,7 @@
 import "./App.css";
-import Main from "./components/Main/Main";
-import ReportForm from "./components/Main/ReportForm";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import List from "./components/Main/List";
-import Login from "./components/Main/Login";
-import Admin from "./components/Admin/Admin";
-import ObjectForm from "./components/Admin/ObjectForm";
-import Found from "./components/Admin/Found";
-import Report from "./components/Admin/Report";
+
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import Home from "./pages/home/Home";
 import LoginPage from "./pages/loginPage/LoginPage";
@@ -22,37 +16,43 @@ import WhoWeAre from "./pages/home/whoWeAre/WhoWeAre";
 import Faq from "./pages/home/faq/Faq";
 import Cookies from "./pages/home/cookies/Cookies";
 import AddFoundForm from "./pages/addFound/AddFoundForm";
+import { useAuthContext } from "./hooks/useAuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import OpenRoute from "./components/OpenRoute";
 
 const App = () => {
+  const { authIsReady, user } = useAuthContext();
+  const navigate = useNavigate();
+
   return (
     <div className="App">
-
       <LanguageSwitcher />
 
-      <BrowserRouter>
-        <Routes>
-          {/* Novas rotas */}
-          
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/loginPage" element={<LoginPage />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/help" element={<Help />}></Route>
-          <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
-          <Route path="/whoWeAre" element={<WhoWeAre />}></Route>
-          <Route path="/faq" element={<Faq />}></Route>
-          <Route path="/cookies" element={<Cookies />}></Route>
+        {authIsReady && (
+          <Routes>
+            {/* Novas rotas */}
+
+            <Route path="/help" element={<Help />}></Route>
+            <Route path="/whoWeAre" element={<WhoWeAre />}></Route>
+            <Route path="/faq" element={<Faq />}></Route>
+            <Route path="/cookies" element={<Cookies />}></Route>
 
 
-          {/* Novas rotas que devem ser protegidas no login */}
-          <Route path="/mainPage" element={<MainPage />}></Route>
-          <Route path="/reportForm" element={<ReportFormPage />}></Route>
-          <Route path="/editProfile" element={<EditProfile />}></Route>
-          <Route path="/addFound" element={<AddFoundForm />}></Route>
+            <Route path="/" element={<OpenRoute><Home /></OpenRoute>}></Route>
+            <Route path="/loginPage" element={<OpenRoute><LoginPage /></OpenRoute>}></Route>
+            <Route path="/register" element={<OpenRoute><Register /></OpenRoute>}></Route>
+            <Route path="/forgotPassword" element={<OpenRoute><ForgotPassword /></OpenRoute>}></Route>
+            
 
+            {/* Novas rotas que devem ser protegidas no login */}
+            <Route path="/mainPage" element={<ProtectedRoute><MainPage /></ProtectedRoute>}></Route>
+            <Route path="/reportForm" element={<ProtectedRoute><ReportFormPage /></ProtectedRoute>}></Route>
+            <Route path="/editProfile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>}></Route>
+            <Route path="/addFound" element={<ProtectedRoute><AddFoundForm /></ProtectedRoute>}></Route>
 
-          {/* Antigas rotas */}
+            {/* Antigas rotas */}
 
-          {/* <Route path="/" element={<Main />}>
+            {/* <Route path="/" element={<Main />}>
             <Route path="/list" element={<List />}></Route>
             <Route path="report_form" element={<ReportForm />}></Route>
           </Route>
@@ -63,9 +63,9 @@ const App = () => {
             <Route path="found" element={<Found />}></Route>
             <Route path="report" element={<Report />}></Route>
           </Route> */}
+          </Routes>
+        )}
 
-        </Routes>
-      </BrowserRouter>
     </div>
   );
 };
