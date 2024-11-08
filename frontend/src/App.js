@@ -19,6 +19,7 @@ import AddFoundForm from "./pages/addFound/AddFoundForm";
 import { useAuthContext } from "./hooks/useAuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import OpenRoute from "./components/OpenRoute";
+import AdminRoute from "./components/AdminRoute";
 
 const App = () => {
   const { authIsReady, user } = useAuthContext();
@@ -48,7 +49,7 @@ const App = () => {
             <Route path="/mainPage" element={<ProtectedRoute><MainPage /></ProtectedRoute>}></Route>
             <Route path="/reportForm" element={<ProtectedRoute><ReportFormPage /></ProtectedRoute>}></Route>
             <Route path="/editProfile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>}></Route>
-            <Route path="/addFound" element={<ProtectedRoute><AddFoundForm /></ProtectedRoute>}></Route>
+            <Route path="/addFound" element={<AdminRoute><ProtectedRoute><AddFoundForm /></ProtectedRoute></AdminRoute>}></Route>
 
             {/* Antigas rotas */}
 

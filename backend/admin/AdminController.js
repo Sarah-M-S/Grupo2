@@ -17,6 +17,7 @@ const config = require("../config/auth.config");
 const { where } = require("sequelize");
 const { json, raw } = require("body-parser");
 const nodemailer = require("nodemailer");
+const usuario = require("../Model/usuario");
 
 //=================================================================================
 
@@ -75,23 +76,27 @@ router.post("/users/create", async (req, res) => {
   var nome = req.body.name;
   var senha = req.body.password;
   var email = req.body.email;
-  var cargo = "USER";
+  var telefone = req.body.phone
+  var admin = true;
   var turno = req.body.shift;
-  var status = 1;
+  var status = true;
 
   var salt = bcrypt.genSaltSync(10);
   var senhaHash = bcrypt.hashSync(senha, salt);
 
   // Tem que ser um user no caso
   try {
-    const user = await Administrador.create({
+    const user = await usuario.create({
       nome: nome,
       senha: senhaHash,
       email: email,
-      cargo: cargo,
+      admin: admin,
       turno: turno,
-      f_status: status,
+      telefone:telefone,
+      status: status,
     });
+
+    console.log(user)
 
     const token = jwt.sign({ id: user.id }, config.secret, {
       algorithm: "HS256",
@@ -112,7 +117,10 @@ router.post("/users/create", async (req, res) => {
 
 //checagem do token
 router.get("/admin", adminAuth, async (req, res) => {
-  const user = await Administrador.findOne({ where: { id: req.userId } })
+  if(req.userId === undefined){
+    return res.json( null );
+  }
+  const user = await usuario.findOne({ where: { id_usuario: req.userId } })
   return res.json({ user: user.dataValues });
 });
 
@@ -128,23 +136,23 @@ router.post("/autenticar", (req, res) => {
   var email = req.body.email;
   var password = req.body.password;
 
-  Administrador.findOne({ where: { email: email } }).then((admin) => {
-    if (admin != undefined) {
-      var correct = bcrypt.compareSync(password, admin.senha);
+  usuario.findOne({ where: { email: email } }).then((user) => {
+    if (user != undefined) {
+      var correct = bcrypt.compareSync(password, user.senha);
       if (correct) {
-        req.session.admin = {
-          id: admin.id,
-          email: admin.email,
-        };
+        // req.user.admin = {
+        //   id: user.id_usuario,
+        //   email: user.email,
+        // };
 
-        const token = jwt.sign({ id: admin.id }, config.secret, {
+        const token = jwt.sign({ id: user.id_usuario }, config.secret, {
           algorithm: "HS256",
           allowInsecureKeySizes: true,
           expiresIn: 86400, // 24 hours
         });
 
         res.status(200).send({
-          user: admin.dataValues,
+          user: user.dataValues,
           accessToken: token,
         });
       } else {

@@ -44,7 +44,7 @@ export const AuthContextProvider = ({ children }) => {
           },
         }).then((res) => res.json());
 
-        if (res.message === "Unauthorized!") {
+        if (!res || res.message === "Unauthorized!") {
             dispatch({ type: "AUTH_IS_READY", payload: null });
             return
         }

@@ -11,6 +11,8 @@ export default function LeftPanel({ state, onDisplayChange }) {
   const { payload } = useAuthContext();
   const navigate = useNavigate();
 
+  console.log(payload)
+
   const handleReportForm = () => {
     navigate("/reportForm");
   };
@@ -54,7 +56,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
             Lista de Achados
           </button>
 
-          {payload.user.cargo === "ADMIN" && (
+          {payload.user.admin  && (
             <button
               onClick={() => handleDisplay("reports")}
               className={`font-semibold text-emerald-950 text-lg ${
@@ -65,7 +67,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
             </button>
           )}
 
-          {payload.user.cargo === "ADMIN" && (
+          {payload.user.admin  && (
             <button
               onClick={() => handleDisplay("users")}
               className={`font-semibold text-emerald-950 text-lg ${
@@ -76,7 +78,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
             </button>
           )}
 
-          {payload.user.cargo === "ADMIN" && (
+          {payload.user.admin  && (
             <button
               onClick={handleAddFound}
               className="font-semibold text-emerald-950 text-lg"
