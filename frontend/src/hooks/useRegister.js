@@ -11,7 +11,7 @@ const useRegister = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:3001/users', {
+      const response = await fetch('http://localhost:8083/users/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ const useRegister = () => {
         throw new Error('Failed to register user');
       }
 
-      const user = await response.json();
+      const user =  response.json();
       dispatch({ type: 'LOGIN', payload: user})
 
     } catch (err) {

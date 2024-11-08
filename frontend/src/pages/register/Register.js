@@ -86,10 +86,10 @@ export default function Register() {
               <option value="" disabled hidden>
                 Turno
               </option>
-              <option value="manha">Manhã</option>
-              <option value="tarde">Tarde</option>
-              <option value="noite">Noite</option>
-              <option value="integral">Integral</option>
+              <option value="1">Manhã</option>
+              <option value="2">Tarde</option>
+              <option value="3">Noite</option>
+              <option value="4">Integral</option>
             </select>
 
             <input

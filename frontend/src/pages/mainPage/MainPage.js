@@ -9,6 +9,7 @@ import UserCard from "../card/UserCard";
 export default function MainPage() {
   const [display, setDisplay] = useState("found");
 
+
   const handleDisplay = (key) => {
     setDisplay(key)
   };

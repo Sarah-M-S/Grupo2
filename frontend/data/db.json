@@ -37,46 +37,24 @@
       "status": "active"
     },
     {
-      "id": "3e2a",
-      "name": "Grupo Dois",
-      "email": "grupo2pi1a5@gmail.com",
+      "id": "dc3e",
+      "name": "Diego Celestino",
+      "email": "diegocdsantos@gmail.com",
       "phone": "11949803682",
-      "course": "123",
+      "course": "ADS",
       "shift": "tarde",
       "password": "123",
-      "passwordConfirm": "123",
-      "token": "123",
-      "admin": true
+      "passwordConfirm": "123"
     },
     {
-      "id": "e90f",
-      "name": "Grupo Dois",
-      "email": "grupo2pi1a5@gmail.com",
+      "id": "10cf",
+      "name": "Diego Celestino",
+      "email": "diegocdsantos@gmail.com",
       "phone": "11949803682",
-      "course": "123",
-      "shift": "",
+      "course": "ADS",
+      "shift": "4",
       "password": "123",
       "passwordConfirm": "123"
-    },
-    {
-      "id": "a9f3",
-      "name": "Grupo Dois",
-      "email": "grupo2pi1a5@gmail.com",
-      "phone": "11949803682",
-      "course": "123",
-      "shift": "",
-      "password": "12",
-      "passwordConfirm": "123"
-    },
-    {
-      "id": "b9c5",
-      "name": "Grupo Dois",
-      "email": "grupo2pi1a5@gmail.com",
-      "phone": "11949803682",
-      "course": "123",
-      "shift": "",
-      "password": "",
-      "passwordConfirm": ""
     }
   ]
 }

@@ -21,7 +21,11 @@ const nodemailer = require("nodemailer");
 //=================================================================================
 
 //Config da router
-router.use(cors());
+router.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 router.use(
   session({ secret: "miasdknndsalininadnh", cookie: { maxAge: 30000 } })
 );
@@ -30,30 +34,34 @@ router.use(
 //Rotas da router
 
 router.get("/admin/encontrados", (req, res) => {
-  itemCadastrado.findAll({
-    order: [
-      ['dataCadastro', 'Desc'] // Change 'ASC' to 'DESC' for descending order
-    ]
-  }).then((itens) => {
-    res.json({ itens: itens });
-  }).catch((error) => {
-    res.status(500).json({ error: error.message });
-  });
+  itemCadastrado
+    .findAll({
+      order: [
+        ["dataCadastro", "Desc"], // Change 'ASC' to 'DESC' for descending order
+      ],
+    })
+    .then((itens) => {
+      res.json({ itens: itens });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: error.message });
+    });
 });
-
 
 router.get("/admin/perdidos", (req, res) => {
-  itemPerdido.findAll({
-    order: [
-      ['data', 'DESC'] // Change 'ASC' to 'DESC' for descending order
-    ]
-  }).then((itens) => {
-    res.json({ itens: itens });
-  }).catch((error) => {
-    res.status(500).json({ error: error.message });
-  });
+  itemPerdido
+    .findAll({
+      order: [
+        ["data", "DESC"], // Change 'ASC' to 'DESC' for descending order
+      ],
+    })
+    .then((itens) => {
+      res.json({ itens: itens });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: error.message });
+    });
 });
-
 
 //formulario criacao admin
 router.get("/admin/users/create", (req, res) => {
@@ -61,31 +69,43 @@ router.get("/admin/users/create", (req, res) => {
 });
 
 // criacao admin banco
-router.post("/users/create", (req, res) => {
-  var nome = req.body.nome;
-  var senha = req.body.senha;
+// To mexendo aqui pra criar os usuários
+router.post("/users/create", async (req, res) => {
+  // Precisamos montar corretamente o objeto aqui
+  var nome = req.body.name;
+  var senha = req.body.password;
   var email = req.body.email;
-  var cargo = req.body.cargo;
-  var turno = req.body.turno;
-  var status = req.body.f_status;
+  var cargo = "USER";
+  var turno = req.body.shift;
+  var status = 1;
 
-  var salt = bcrypt.genSaltSync(10); //gerando seed de encriptação
+  var salt = bcrypt.genSaltSync(10);
   var senhaHash = bcrypt.hashSync(senha, salt);
 
-  Administrador.create({
-    nome: nome,
-    senha: senhaHash,
-    email: email,
-    cargo: cargo,
-    turno: turno,
-    f_status: status,
-  })
-    .then(() => {
-      res.redirect("/admin/home");
-    })
-    .catch((err) => {
-      res.redirect("/admin/home");
+  // Tem que ser um user no caso
+  try {
+    const user = await Administrador.create({
+      nome: nome,
+      senha: senhaHash,
+      email: email,
+      cargo: cargo,
+      turno: turno,
+      f_status: status,
     });
+
+    const token = jwt.sign({ id: user.id }, config.secret, {
+      algorithm: "HS256",
+      allowInsecureKeySizes: true,
+      expiresIn: 86400, // 24 hours
+    });
+
+    res.status(200).send({
+      user: user.dataValues,
+      accessToken: token,
+    });
+  } catch (err) {
+    res.status(401).send(err);
+  }
 });
 
 //checagem do token
@@ -102,16 +122,12 @@ router.get("/admin/users/list", adminAuth, (req, res) => {
 
 //autenticacao de login admins
 router.post("/autenticar", (req, res) => {
-  console.log(req.body);
   var email = req.body.email;
   var password = req.body.password;
-  console.log(email + " " + password)
 
   Administrador.findOne({ where: { email: email } }).then((admin) => {
-
     if (admin != undefined) {
       var correct = bcrypt.compareSync(password, admin.senha);
-      console.log(correct)
       if (correct) {
         req.session.admin = {
           id: admin.id,
@@ -125,6 +141,7 @@ router.post("/autenticar", (req, res) => {
         });
 
         res.status(200).send({
+          user: user.dataValues,
           accessToken: token,
         });
       } else {
@@ -134,6 +151,10 @@ router.post("/autenticar", (req, res) => {
       res.status(401).send("Acesso Negado");
     }
   });
+});
+
+router.post("/logout", (req, res) => {
+  console.log(req.body);
 });
 
 // reporta item perdido
@@ -235,9 +256,8 @@ router.post("/cadastrarItem", (req, res) => {
           },
         })
         .then((itens) => {
-
-           //nodmailer config
-           let transporter = nodemailer.createTransport({
+          //nodmailer config
+          let transporter = nodemailer.createTransport({
             service: "gmail",
             port: 465,
             secure: true,
@@ -248,7 +268,6 @@ router.post("/cadastrarItem", (req, res) => {
           });
 
           itens.forEach((item) => {
-
             const mailOptions = {
               from: "grupo2pi1a5@gmail.com",
               to: item.email,
@@ -267,15 +286,14 @@ router.post("/cadastrarItem", (req, res) => {
                 },
               ],
             };
-    
-            transporter.sendMail(mailOptions, function(error, info){
+
+            transporter.sendMail(mailOptions, function (error, info) {
               if (error) {
                 console.log(error);
               } else {
-                console.log('Email enviado: ' + info.response);
+                console.log("Email enviado: " + info.response);
               }
             });
-
           });
         })
         .then(res.redirect("/admin/home"))

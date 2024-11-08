@@ -27,7 +27,7 @@ function Home() {
 
   return (
     <div className="w-svw h-svh flex-col">
-      <div className="h-[90%] w-full flex-col content-center justify-items-center">
+      <div className="h-[90%] w-full flex flex-col items-center justify-center">
         <div className="flex-col space-y-12">
           <div className="">
             <img src={logo} />

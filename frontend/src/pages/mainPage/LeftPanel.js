@@ -4,9 +4,11 @@ import logo from "../images/dark-logo.png";
 import profile from "../images/profile.png";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
+import useSession from "../../hooks/useSession";
 
 export default function LeftPanel({ state, onDisplayChange }) {
   const { logout } = useLogout();
+  const { session, reading } = useSession();
   const navigate = useNavigate();
 
   const handleReportForm = () => {
@@ -93,7 +95,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
         </div>
 
         <div className="flex flex-row space-x-4 h-[30%] items-end">
-          <button onClick={handleHelp}>Ajuda</button>
+          <button onClick={reading}>Ajuda</button>
           <button onClick={logout}>Logout</button>
         </div>
       </div>

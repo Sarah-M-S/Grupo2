@@ -1,26 +1,32 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 
-export const useLogout = () => {
+export const useLogin = () => {
   const [isCanceled, setIsCanceled] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { dispatch } = useAuthContext();
-  const { user } = useAuthContext();
 
-  const logout = async () => {
+  const login = async (email, password) => {
     setError(null);
     setLoading(true);
 
-    try {
-        fetch('http://localhost:3001/logout', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
+    const login = {
+      email: email,
+      password: password,
+    };
 
-      dispatch({ type: "LOGOUT" });
+    try {
+      const res = await fetch("http://localhost:8083/autenticar", {
+        method: "POST",
+        body: JSON.stringify(login),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(res => res.json())
+
+      dispatch({ type: "LOGIN", payload: res.user });
 
       if (!isCanceled) {
         setLoading(false);
@@ -39,5 +45,5 @@ export const useLogout = () => {
     return () => setIsCanceled(true);
   }, []);
 
-  return { logout, error, loading };
+  return { login, error, loading };
 };

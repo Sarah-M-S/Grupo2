@@ -1,16 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "../../hooks/useLogin";
 
 export default function LoginPage() {
+  const { login, error, loading } = useLogin()
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  })
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const handleForgotPassword = () => {
     navigate("/forgotPassword");
   };
 
-  const handleLogin = () => {
-    navigate("/mainPage");
+  const handleLogin = (e) => {
+    e.preventDefault();
+    login(formData.email, formData.password);
   };
+
+  
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
@@ -25,6 +42,8 @@ export default function LoginPage() {
             <input
               type="text"
               name="email"
+              value={formData.email}
+              onChange={handleChange}
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               required
               placeholder="Login"
@@ -33,6 +52,8 @@ export default function LoginPage() {
             <input
               type="password"
               name="password"
+              value={formData.password}
+              onChange={handleChange}
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               required
               placeholder="Senha"
