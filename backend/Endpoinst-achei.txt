@@ -1,0 +1,65 @@
+Main - localhost:8083
+------------------------------------------------------------------------------------------------------
+reportar perda (usuario)
+localhost:8083/formularioPerda
+
+devolver ao backend:
+ <form action="/confirmar" method="POST" onsubmit="return confirm('Tem certeza que deseja enviar o formulário?');">
+        
+	id="nome" name="nome" required>
+        id="tituloItem" name="tituloItem" required>
+        id="email" name="email" required>
+        id="descricao" name="descricao" rows="5" required></textarea>
+        id="marca" name="marca" required>
+        id="categoria" name="categoria" required>
+        id="curso" name="curso" required>
+        <select id="periodo" name="periodo" required>
+	(sugestão de dropbox)
+            <optgroup label="">
+                <option value="matutino"><%= i18next.t('matutino')  %></option>
+                <option value="vespertino"><%= i18next.t('vespertino')  %></option>
+                <option value="noturno"><%= i18next.t('noturno')  %></option>
+            </optgroup>
+        </select>
+
+        id="cor" name="cor" required>
+        id="local" name="local" required>
+        id="dataPerda" name="dataPerda" required>
+        <button type="submit">Enviar</button>
+        </form>
+        
+------------------------------------------------------------------------------------------------------
+login - localhost:8083/logar
+Para funcionar o login, ao clicar para logar, deve ser chamada uma action="/autenticar" method="post",
+e devem existir:
+name=email,
+name=password,
+como parametros.
+------------------------------------------------------------------------------------------------------
+Founds
+listar objetos cadastrados pelo admin:
+localhost:8083/admin/encontrados
+------------------------------------------------------------------------------------------------------
+Reports
+listar objetos perdidos por usuarios:
+localhost:8083/admin/perdidos
+
+------------------------------------------------------------------------------------------------------
+add-object
+/admin/formularioReporte
+Necessário devolver para o back:
+  <form action="/cadastrarItem" method="POST" onsubmit="return confirm('Tem certeza que deseja enviar o formulário?');">
+
+       	id="tituloItem" name="tituloItem"
+	id="descricao" name="descricao" 
+        id="marca" name="marca"
+        id="categoria" name="categoria" 
+     	id="cor" name="cor"
+        id="local" name="local"
+        id="dataEncontro" name="dataEncontro"
+        id="registrador" name="registrador" (pessoa que fez o cadastro)
+        <button type="submit">Enviar:</button>
+        
+    </form>
+Todos com exceção de marca devem estar preenchidos
+-------------------------------------------------------------------------------------------------------
