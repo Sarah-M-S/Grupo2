@@ -17,14 +17,11 @@ const useRegister = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(userData),
-      });
+      })
+      .then(response => response.json())
 
-      if (!response.ok) {
-        throw new Error('Failed to register user');
-      }
-
-      const user =  response.json();
-      dispatch({ type: 'LOGIN', payload: user})
+      console.log(response)
+      dispatch({ type: 'LOGIN', payload: response})
 
     } catch (err) {
       setError(err.message);

@@ -4,11 +4,11 @@ import logo from "../images/dark-logo.png";
 import profile from "../images/profile.png";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
-import useSession from "../../hooks/useSession";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function LeftPanel({ state, onDisplayChange }) {
   const { logout } = useLogout();
-  const { session, reading } = useSession();
+  const { user } = useAuthContext()
   const navigate = useNavigate();
 
   const handleReportForm = () => {
@@ -30,7 +30,6 @@ export default function LeftPanel({ state, onDisplayChange }) {
 
   const handleDisplay = (key) => {
     onDisplayChange(key);
-    console.log(key);
   };
 
   return (
@@ -41,7 +40,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
         <div className="flex flex-col items-center space-y-4">
           <img src={profile} />
           <h3 className="font-semibold text-emerald-950 text-xl">
-            Fulano Cicrano
+            Fulano Ciclano
           </h3>
         </div>
 
@@ -95,7 +94,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
         </div>
 
         <div className="flex flex-row space-x-4 h-[30%] items-end">
-          <button onClick={reading}>Ajuda</button>
+          <button onClick={handleHelp}>Ajuda</button>
           <button onClick={logout}>Logout</button>
         </div>
       </div>

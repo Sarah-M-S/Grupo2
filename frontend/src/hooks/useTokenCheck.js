@@ -1,32 +1,35 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 
-export const useLogin = () => {
+export const useTokenCheck = () => {
   const [isCanceled, setIsCanceled] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { dispatch } = useAuthContext();
 
-  const login = async (email, password) => {
+  const checkToken = async () => {
     setError(null);
     setLoading(true);
 
-    const login = {
-      email: email,
-      password: password,
-    };
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      console.log("not token:", token);
+      dispatch({ type: "AUTH_IS_READY", payload: null });
+      return;
+    }
+
+    console.log("token:", token);
 
     try {
-      const res = await fetch("http://localhost:8083/autenticar", {
-        method: "POST",
-        body: JSON.stringify(login),
+      const res = await fetch("http://localhost:8083/admin", {
+        method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "access-token": localStorage.getItem("token"),
         },
-      })
-      .then(res => res.json())
+      }).then((res) => res.json());
 
-      dispatch({ type: "LOGIN", payload: res });
+      dispatch({ type: "AUTH_IS_READY", payload: res });
 
       if (!isCanceled) {
         setLoading(false);
@@ -45,5 +48,5 @@ export const useLogin = () => {
     return () => setIsCanceled(true);
   }, []);
 
-  return { login, error, loading };
+  return { checkToken, error, loading };
 };

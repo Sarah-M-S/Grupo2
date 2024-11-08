@@ -12,26 +12,8 @@ export const useLogout = () => {
     setError(null);
     setLoading(true);
 
-    try {
-        fetch('http://localhost:3001/logout', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-
-      dispatch({ type: "LOGOUT" });
-
-      if (!isCanceled) {
-        setLoading(false);
-        setError(null);
-      }
-    } catch (err) {
-      if (!isCanceled) {
-        setError(err.message);
-        setLoading(false);
-      }
-    }
+    dispatch({ type: "LOGOUT" });
+    
   };
 
   useEffect(() => {

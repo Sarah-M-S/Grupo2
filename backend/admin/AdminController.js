@@ -99,6 +99,8 @@ router.post("/users/create", async (req, res) => {
       expiresIn: 86400, // 24 hours
     });
 
+    console.log(user.dataValues)
+
     res.status(200).send({
       user: user.dataValues,
       accessToken: token,
@@ -109,8 +111,9 @@ router.post("/users/create", async (req, res) => {
 });
 
 //checagem do token
-router.get("/admin", adminAuth, (req, res) => {
-  return res.json({ authenticated: true });
+router.get("/admin", adminAuth, async (req, res) => {
+  const user = await Administrador.findOne({ where: { id: req.userId } })
+  return res.json({ user: user.dataValues });
 });
 
 // listagem de admins
@@ -141,7 +144,7 @@ router.post("/autenticar", (req, res) => {
         });
 
         res.status(200).send({
-          user: user.dataValues,
+          user: admin.dataValues,
           accessToken: token,
         });
       } else {
