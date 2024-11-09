@@ -11,8 +11,6 @@ export default function LeftPanel({ state, onDisplayChange }) {
   const { payload } = useAuthContext();
   const navigate = useNavigate();
 
-  console.log(payload)
-
   const handleReportForm = () => {
     navigate("/reportForm");
   };

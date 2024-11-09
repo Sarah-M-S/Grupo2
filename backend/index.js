@@ -208,14 +208,6 @@ app.post("/cadastrarPerda", (req, res) => {
 
 
 
-
-
-
-
-
-
-// ------------------------------------------------------------------------------------
-
 app.get("/session", (req, res)=>{
   req.session.nome = "teste usuario"
   res.send("ok")

@@ -18,6 +18,7 @@ const { where } = require("sequelize");
 const { json, raw } = require("body-parser");
 const nodemailer = require("nodemailer");
 const usuario = require("../Model/usuario");
+const item = require("../Model/Item");
 
 //=================================================================================
 
@@ -31,6 +32,126 @@ router.use(
   session({ secret: "miasdknndsalininadnh", cookie: { maxAge: 30000 } })
 );
 //=================================================================================
+//itens----------------------------------------------------------------------------
+//Listar itens perdidos
+router.get("/admin/list/item/perdidos", (req, res) => {
+  item.findAll({
+    where : {
+      situacao : 1 //perdido
+    },
+    order: [
+      ['createdAt', 'DESC']
+    ]
+
+  }).then(itens => {
+    res.json({ itens: itens });
+}).catch(error => {
+    res.status(500).json({ error: error.message });
+});
+});
+
+//usuarios--------------------------------------------------------------------------
+//Listar usuarios
+router.get("/admin/list/usuarios", (req, res) => {
+  usuario.findAll({
+  }).then(usuario => {
+    res.json({ usuario: usuario });
+}).catch(error => {
+    res.status(500).json({ error: error.message });
+});
+});
+
+//formularios--------------------------------------------------------------------------
+
+// Adicionar achado
+router.post("/admin/adicionarAchado", (req, res) => {
+  var tituloItem = req.body.achado.tituloItem;
+  var descricao = req.body.achado.descricao;
+  var categoria = req.body.achado.categoria;
+  var cor = req.body.achado.cor;
+  var marca = req.body.achado.marca;
+  var localEncontro = req.body.achado.localEncontro;
+  var dependencia = req.body.achado.dependencia;
+  var dataEntrada = req.body.achado.dataEntrada;
+  var situacao = 2; //encontrados
+  var usuarioCadastrante =  req.session.usuario != null ?  req.session.usuario : 22;
+ 
+
+  item.create({
+    titulo: tituloItem,
+    descricao: descricao,
+    categoria: categoria,
+    cor: cor,
+    marca: marca,
+    local_encontro: localEncontro,
+    dependencia_encontro: dependencia,
+    data_entrada: dataEntrada,
+    situacao: situacao,
+    usuario_cadastrante: usuarioCadastrante,
+  })
+    .then((itemCriado) => {
+      // Retorna uma resposta de sucesso com o item criado
+      res.status(201).json({
+        sucesso: true,
+        mensagem: 'Item cadastrado com sucesso!',
+        dados: itemCriado
+      });
+    })
+    .catch((erro) => {
+      // Retorna uma resposta de erro com a mensagem de erro
+      res.status(500).json({
+        sucesso: false,
+        mensagem: 'Erro ao cadastrar o item.',
+        erro: erro.message
+      });
+    });
+});
+
+// reportar perda sendo admin
+router.post("/admin/reportarPerda", (req, res) => {
+  var tituloItem = req.body.itemPerdido.tituloItem;
+  var descricao = req.body.itemPerdido.descricao;
+  var categoria = req.body.itemPerdido.categoria;
+  var cor = req.body.itemPerdido.cor;
+  var marca = req.body.itemPerdido.marca;
+  var localPerda = req.body.itemPerdido.localPerda;
+  var dependencia = req.body.itemPerdido.dependencia;
+  var dataPerda = req.body.itemPerdido.dataPerda;
+  var situacao = 1; //perdido
+  var usuarioCadastrante =  req.session.usuario != null ?  req.session.usuario : 22;
+  var usuarioPerda = req.body.itemPerdido.usuarioPerda;
+ 
+
+  item.create({
+    titulo: tituloItem,
+    descricao: descricao,
+    categoria: categoria,
+    cor: cor,
+    marca: marca,
+    local_perda: localPerda,
+    dependencia_perda: dependencia,
+    data_perda: dataPerda,
+    situacao: situacao,
+    usuario_cadastrante: usuarioCadastrante,
+    usuario_perda: usuarioPerda
+  })
+    .then((itemCriado) => {
+      // Retorna uma resposta de sucesso com o item criado
+      res.status(201).json({
+        sucesso: true,
+        mensagem: 'Item cadastrado com sucesso!',
+        dados: itemCriado
+      });
+    })
+    .catch((erro) => {
+      // Retorna uma resposta de erro com a mensagem de erro
+      res.status(500).json({
+        sucesso: false,
+        mensagem: 'Erro ao cadastrar o item.',
+        erro: erro.message
+      });
+    });
+});
 
 //Rotas da router
 

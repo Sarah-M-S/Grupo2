@@ -5,10 +5,14 @@ import LeftPanel from "./LeftPanel";
 import SearchBar from "./SearchBar";
 import Filters from "./Filters";
 import UserCard from "../card/UserCard";
+import FoundPanel from "./FoundPanel";
+import useFetchData from "../../hooks/useFetchData";
+import ReportsPanel from "./ReportsPanel";
+import UserPanel from "./UserPanel";
 
 export default function MainPage() {
   const [display, setDisplay] = useState("found");
-
+  
 
   const handleDisplay = (key) => {
     setDisplay(key)
@@ -37,42 +41,15 @@ export default function MainPage() {
             
               {/* cards de objeto */}
               {display === "found" && 
-              <div className="max-h-[70%] h-[70%] w-full flex flex-col space-y-2 overflow-y-auto">
-              <ObjectCard object={{object:"Garrafa Azul", place:"Cantina", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Garrafa Azul", place:"Cantina", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Garrafa Azul", place:"Cantina", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Garrafa Azul", place:"Cantina", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Garrafa Azul", place:"Cantina", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Garrafa Azul", place:"Cantina", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Garrafa Azul", place:"Cantina", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Garrafa Azul", place:"Cantina", date:"01/01/2001"}}/>
-              </div>
+                <FoundPanel/>
               }
 
               {display === "reports" && 
-              <div className="max-h-[70%] h-[70%] w-full flex flex-col space-y-2 overflow-y-auto">
-              <ObjectCard object={{object:"Moletom de Couro", place:"aaaaa", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Moletom de Couro", place:"aaaaan", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Moletom de Couro", place:"aaaaa", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Moletom de Couro", place:"aaaaa", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Moletom de Couro", place:"aaaaa", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Moletom de Couro", place:"aaaaa", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Moletom de Couro", place:"aaaaa", date:"01/01/2001"}}/>
-              <ObjectCard object={{object:"Moletom de Couro", place:"aaaaa", date:"01/01/2001"}}/>
-              </div>
+              <ReportsPanel />
               }
 
               {display === "users" && 
-              <div className="max-h-[70%] h-[70%] w-full flex flex-col space-y-2 overflow-y-auto">
-              <UserCard user={{object:"Raul Garcia", place:"User", date:"01/01/2001"}}/>
-              <UserCard user={{object:"Raul Garcia", place:"Admin", date:"01/01/2001"}}/>
-              <UserCard user={{object:"Raul Garcia", place:"User", date:"01/01/2001"}}/>
-              <UserCard user={{object:"Raul Garcia", place:"User", date:"01/01/2001"}}/>
-              <UserCard user={{object:"Raul Garcia", place:"User", date:"01/01/2001"}}/>
-              <UserCard user={{object:"Raul Garcia", place:"User", date:"01/01/2001"}}/>
-              <UserCard user={{object:"Raul Garcia", place:"User", date:"01/01/2001"}}/>
-              <UserCard user={{object:"Raul Garcia", place:"User", date:"01/01/2001"}}/>
-              </div>
+              <UserPanel />
               }
             
           </div>

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import useRegister from "../../hooks/useRegister";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
   const { registerUser, loading, error } = useRegister();
   const [formData, setFormData] = useState({
     name: "",
@@ -16,6 +18,10 @@ export default function Register() {
   const handleRegister = (e) => {
     e.preventDefault();
     registerUser(formData);
+  };
+
+  const handleBack = () => {
+    navigate("/");
   };
 
   const handleChange = (e) => {
@@ -114,6 +120,12 @@ export default function Register() {
           </div>
 
           <div className="flex flex-row justify-between">
+            <button
+              onClick={handleBack}
+              className="bg-white rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-950"
+            >
+              Voltar
+            </button>
             {!loading && (
               <button
                 onClick={handleRegister}
@@ -122,6 +134,7 @@ export default function Register() {
                 Cadastrar
               </button>
             )}
+
             {loading && (
               <button
                 className="bg-emerald-950 rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-500"

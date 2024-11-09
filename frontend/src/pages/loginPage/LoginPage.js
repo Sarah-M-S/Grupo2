@@ -23,6 +23,10 @@ export default function LoginPage() {
     navigate("/forgotPassword");
   };
 
+  const handleRegister = () => {
+    navigate("/register");
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
     login(formData.email, formData.password);
@@ -30,20 +34,17 @@ export default function LoginPage() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === 'Enter') {
+      if (event.key === "Enter") {
         buttonRef.current.click();
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
-
-
-  
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
@@ -76,21 +77,30 @@ export default function LoginPage() {
               placeholder="Senha"
             />
           </div>
-
-          <div className="flex flex-row justify-between">
-            <button
-              onClick={handleForgotPassword}
-              className="text-emerald-950 rounded-full py-2 px-2 text-lg font-semibold"
-            >
-              Esqueci minha senha
-            </button>
-            <button
-              ref={buttonRef}
-              onClick={handleLogin}
-              className="bg-emerald-950 rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-500"
-            >
-              Entrar
-            </button>
+          <div className="flex flex-col space-y-4">
+            <div className="flex flex-row justify-between">
+              <button
+                onClick={handleForgotPassword}
+                className="text-emerald-950 rounded-full py-2 px-2 text-lg font-semibold"
+              >
+                Esqueci minha senha
+              </button>
+              <button
+                ref={buttonRef}
+                onClick={handleLogin}
+                className="bg-emerald-950 rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-500"
+              >
+                Entrar
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={handleRegister}
+                className="text-emerald-950 rounded-full px-2 text-sm font-semibold"
+              >
+                Ainda não tem conta? Faça seu cadastro!
+              </button>
+            </div>
           </div>
         </div>
       </div>

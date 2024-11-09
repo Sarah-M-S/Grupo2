@@ -5,7 +5,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 const AdminRoute = ({ children }) => {
   const { payload } = useAuthContext();
 
-  if (!payload.admin) {
+  if (!payload.user.admin) {
     return <Navigate to="/mainPage" replace />;
   }
 
