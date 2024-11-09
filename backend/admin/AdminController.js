@@ -74,8 +74,8 @@ router.post("/admin/adicionarAchado", (req, res) => {
   var dependencia = req.body.achado.dependencia;
   var dataEntrada = req.body.achado.dataEntrada;
   var situacao = 2; //encontrados
-  // Enviar o ID do admin cadastrante
-  var usuarioCadastrante =  req.session.usuario != null ?  req.session.usuario : 22;
+  // Enviar o ID do admin
+  var usuarioCadastrante =  req.body.achado.usuarioCadastrante;
  
 
   item.create({

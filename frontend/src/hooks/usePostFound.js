@@ -1,8 +1,10 @@
-import { useState } from "react";
+import {  useState } from "react";
+import { useAuthContext } from "./useAuthContext";
 
 const usePostFound = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const { payload } = useAuthContext()
 
   const postFound = async (formData) => {
     setIsSubmitting(true);
@@ -17,6 +19,7 @@ const usePostFound = () => {
       localEncontro: formData.place,
       dependencia: formData.dependencie,
       dataEntrada: formData.date,
+      usuarioCadastrante: payload.user.id_usuario
     };
 
     try {
