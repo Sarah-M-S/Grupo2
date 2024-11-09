@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Success from "../success/Success";
+import useFetchValues from "../../hooks/useFetchValues";
+import usePostFound from "../../hooks/usePostFound";
 
 export default function AddFoundForm() {
   const [formData, setFormData] = useState({
@@ -13,6 +15,11 @@ export default function AddFoundForm() {
     dependencie: "",
     details: "",
   });
+  const { places, colors, categories, dependencies } = useFetchValues(
+    formData.place
+  );
+  const { isSubmitting, error, postFound } = usePostFound()
+
   const [sent, setSent] = useState(false);
   const navigate = useNavigate();
 
@@ -25,7 +32,7 @@ export default function AddFoundForm() {
   };
 
   const handleSave = () => {
-    console.log(formData);
+    postFound(formData)
     setSent(true);
   };
 
@@ -36,9 +43,12 @@ export default function AddFoundForm() {
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
-        {sent && <Success 
-        message={"Objeto adicionado com sucesso!"}
-        route={"/mainPage"}/>}
+        {sent && (
+          <Success
+            message={"Objeto adicionado com sucesso!"}
+            route={"/mainPage"}
+          />
+        )}
 
         {!sent && (
           <div className="flex flex-col w-full max-w-md space-y-8 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
@@ -54,30 +64,36 @@ export default function AddFoundForm() {
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
+                required
               >
                 <option value="" disabled hidden>
                   Categoria
                 </option>
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+                {categories &&
+                  categories.categorias.map((categoria) => (
+                    <option
+                      key={categoria.id_categoria}
+                      value={categoria.id_categoria}
+                    >
+                      {categoria.nome}
+                    </option>
+                  ))}
+                {!places && (
+                  <option value="" disabled hidden>
+                    Categoria
+                  </option>
+                )}
               </select>
 
-              <select
+              <input
+                type="text"
                 className="rounded-xl w-full h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
                 name="object"
                 value={formData.object}
                 onChange={handleChange}
-              >
-                <option value="" disabled hidden>
-                  Objeto
-                </option>
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-              </select>
+                required
+                placeholder="Objeto"
+              />
 
               <select
                 className="rounded-xl w-full h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
@@ -88,10 +104,17 @@ export default function AddFoundForm() {
                 <option value="" disabled hidden>
                   Cor
                 </option>
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+                {colors &&
+                  colors.cor.map((cor) => (
+                    <option key={cor.id_cor} value={cor.id_cor}>
+                      {cor.nome}
+                    </option>
+                  ))}
+                {!places && (
+                  <option value="" disabled hidden>
+                    Categoria
+                  </option>
+                )}
               </select>
 
               <input
@@ -102,6 +125,17 @@ export default function AddFoundForm() {
                 onChange={handleChange}
                 required
                 placeholder="Marca"
+              />
+
+              <textarea
+                type="text"
+                name="details"
+                rows="8"
+                className="rounded-xl w-full max-h-24 min-h-24 py-2 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
+                required
+                placeholder="Detalhes"
+                value={formData.details}
+                onChange={handleChange}
               />
 
               <input
@@ -119,12 +153,19 @@ export default function AddFoundForm() {
                 onChange={handleChange}
               >
                 <option value="" disabled hidden>
-                  Bloco
+                  Local
                 </option>
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+                {places &&
+                  places.locais.map((place) => (
+                    <option key={place.id_local} value={place.id_local}>
+                      {place.titulo}
+                    </option>
+                  ))}
+                {!places && (
+                  <option value="" disabled hidden>
+                    Local
+                  </option>
+                )}
               </select>
 
               <select
@@ -132,14 +173,25 @@ export default function AddFoundForm() {
                 name="dependencie"
                 value={formData.dependencie}
                 onChange={handleChange}
+                disabled={!dependencies}
               >
                 <option value="" disabled hidden>
                   Dependência
                 </option>
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+                {dependencies &&
+                  dependencies.dependencias.map((dependencia) => (
+                    <option
+                      key={dependencia.id_dependencia}
+                      value={dependencia.id_dependencia}
+                    >
+                      {dependencia.titulo}
+                    </option>
+                  ))}
+                {!places && (
+                  <option value="" disabled hidden>
+                    Dependência
+                  </option>
+                )}
               </select>
             </div>
 
