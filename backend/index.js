@@ -118,25 +118,6 @@ app.get("/list/locais/dependencias/:id", (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Listar itens devolvidos
 app.get("/list/item/devolvido", (req, res) => {
   item.findAll({
@@ -199,12 +180,6 @@ app.post("/cadastrarPerda", (req, res) => {
 
 
 
-
-
-
-
-
-
 // ------------------------------------------------------------------------------------
 
 app.get("/session", (req, res)=>{
@@ -219,66 +194,6 @@ app.get("/leitura", (req, res)=>{
 })
 
 //--------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //formularios de perda
