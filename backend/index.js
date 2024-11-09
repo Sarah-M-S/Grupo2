@@ -25,7 +25,8 @@ app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', adminController)
-app.use(session({ secret: "miasdknndsalininadnh", cookie: { maxAge:30000 }
+app.use(session({
+  secret: "miasdknndsalininadnh", cookie: { maxAge: 30000 }
 }))
 app.use(cors())
 
@@ -46,23 +47,23 @@ i18next.init({
 // Pagina inicial
 app.get("/", (req, res) => {
   itemCadastrado.findAll({
-      order: [
-          ['dataCadastro', 'Desc'] // Change 'ASC' to 'DESC' for descending order
-      ]
+    order: [
+      ['dataCadastro', 'Desc'] // Change 'ASC' to 'DESC' for descending order
+    ]
   }).then(itens => {
-      res.json({ itens: itens });
+    res.json({ itens: itens });
   }).catch(error => {
-      res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   });
 });
 
 
-app.get("/session", (req, res)=>{
+app.get("/session", (req, res) => {
   req.session.nome = "Funciona meu nome"
   res.send("ok")
 })
 
-app.get("/leitura", (req, res)=>{
+app.get("/leitura", (req, res) => {
   res.json({
     nome: req.session.nome
   })
@@ -76,7 +77,7 @@ app.get("/formularioPerda", (req, res) => {
 });
 
 app.get("/formularioPerda/en", (req, res) => {
-  res.render("formularioPerda", {i18next: i18next});
+  res.render("formularioPerda", { i18next: i18next });
   i18next.changeLanguage('en')
 })
 
@@ -87,7 +88,7 @@ app.get("/formularioPerda/zh", (req, res) => {
 
 
 //rota botão login
- app.get("/logar", (req, res) => {
+app.get("/logar", (req, res) => {
   res.render("login")
 });
 
@@ -117,48 +118,56 @@ app.post("/cadastrarPerda", (req, res) => {
       cor: cor,
       local: local,
       data: dataPerda,
-      marca: marca,
+      marca: marca
     })
     .then(res.redirect("/"));
 
-    //Nodemailer config
+  //Nodemailer config
+
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'grupo2pi1a5@gmail.com',
+      pass: 'djkt axge nvgo rjcr'
+    }
+  });
+
+  const mailOptions = {
+    from: 'grupo2pi1a5@gmail.com',
+    to: req.body.itemPerdido.email,
+    subject: `iChei - Item perdido reportado: ${req.body.itemPerdido.tituloItem}`,
+    html: `<p>Olá ${req.body.itemPerdido.nome}</p>
+                      <p>Você reportou a perda do item ${req.body.itemPerdido.tituloItem} no iChei.</p>
+                      <p>Estamos monitorando os itens devolvidos e faremos o possível para fazer com que você encontre o que perdeu.</p>
+                      <p>Em breve você receberá atualizações sobre ${req.body.itemPerdido.tituloItem}</p>
+                      <p>Equipe iChei</p>
+                      <img src="cid:logo@cid" alt="Logo" style="width: 20%; height: 20%;" />
+                      `,
+    attachments: [
+      {
+        filename: 'logo.png', // nome do arquivo
+        path: './logo.png', // caminho para o arquivo
+        cid: 'logo@cid', // cid: identificador para a imagem
+      },
+    ],
+  }
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email enviado: ' + info.response);
+    }
+  });
+
   
-    let transporter = nodemailer.createTransport({
-      service: 'gmail',
-      port: 465,
-      secure: true,
-      auth: {
-          user: 'grupo2pi1a5@gmail.com',
-          pass: 'djkt axge nvgo rjcr'
-      }
-    });
-    
-    const mailOptions = {
-      from: 'grupo2pi1a5@gmail.com',
-      to: req.body.itemPerdido.email,
-      subject: `iChei - Item perdido reportado: ${req.body.itemPerdido.tituloItem}`,
-      html: `<p>Olá ${req.body.itemPerdido.nome}</p>
-              <p>Você reportou a perda do item ${req.body.itemPerdido.tituloItem} no iChei.</p>
-              <p>Estamos monitorando os itens devolvidos e faremos o possível para fazer com que você encontre o que perdeu.</p>
-              <p>Em breve você receberá atualizações sobre ${req.body.itemPerdido.tituloItem}</p>
-              <p>Equipe iChei</p>
-              <img src="cid:logo@cid" alt="Logo" style="width: 20%; height: 20%;" />`, 
-      attachments: [
-        {
-            filename: 'logo.png', // nome do arquivo
-            path: './logo.png', // caminho para o arquivo
-            cid: 'logo@cid', // cid: identificador para a imagem
-        },
-], }
-    
-    transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('Email enviado: ' + info.response);
-      }
-    });
-});
+  
+});  
+
+
+
 
 
 
@@ -183,7 +192,7 @@ itemPerdido
     console.error("Erro ao criar tabelas:", err);
   });
 
-  itemCadastrado
+itemCadastrado
   .sync({ force: false }) // Cria as tabelas se não existirem (force: true)
   .then(() => {
     console.log("Tabelas criadas com sucesso.");
