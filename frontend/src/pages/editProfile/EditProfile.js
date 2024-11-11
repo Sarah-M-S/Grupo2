@@ -9,10 +9,12 @@ export default function EditProfile() {
     password: "",
     type: "",
   });
-  const [sent, setSent] = useState(false)
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
+
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -21,6 +23,16 @@ export default function EditProfile() {
   };
 
   const handleSave = () => {
+    
+    if (!formData.name || !formData.email || !formData.password || !formData.type) {
+      setError("Todos os campos são obrigatórios!");
+      return; // Prevent submission if any field is empty
+    }
+
+    // Reset error if validation passes
+    setError("");
+    
+    
     console.log(formData);
     setSent(true)
   };
@@ -45,6 +57,8 @@ export default function EditProfile() {
               Editar Perfil
             </h2>
           </div>
+          
+          {error && <div className="text-red-500 text-center">{error}</div>}
 
           <div className="flex flex-col space-y-4">
             <input

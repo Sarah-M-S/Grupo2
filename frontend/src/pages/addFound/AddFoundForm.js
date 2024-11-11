@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Success from "../success/Success";
 
 export default function AddFoundForm() {
+  
+
   const [formData, setFormData] = useState({
     category: "",
     object: "",
@@ -13,7 +15,9 @@ export default function AddFoundForm() {
     dependencie: "",
     details: "",
   });
+  
   const [sent, setSent] = useState(false);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -24,9 +28,25 @@ export default function AddFoundForm() {
     }));
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    // Validate required fields (all except "brand")
+    if (!formData.category) newErrors.category = "Categoria é obrigatória.";
+    if (!formData.object) newErrors.object = "Objeto é obrigatório.";
+    if (!formData.color) newErrors.color = "Cor é obrigatória.";
+    if (!formData.date) newErrors.date = "Data é obrigatória.";
+    if (!formData.place) newErrors.place = "Bloco é obrigatório.";
+    if (!formData.dependencie) newErrors.dependencie = "Dependência é obrigatória.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSave = () => {
-    console.log(formData);
-    setSent(true);
+    if (validateForm()) {
+        console.log(formData);
+        setSent(true);
+    }
   };
 
   const handleCancel = () => {
@@ -47,14 +67,16 @@ export default function AddFoundForm() {
                 Adicionar Achado
               </h2>
             </div>
-
+            
             <div className="flex flex-col space-y-2">
               <select
                 className="rounded-xl w-full h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
+                
               >
+
                 <option value="" disabled hidden>
                   Categoria
                 </option>
@@ -64,12 +86,16 @@ export default function AddFoundForm() {
                 <option value="audi">Audi</option>
               </select>
 
+              {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
+
+
               <select
                 className="rounded-xl w-full h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
                 name="object"
                 value={formData.object}
                 onChange={handleChange}
               >
+                
                 <option value="" disabled hidden>
                   Objeto
                 </option>
@@ -79,12 +105,15 @@ export default function AddFoundForm() {
                 <option value="audi">Audi</option>
               </select>
 
+              {errors.object && <p className="text-red-500 text-sm">{errors.object}</p>}
+
               <select
                 className="rounded-xl w-full h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
                 name="color"
                 value={formData.color}
                 onChange={handleChange}
               >
+
                 <option value="" disabled hidden>
                   Cor
                 </option>
@@ -93,6 +122,8 @@ export default function AddFoundForm() {
                 <option value="mercedes">Mercedes</option>
                 <option value="audi">Audi</option>
               </select>
+
+            {errors.color && <p className="text-red-500 text-sm">{errors.color}</p>}
 
               <input
                 type="text"
@@ -111,6 +142,7 @@ export default function AddFoundForm() {
                 value={formData.date}
                 onChange={handleChange}
               />
+              {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
 
               <select
                 className="rounded-xl w-full h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
@@ -126,6 +158,8 @@ export default function AddFoundForm() {
                 <option value="mercedes">Mercedes</option>
                 <option value="audi">Audi</option>
               </select>
+              
+              {errors.place && <p className="text-red-500 text-sm">{errors.place}</p>}
 
               <select
                 className="rounded-xl w-full h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
@@ -142,7 +176,7 @@ export default function AddFoundForm() {
                 <option value="audi">Audi</option>
               </select>
             </div>
-
+            {errors.dependencie && <p className="text-red-500 text-sm">{errors.dependencie}</p>}
             <div className="flex flex-row justify-between">
               <button
                 onClick={handleCancel}

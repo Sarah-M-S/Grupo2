@@ -9,16 +9,37 @@ export default function PlaceDate({ onNext }) {
     dependencie: "",
   });
 
+  const [errors, setErrors] = useState({
+    date: false,
+    place: false,
+    dependencie: false,
+  });
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: false,
+    }));
   };
 
-  const handleNext = () => {
-    onNext(formData);
+  const handleNext = () => { 
+    const newErrors = {
+      date: !formData.date,
+      place: !formData.place,
+      dependencie: !formData.dependencie,
+    };
+
+    setErrors(newErrors);
+    if (!newErrors.date && !newErrors.place && !newErrors.dependencie) {
+      onNext(formData);
+    }
   };
 
   return (
@@ -40,6 +61,9 @@ export default function PlaceDate({ onNext }) {
               value={formData.date}
               onChange={handleChange}
             />
+            {errors.date && (
+              <span className="text-red-500 text-sm">Por favor, selecione uma data.</span>
+            )}
 
             <h3 className="text-xl text-start font-semibold text-emerald-950 md:text-[100%]">
               Onde ocorreu a perda?
@@ -59,6 +83,10 @@ export default function PlaceDate({ onNext }) {
               <option value="audi">Audi</option>
             </select>
 
+            {errors.place && (
+              <span className="text-red-500 text-sm">Por favor, selecione um bloco.</span>
+            )}
+
             <select
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               name="dependencie"
@@ -73,6 +101,11 @@ export default function PlaceDate({ onNext }) {
               <option value="mercedes">Mercedes</option>
               <option value="audi">Audi</option>
             </select>
+            
+            {errors.dependencie && (
+              <span className="text-red-500 text-sm">Por favor, selecione uma dependência.</span>
+            )}
+
           </div>
         </div>
       </div>

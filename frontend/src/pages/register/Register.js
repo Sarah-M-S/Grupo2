@@ -1,11 +1,52 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
 
 export default function Register() {
   const navigate = useNavigate()
 
+  const [nomeCompleto, setnomeCompleto] = useState('');
+  const [email, setEmail] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [curso, setCurso] = useState('');
+  const [turno, setTurno] = useState('');
+  const [senha, setSenha] = useState('');
+  const [confirmacaoSenha, setConfirmacaoSenha] = useState('');
+
+  const regexEmail = /\S+@\S+\.\S+/;
+  const phoneRegex = /^(\d{2})\s?(\d{4,5})-?(\d{4})$/;
+  const fullNameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)+$/;
+
   const handleRegister = () => {
-    navigate("/mainPage")
+  if(nomeCompleto === '' || !fullNameRegex.test(nomeCompleto)){
+      alert('Preencher o Nome Completo');
+    } 
+    else if(email === '' || !regexEmail.test(email)){
+        alert('Insira um e-mail válido');
+      }
+      
+    else if(telefone === '' || !phoneRegex.test(telefone)){
+      alert('Insira um telefone válido');
+      }
+      else if (curso === '') {
+        alert('Preencha o Curso');
+      } else if (turno === '') {
+        alert('Preencha o Turno');
+      } else if (senha === '') {
+        alert('Preencha a Senha');
+      } else if (senha.length < 6) {
+        alert('A senha deve ter pelo menos 6 caracteres');
+      } else if (confirmacaoSenha === '') {
+        alert('Preencha a Confirmação de Senha');
+      } else if (senha !== confirmacaoSenha) {
+        alert('As senhas não coincidem');
+      } else {
+        
+        alert('Cadastro realizado com sucesso');
+        navigate("/mainPage");
+        
+      }
+
   }
 
 
@@ -26,6 +67,7 @@ export default function Register() {
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
               placeholder="Nome Completo"
+              onChange={(e) => setnomeCompleto(e.target.value)}
             />
 
             <input
@@ -34,6 +76,7 @@ export default function Register() {
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
               placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <input
@@ -42,6 +85,7 @@ export default function Register() {
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
               placeholder="Telefone"
+              onChange={(e) => setTelefone(e.target.value)}
             />
 
             <input
@@ -50,6 +94,7 @@ export default function Register() {
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
               placeholder="Curso"
+              onChange={(e) => setCurso(e.target.value)}
             />
 
             <input
@@ -58,6 +103,7 @@ export default function Register() {
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
               placeholder="Turno"
+              onChange={(e) => setTurno(e.target.value)}
             />
 
             <input
@@ -66,6 +112,7 @@ export default function Register() {
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
               placeholder="Senha"
+              onChange={(e) => setSenha(e.target.value)}
             />
 
             <input
@@ -74,6 +121,7 @@ export default function Register() {
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
               placeholder="Confirmação de Senha "
+              onChange={(e) => setConfirmacaoSenha(e.target.value)}
             />
           </div>
 

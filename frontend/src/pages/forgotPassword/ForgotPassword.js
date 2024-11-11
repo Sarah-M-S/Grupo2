@@ -4,12 +4,19 @@ import Success from "../success/Success";
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
+
+  
+
+
+
   const [sent, setSent] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
   });
 
   const handleChange = (e) => {
+    
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -22,8 +29,15 @@ export default function ForgotPassword() {
   };
 
   const handleSave = () => {
-    console.log(formData);
-    setSent(true);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(formData === '' || !emailRegex.test(formData.email)){
+      alert('Preencher o campo email corretamente');
+    } else {
+      console.log(formData);
+      setSent(true);
+    }
+    //console.log(formData);
+    //setSent(true);
   };
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
@@ -56,6 +70,8 @@ export default function ForgotPassword() {
                 className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
                 required
                 placeholder="Email"
+                
+
               />
             </div>
 

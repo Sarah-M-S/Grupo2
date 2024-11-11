@@ -9,6 +9,7 @@ export default function ObjectForm({ onNext }) {
     brand: "",
   });
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -18,7 +19,12 @@ export default function ObjectForm({ onNext }) {
   };
 
   const handleNext = () => {
-    onNext(formData);
+if (!formData.category || !formData.object || !formData.color) {
+  alert("Um ou mais campos faltam ser preenchidos");
+      }else{
+        onNext(formData);
+      }
+  
   };
 
   return (
