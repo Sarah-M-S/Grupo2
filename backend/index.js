@@ -20,6 +20,7 @@ const pt = require('./views/locales/pt')
 const zh = require('./views/locales/zh');
 const nodemailer = require('nodemailer');
 const { where } = require("sequelize");
+const { Op } = require('sequelize');
 //const dotenv = require('dotenv');
 
 
@@ -70,6 +71,59 @@ app.get("/list/item/achados", (req, res) => {
 });
 });
 
+
+//listar achados com filtro
+app.get('/list/item/achados/filtro', async (req, res) => {
+  try  {
+    const { local_encontro, dependencia_encontro, data_entrada, categoria } = req.query;
+
+  
+    let conditions = {situacao : 2};
+    
+    if (local_encontro) {
+      conditions.local_encontro = local_encontro;
+    }
+    
+    if (dependencia_encontro) {
+      conditions.dependencia_encontro = dependencia_encontro;
+    }
+    
+    if (data_entrada) {
+      const startOfDay = new Date(data_entrada);
+      startOfDay.setUTCHours(0, 0, 0, 0);
+      const endOfDay = new Date(data_entrada);
+      endOfDay.setUTCHours(23, 59, 59, 999);
+      
+      conditions.data_entrada = {
+        [Op.between]: [startOfDay, endOfDay]
+      };
+
+    }
+    
+    if (categoria) {
+      conditions.categoria = categoria;
+    }
+
+    // Consulta com filtros opcionais
+    const itens = await item.findAll({
+      where: conditions,
+      
+    });
+
+    res.status(200).json({
+      sucesso: true,
+      mensagem: 'Itens filtrados com sucesso',
+      itens: itens
+    });
+  } catch (erro) {
+    res.status(500).json({
+      sucesso: false,
+      mensagem: 'Erro ao filtrar os itens',
+      erro: erro.message
+    });
+  }
+});
+
 //Listar categoria de itens
 app.get("/list/item/categorias", (req, res) => {
   categoria.findAll(
@@ -89,6 +143,7 @@ app.get("/list/item/cores", (req, res) => {
     res.status(500).json({ error: error.message });
 });
 });
+
 
 //locais----------------------------------------------------------------------------
 //Listar locais
@@ -116,44 +171,7 @@ app.get("/list/locais/dependencias/:id", (req, res) => {
   });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Listar itens devolvidos
-app.get("/list/item/devolvido", (req, res) => {
-  item.findAll({
-    where : {
-      situacao : 3 //devolvido
-    },
-    order: [
-      ['createdAt', 'DESC']
-    ]
-
-  }).then(itens => {
-    res.json({ itens: itens });
-}).catch(error => {
-    res.status(500).json({ error: error.message });
-});
-});
-
+// Formulario ---------------------------------------------------------------
 // Reportar item perdido - Usario comum
 app.post("/cadastrarPerda", (req, res) => {
   var tituloItem = req.body.itemPerdido.tituloItem;
@@ -166,6 +184,7 @@ app.post("/cadastrarPerda", (req, res) => {
   var situacao = 1; //perdido
   var usuarioCadastrante =  req.session.usuario != null ?  req.session.usuario : 22;
   var usuarioPerda = req.session.usuario != null ?  req.session.usuario : 22;
+
 
   item.create({
     titulo: tituloItem,

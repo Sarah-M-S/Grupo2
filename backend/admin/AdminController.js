@@ -12,10 +12,12 @@ const adminAuth = require("../middleware/adminAuth");
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config");
 const { where } = require("sequelize");
+const { Op } = require('sequelize');
 const { json, raw } = require("body-parser");
 const nodemailer = require("nodemailer");
 const item = require("../Model/Item");
 const usuario = require("../Model/usuario");
+
 
 //=================================================================================
 
@@ -44,6 +46,60 @@ router.get("/admin/list/item/perdidos", (req, res) => {
 });
 });
 
+
+//listar itens perdidos com filtro
+router.get('/admin/list/item/perdidos/filtro', async (req, res) => {
+  try  {
+    const { local_perda, dependencia_perda, data_perda, categoria } = req.query;
+
+  
+    let conditions = {situacao : 1};
+    
+    if (local_perda) {
+      conditions.local_perda = local_perda;
+    }
+    
+    if (dependencia_perda) {
+      conditions.dependencia_perda = dependencia_perda;
+    }
+    
+    if (data_perda) {
+      const startOfDay = new Date(data_perda);
+      startOfDay.setUTCHours(0, 0, 0, 0);
+      const endOfDay = new Date(data_perda);
+      endOfDay.setUTCHours(23, 59, 59, 999);
+      
+      conditions.data_perda = {
+        [Op.between]: [startOfDay, endOfDay]
+      };
+      console.log(conditions.data_perda)
+    }
+    
+    if (categoria) {
+      conditions.categoria = categoria;
+    }
+
+    // Consulta com filtros opcionais
+    const itens = await item.findAll({
+      where: conditions,
+      
+    });
+
+    res.status(200).json({
+      sucesso: true,
+      mensagem: 'Itens filtrados com sucesso',
+      itens: itens
+    });
+  } catch (erro) {
+    res.status(500).json({
+      sucesso: false,
+      mensagem: 'Erro ao filtrar os itens',
+      erro: erro.message
+    });
+  }
+});
+
+
 //usuarios--------------------------------------------------------------------------
 //Listar usuarios
 router.get("/admin/list/usuarios", (req, res) => {
@@ -53,6 +109,23 @@ router.get("/admin/list/usuarios", (req, res) => {
 }).catch(error => {
     res.status(500).json({ error: error.message });
 });
+});
+
+//listar usuario por id
+router.get('/admin/list/usuarios/:id', (req, res) => {
+
+  const id = req.params.id;
+
+  usuario.findOne({
+      where: {
+          id_usuario: id
+      }
+  }).then(usuario => {
+    res.json({ usuario: usuario });
+}).catch(error => {
+    res.status(500).json({ error: error.message });
+});
+
 });
 
 //formularios--------------------------------------------------------------------------
@@ -70,7 +143,6 @@ router.post("/admin/adicionarAchado", (req, res) => {
   var situacao = 2; //encontrados
   var usuarioCadastrante =  req.session.usuario != null ?  req.session.usuario : 22;
  
-
   item.create({
     titulo: tituloItem,
     descricao: descricao,
@@ -115,7 +187,6 @@ router.post("/admin/reportarPerda", (req, res) => {
   var usuarioCadastrante =  req.session.usuario != null ?  req.session.usuario : 22;
   var usuarioPerda = req.body.itemPerdido.usuarioPerda;
  
-
   item.create({
     titulo: tituloItem,
     descricao: descricao,
@@ -146,6 +217,98 @@ router.post("/admin/reportarPerda", (req, res) => {
       });
     });
 });
+
+// Editar Usuário -----------------------------------------------------------------------------------
+
+router.post('/admin/editUsuario', (req, res) => {
+  var idUsuario = req.body.usuario.idUsuario;
+  var nome = req.body.usuario.nomeUsuario;
+  var email = req.body.usuario.email;
+  var senha = req.body.usuario.senha;
+  var telefone = req.body.usuario.telefone;
+  var turno = req.body.usuario.turno;
+  var curso = req.body.usuario.curso;
+  var ativoFlag = req.body.usuario.ativoFlag;
+  var adminFlag = req.body.usuario.adminFlag;
+
+
+  if (!email || !senha) {
+      return res.status(400).send('E-mail e senha são obrigatórios.');
+
+  }
+
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(senha, salt);
+
+   usuario.update({
+      id_usuario : idUsuario,
+      nome: nome,
+      email: email,
+      senha: hash,
+      telefone: telefone,
+      turno: turno,
+      curso: curso,
+      ativo: ativoFlag,
+      admin: adminFlag
+
+  },
+      {
+          where: {
+              id_usuario: idUsuario
+          }
+      }).then((usuario) => {
+        // Retorna uma resposta de sucesso
+        res.status(201).json({
+          sucesso: true,
+          mensagem: 'Usuario atualizado com sucesso'
+        });
+      })
+      .catch((erro) => {
+        // Retorna uma resposta de erro com a mensagem de erro
+        res.status(500).json({
+          sucesso: false,
+          mensagem: 'Erro ao atualizar o usuario.',
+          erro: erro.message
+        });
+      });
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

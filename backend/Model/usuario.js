@@ -29,7 +29,7 @@ id_usuario: {
   curso: {
     type: DataTypes.INTEGER
   },
-  status: {
+  ativo: {
     type: DataTypes.BOOLEAN,
     allowNull: false
   },
