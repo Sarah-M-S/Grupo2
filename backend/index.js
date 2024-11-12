@@ -145,6 +145,7 @@ app.get("/list/item/cores", (req, res) => {
 });
 
 
+
 //locais----------------------------------------------------------------------------
 //Listar locais
 app.get("/list/locais", (req, res) => {
@@ -169,6 +170,17 @@ app.get("/list/locais/dependencias/:id", (req, res) => {
   .catch(error => {
     res.status(500).json({ error: error.message });
   });
+});
+
+//---------------------------------------------------------------------------
+//Listar cursos
+app.get("/list/cursos", (req, res) => {
+  curso.findAll(
+ ).then(curso => {
+    res.json({ curso: curso });
+}).catch(error => {
+    res.status(500).json({ error: error.message });
+});
 });
 
 // Formulario ---------------------------------------------------------------
