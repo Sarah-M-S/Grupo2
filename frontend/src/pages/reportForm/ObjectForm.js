@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ForwardButton from "./ForwardButton";
+import useFetchValues from "../../hooks/useFetchValues";
 
 export default function ObjectForm({ onNext }) {
   const [formData, setFormData] = useState({
@@ -8,6 +9,8 @@ export default function ObjectForm({ onNext }) {
     color: "",
     brand: "",
   });
+  const { colors, categories } = useFetchValues(formData.place);
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,14 +20,26 @@ export default function ObjectForm({ onNext }) {
     }));
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    // Validate required fields (all except "brand")
+    if (!formData.category) newErrors.category = "Categoria é obrigatória.";
+    if (!formData.object) newErrors.object = "Objeto é obrigatório.";
+    if (!formData.color) newErrors.color = "Cor é obrigatória.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleNext = () => {
-    onNext(formData);
+    if (validateForm()) {
+      onNext(formData);
+    }
   };
 
   return (
-    <div className="h-[90%] w-full flex flex-col items-center justify-center space-y-8">
-      <div className="flex flex-col max-w-md space-y-12 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
-        <div className="flex flex-col space-y-8">
+    <div className="h-[90%] w-full flex flex-col items-center justify-center space-y-4">
+      <div className="flex flex-col max-w-md space-y-12 bg-white rounded-3xl py-12 px-8 md:w-[30%]">
+        <div className="flex flex-col space-y-4">
           <h2 className="text-3xl text-start font-semibold text-emerald-950 md:text-[220%]">
             Como é o objeto?
           </h2>
@@ -39,30 +54,38 @@ export default function ObjectForm({ onNext }) {
               name="category"
               value={formData.category}
               onChange={handleChange}
+              required
             >
               <option value="" disabled hidden>
                 Categoria
               </option>
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="mercedes">Mercedes</option>
-              <option value="audi">Audi</option>
+              {categories &&
+                categories.categorias.map((categoria) => (
+                  <option
+                    key={categoria.id_categoria}
+                    value={categoria.id_categoria}
+                  >
+                    {categoria.nome}
+                  </option>
+                ))}
+              {!categories && (
+                <option value="" disabled hidden>
+                  Categoria
+                </option>
+              )}
             </select>
+            {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
 
-            <select
+            <input
+              type="text"
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               name="object"
               value={formData.object}
               onChange={handleChange}
-            >
-              <option value="" disabled hidden>
-                Objeto
-              </option>
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="mercedes">Mercedes</option>
-              <option value="audi">Audi</option>
-            </select>
+              required
+              placeholder="Objeto"
+            />
+            {errors.object && <p className="text-red-500 text-sm">{errors.object}</p>}
 
             <select
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
@@ -73,11 +96,19 @@ export default function ObjectForm({ onNext }) {
               <option value="" disabled hidden>
                 Cor
               </option>
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="mercedes">Mercedes</option>
-              <option value="audi">Audi</option>
+              {colors &&
+                colors.cor.map((cor) => (
+                  <option key={cor.id_cor} value={cor.id_cor}>
+                    {cor.nome}
+                  </option>
+                ))}
+              {!colors && (
+                <option value="" disabled hidden>
+                  Categoria
+                </option>
+              )}
             </select>
+            {errors.color && <p className="text-red-500 text-sm">{errors.color}</p>}
 
             <input
               type="text"
@@ -85,7 +116,6 @@ export default function ObjectForm({ onNext }) {
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               value={formData.brand}
               onChange={handleChange}
-              required
               placeholder="Marca"
             />
           </div>

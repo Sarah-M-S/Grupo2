@@ -1,42 +1,39 @@
 import React, { useState } from "react";
 
-import ForwardButton from "./ForwardButton";
 import Disclaimer from "./Disclaimer";
 import ObjectForm from "./ObjectForm";
 import ObjectDetails from "./ObjectDetails";
 import PlaceDate from "./PlaceDate";
 import DataConfirm from "./DataConfirm";
 import Success from "../success/Success";
-import BackwardButton from "./RestartButton";
-import FinalizeButton from "./FinalizeButton"
+import usePostReport from "../../hooks/usePostReport";
 
 export default function ReportFormPage() {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({});
+  const { isSubmitting, error, postFound } = usePostReport();
 
   const handleNext = (data) => {
-    
     setFormData((prevData) => ({
       ...prevData,
-      ...data
+      ...data,
     }));
     setStep((prevStep) => prevStep + 1);
-    console.log(formData)
-
   };
 
   const handleRestart = () => {
-    setFormData({})
+    setFormData({});
     setStep(0);
   };
 
   const handleFinalize = () => {
-    setStep((prevStep) => prevStep + 1);
     // ENVIAR OS DADOS DO FORMULÁRIO PARA O BACKEND ATRAVÉS DO FETCH
     console.log(formData)
-  }
-  
-  console.log(step)
+    postFound(formData);
+    if (!error) {
+      setStep((prevStep) => prevStep + 1);
+    }
+  };
 
   const renderStep = () => {
     switch (step) {
@@ -49,11 +46,24 @@ export default function ReportFormPage() {
       case 3:
         return <PlaceDate onNext={handleNext} />;
       case 4:
-        return <DataConfirm onRestart={handleRestart} onNext={handleFinalize} dataToConfirm={formData}/>;
+        return (
+          <DataConfirm
+            onRestart={handleRestart}
+            onNext={handleFinalize}
+            dataToConfirm={formData}
+            isSubmitting={isSubmitting}
+            error={error}
+          />
+        );
       case 5:
-        return <Success 
-        message={"Seu reporte foi enviado com Sucesso! Seguiremos te informando por email."}
-        route={"/mainPage"}/>;
+        return (
+          <Success
+            message={
+              "Seu reporte foi enviado com Sucesso! Seguiremos te informando por email."
+            }
+            route={"/mainPage"}
+          />
+        );
       default:
         return <Disclaimer onNext={handleNext} />;
     }

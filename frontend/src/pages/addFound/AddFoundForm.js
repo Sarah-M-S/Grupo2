@@ -78,7 +78,7 @@ export default function AddFoundForm() {
                       {categoria.nome}
                     </option>
                   ))}
-                {!places && (
+                {!categories && (
                   <option value="" disabled hidden>
                     Categoria
                   </option>
@@ -110,7 +110,7 @@ export default function AddFoundForm() {
                       {cor.nome}
                     </option>
                   ))}
-                {!places && (
+                {!colors && (
                   <option value="" disabled hidden>
                     Categoria
                   </option>
