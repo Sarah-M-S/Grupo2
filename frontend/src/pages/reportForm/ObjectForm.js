@@ -10,6 +10,13 @@ export default function ObjectForm({ onNext }) {
   });
 
 
+  const [errors, setErrors] = useState({
+    category: "",
+    object: "",
+    color: "",
+    brand: "",
+  });
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -18,13 +25,40 @@ export default function ObjectForm({ onNext }) {
     }));
   };
 
+
+
+
   const handleNext = () => {
-if (!formData.category || !formData.object || !formData.color) {
-  alert("Um ou mais campos faltam ser preenchidos");
-      }else{
-        onNext(formData);
-      }
-  
+
+    let validationErrors = {};
+
+    // Validate category
+    if (!formData.category) {
+      validationErrors.category = "Preencher Categoria";
+    }
+
+    // Validate object
+    if (!formData.object) {
+      validationErrors.object = "Preencher Objeto";
+    }
+
+    // Validate color
+    if (!formData.color) {
+      validationErrors.color = "Preencher Cor";
+    }
+
+    // Validate brand
+    
+
+    // If there are validation errors, set them and return early
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    // If no validation errors, proceed to the next step
+    onNext(formData);
+
   };
 
   return (
@@ -55,6 +89,8 @@ if (!formData.category || !formData.object || !formData.color) {
               <option value="audi">Audi</option>
             </select>
 
+            {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
+
             <select
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               name="object"
@@ -69,7 +105,7 @@ if (!formData.category || !formData.object || !formData.color) {
               <option value="mercedes">Mercedes</option>
               <option value="audi">Audi</option>
             </select>
-
+            {errors.object && <p className="text-red-500 text-sm">{errors.object}</p>}
             <select
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               name="color"
@@ -85,6 +121,8 @@ if (!formData.category || !formData.object || !formData.color) {
               <option value="audi">Audi</option>
             </select>
 
+            {errors.color && <p className="text-red-500 text-sm">{errors.color}</p>}
+
             <input
               type="text"
               name="brand"
@@ -94,6 +132,7 @@ if (!formData.category || !formData.object || !formData.color) {
               required
               placeholder="Marca"
             />
+            
           </div>
         </div>
       </div>
