@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import ForwardButton from "./ForwardButton";
 import Disclaimer from "./Disclaimer";
 import ObjectForm from "./ObjectForm";
 import ObjectDetails from "./ObjectDetails";
@@ -10,34 +9,34 @@ import Success from "../success/Success";
 import BackwardButton from "./RestartButton";
 import FinalizeButton from "./FinalizeButton"
 import { useTranslation } from "react-i18next";
+import usePostReport from "../../hooks/usePostReport";
 
 export default function ReportFormPage() {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({});
+  const { isSubmitting, error, postFound } = usePostReport();
 
   const handleNext = (data) => {
-    
     setFormData((prevData) => ({
       ...prevData,
-      ...data
+      ...data,
     }));
     setStep((prevStep) => prevStep + 1);
-    console.log(formData)
-
   };
 
   const handleRestart = () => {
-    setFormData({})
+    setFormData({});
     setStep(0);
   };
 
   const handleFinalize = () => {
-    setStep((prevStep) => prevStep + 1);
     // ENVIAR OS DADOS DO FORMULÁRIO PARA O BACKEND ATRAVÉS DO FETCH
     console.log(formData)
-  }
-  
-  console.log(step)
+    postFound(formData);
+    if (!error) {
+      setStep((prevStep) => prevStep + 1);
+    }
+  };
 
   const { t } = useTranslation();
   const renderStep = () => {
@@ -51,7 +50,15 @@ export default function ReportFormPage() {
       case 3:
         return <PlaceDate onNext={handleNext} />;
       case 4:
-        return <DataConfirm onRestart={handleRestart} onNext={handleFinalize} dataToConfirm={formData}/>;
+        return (
+          <DataConfirm
+            onRestart={handleRestart}
+            onNext={handleFinalize}
+            dataToConfirm={formData}
+            isSubmitting={isSubmitting}
+            error={error}
+          />
+        );
       case 5:
         return <Success 
         message={t("mensagemSucesso")}
