@@ -153,6 +153,7 @@ app.get("/list/item/cores", (req, res) => {
 });
 
 
+
 //locais----------------------------------------------------------------------------
 //Listar locais
 app.get("/list/locais", (req, res) => {

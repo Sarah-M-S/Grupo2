@@ -19,6 +19,8 @@ const { Op } = require("sequelize");
 const { json, raw } = require("body-parser");
 const nodemailer = require("nodemailer");
 const usuario = require("../Model/usuario");
+const local = require("../Model/local");
+const dependencia = require("../Model/dependencia");
 
 const item = require("../Model/Item");
 
@@ -102,6 +104,91 @@ router.get("/admin/list/item/perdidos/filtro", async (req, res) => {
   }
 });
 
+//Listar itens por id
+router.get("  :id?", (req, res) => {
+  const { id } = req.params;
+
+  item.findAll({
+    where: {
+      id_item : id
+    },
+    order: [['createdAt', 'DESC']]
+  })
+  .then(itens => {
+    res.json({ itens });
+  })
+  .catch(error => {
+    res.status(500).json({ error: error.message });
+  });
+});
+
+//editar info itens
+router.post('/admin/editItem', (req, res) => {
+  var idItem = req.body.item.idItem;
+  var titulo = req.body.item.titulo;
+  var descricao = req.body.item.descricao;
+  var categoria = req.body.item.categoria;
+  var cor = req.body.item.cor;
+  var marca = req.body.item.marca;
+  var localPerda = req.body.item.localPerda;
+  var dependencia_perda = req.body.item.dependenciaPerda;
+  var localEncontro = req.body.item.localEncontro;
+  var dependenciaEncontro = req.body.item.dependenciaEncontro;
+  var dataPerda = req.body.item.dataPerda;
+  var dataEntrada = req.body.item.dataEntrada;
+  var dataDevolucao = req.body.item.dataDevolucao;
+  var situacao = req.body.item.situacao;
+  var usuarioCadastrante = req.body.item.usuarioCadastrante;
+  var usuarioResgatante = req.body.item.usuarioResgatante;
+  var usuarioDevolucao = req.body.item.usuarioDevolucao;
+  var usuarioPerda = req.body.item.usuarioPerda;
+
+   item.update({
+     // id_item : idItem,
+      titulo: titulo,
+      descricao: descricao,
+      categoria: categoria,
+      cor: cor,
+      marca: marca,
+      local_perda: localPerda,
+      dependencia_perda: dependencia_perda,
+      local_encontro: localEncontro,
+      dependencia_encontro: dependenciaEncontro,
+      data_perda : dataPerda,
+      data_entrada : dataEntrada,
+      data_devolucao : dataDevolucao,
+      situacao : situacao,
+      usuario_cadastrante : usuarioCadastrante,
+      usuario_resgatante : usuarioResgatante,
+      funcionario_devolucao: usuarioDevolucao,
+      usuario_perda: usuarioPerda 
+  },
+      {
+          where: {
+            id_item: idItem
+          }
+      }).then(async (result) => {
+        if (result[0] === 0) {
+          return res.status(404).json({
+            sucesso: false,
+            mensagem: 'Item não encontrado para atualização.'
+          });
+        }
+  
+        // Buscar o item atualizado para retornar
+        const itemAtualizado = await item.findOne({ where: { id_item: idItem } });
+        res.status(200).json({ item: itemAtualizado });
+      })
+      .catch((erro) => {
+        res.status(500).json({
+          sucesso: false,
+          mensagem: 'Erro ao atualizar o item.',
+          erro: erro.message
+        });
+      });
+
+});
+
 //usuarios--------------------------------------------------------------------------
 //Listar usuarios
 router.get("/admin/list/usuarios", (req, res) => {
@@ -122,16 +209,37 @@ router.get("/admin/list/usuarios/:id", (req, res) => {
   usuario
     .findOne({
       where: {
-        id_usuario: id,
-      },
-    })
-    .then((usuario) => {
-      res.json({ usuario: usuario });
-    })
-    .catch((error) => {
-      res.status(500).json({ error: error.message });
-    });
+          id_usuario: id
+      }
+  }).then(usuario => {
+    res.json({ usuario: usuario });
+}).catch(error => {
+    res.status(500).json({ error: error.message });
 });
+
+});
+
+//procurar usuario por nome
+router.get("/admin/search/usuario/", (req, res) => {
+  const { nome } = req.query; // Obtém o nome da query string na URL (ex: ?nome=João)
+  console.log(nome)
+  console.log("teste")
+
+  // Define a condição de busca com base no nome (se fornecido)
+  const whereCondition = nome ? { nome: { [Op.like]: `%${nome}%` } } : {};
+
+  usuario.findAll({
+    where: whereCondition // Usa a condição de busca
+  })
+  .then(usuarios => {
+    res.json({ usuarios }); // Retorna os usuários encontrados em JSON
+  })
+  .catch(error => {
+    console.error(error); // Loga o erro no console para depuração
+    res.status(500).json({ error: error.message }); // Retorna um erro 500 com a mensagem
+  });
+});
+  
 
 //formularios--------------------------------------------------------------------------
 
@@ -291,6 +399,139 @@ router.post("/admin/editUsuario", (req, res) => {
       });
     });
 });
+
+
+// add locais 
+router.post('/admin/addLocal', (req, res) => {
+  const { titulo } = req.body;
+console.log("ok")
+   // Verifica se o título foi fornecido
+  if (!titulo) {
+    return res.status(400).json({ 
+      sucesso: false,
+      mensagem: 'O título é obrigatório.'
+    });
+  }
+
+ // Cria o novo local
+  local.create({ titulo })
+    .then(novoLocal => {
+      res.status(201).json({
+        sucesso: true,
+        mensagem: 'Local inserido com sucesso.',
+        local: novoLocal // Retorna o local recém-criado
+      });
+    })
+    .catch(erro => {
+      console.error(erro); // Loga o erro para depuração
+      res.status(500).json({
+        sucesso: false,
+        mensagem: 'Erro ao inserir o local.',
+        erro: erro.message
+      });
+    });
+});
+
+// add dependencia -----------------------------------------------------------
+router.post('/admin/addDependencia', (req, res) => {
+  const { titulo, local_pai } = req.body;
+
+  // Verifica se o título e o local_pai foram fornecidos
+  if (!titulo || !local_pai) {
+    return res.status(400).json({
+      sucesso: false,
+      mensagem: 'O título e o local pai são obrigatórios.'
+    });
+  }
+
+  // Cria a nova dependência
+  dependencia.create({ titulo, local_pai })
+    .then(novaDependencia => {
+      res.status(201).json({
+        sucesso: true,
+        mensagem: 'Dependência inserida com sucesso.',
+        dependencia: novaDependencia // Retorna a dependência recém-criada
+      });
+    })
+    .catch(erro => {
+      console.error(erro); // Loga o erro para depuração
+      res.status(500).json({
+        sucesso: false,
+        mensagem: 'Erro ao inserir a dependência.',
+        erro: erro.message
+      });
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Rotas da router
 
