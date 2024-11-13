@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ForwardButton from "./ForwardButton";
+import { useTranslation } from "react-i18next";
 
 export default function ObjectForm({ onNext }) {
   const [formData, setFormData] = useState({
@@ -17,6 +18,8 @@ export default function ObjectForm({ onNext }) {
     }));
   };
 
+  const { t } = useTranslation();
+
   const handleNext = () => {
     onNext(formData);
   };
@@ -26,11 +29,10 @@ export default function ObjectForm({ onNext }) {
       <div className="flex flex-col max-w-md space-y-12 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
         <div className="flex flex-col space-y-8">
           <h2 className="text-3xl text-start font-semibold text-emerald-950 md:text-[220%]">
-            Como é o objeto?
+            {t("objetoDescricao")}
           </h2>
           <h3 className="text-xl text-start font-semibold text-emerald-950 md:text-[100%]">
-            Quanto mais detalhes você der, mais fácil será de identificar o
-            objeto e devolvê-lo para você.
+            {t("objetoTextoIdentificacao")}
           </h3>
 
           <div className="flex flex-col space-y-4">
@@ -41,7 +43,7 @@ export default function ObjectForm({ onNext }) {
               onChange={handleChange}
             >
               <option value="" disabled hidden>
-                Categoria
+              {t("categoria")}
               </option>
               <option value="volvo">Volvo</option>
               <option value="saab">Saab</option>
@@ -56,7 +58,7 @@ export default function ObjectForm({ onNext }) {
               onChange={handleChange}
             >
               <option value="" disabled hidden>
-                Objeto
+              {t("objeto")}
               </option>
               <option value="volvo">Volvo</option>
               <option value="saab">Saab</option>
@@ -71,7 +73,7 @@ export default function ObjectForm({ onNext }) {
               onChange={handleChange}
             >
               <option value="" disabled hidden>
-                Cor
+              {t("cor")}
               </option>
               <option value="volvo">Volvo</option>
               <option value="saab">Saab</option>
@@ -86,7 +88,7 @@ export default function ObjectForm({ onNext }) {
               value={formData.brand}
               onChange={handleChange}
               required
-              placeholder="Marca"
+              placeholder={t("marca")}
             />
           </div>
         </div>

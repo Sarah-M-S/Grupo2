@@ -9,6 +9,7 @@ import DataConfirm from "./DataConfirm";
 import Success from "../success/Success";
 import BackwardButton from "./RestartButton";
 import FinalizeButton from "./FinalizeButton"
+import { useTranslation } from "react-i18next";
 
 export default function ReportFormPage() {
   const [step, setStep] = useState(0);
@@ -38,6 +39,7 @@ export default function ReportFormPage() {
   
   console.log(step)
 
+  const { t } = useTranslation();
   const renderStep = () => {
     switch (step) {
       case 0:
@@ -52,7 +54,7 @@ export default function ReportFormPage() {
         return <DataConfirm onRestart={handleRestart} onNext={handleFinalize} dataToConfirm={formData}/>;
       case 5:
         return <Success 
-        message={"Seu reporte foi enviado com Sucesso! Seguiremos te informando por email."}
+        message={t("mensagemSucesso")}
         route={"/mainPage"}/>;
       default:
         return <Disclaimer onNext={handleNext} />;

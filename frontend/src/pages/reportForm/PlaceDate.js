@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import ForwardButton from "./ForwardButton";
 
+import { useTranslation } from "react-i18next";
+
 export default function PlaceDate({ onNext }) {
   const [formData, setFormData] = useState({
     date: "",
@@ -17,6 +19,8 @@ export default function PlaceDate({ onNext }) {
     }));
   };
 
+  const { t } = useTranslation();
+
   const handleNext = () => {
     onNext(formData);
   };
@@ -26,10 +30,10 @@ export default function PlaceDate({ onNext }) {
       <div className="flex flex-col w-full max-w-md space-y-12 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
         <div className="flex flex-col space-y-8">
           <h2 className="text-3xl text-start font-semibold text-emerald-950 md:text-[220%]">
-            Local e Data
+            {t("localData")}
           </h2>
           <h3 className="text-xl text-start font-semibold text-emerald-950 md:text-[100%]">
-            Quando ocorreu a perda?
+            {t("dataPerda")}
           </h3>
 
           <div className="flex flex-col space-y-4">
@@ -42,7 +46,7 @@ export default function PlaceDate({ onNext }) {
             />
 
             <h3 className="text-xl text-start font-semibold text-emerald-950 md:text-[100%]">
-              Onde ocorreu a perda?
+              {t("localPerda")}
             </h3>
             <select
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
@@ -51,7 +55,7 @@ export default function PlaceDate({ onNext }) {
               onChange={handleChange}
             >
               <option value="" disabled hidden>
-                Bloco
+              {t("bloco")}
               </option>
               <option value="volvo">Volvo</option>
               <option value="saab">Saab</option>
@@ -66,7 +70,7 @@ export default function PlaceDate({ onNext }) {
               onChange={handleChange} 
             >
               <option value="" disabled hidden>
-                Dependência
+              {t("dependencia")}
               </option>
               <option value="volvo">Volvo</option>
               <option value="saab">Saab</option>

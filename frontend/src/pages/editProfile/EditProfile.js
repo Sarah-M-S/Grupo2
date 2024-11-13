@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Success from "../success/Success";
+import { useTranslation } from "react-i18next";
 
 export default function EditProfile() {
   const [formData, setFormData] = useState({
@@ -29,12 +30,14 @@ export default function EditProfile() {
     navigate("/mainPage");
   };
 
+  const { t } = useTranslation();
+
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
 
         {sent && <Success 
-        message={"Suas informações foram atualizadas com sucesso!"}
+        message={t("successMessage")}
         route={"/mainPage"}/>}
 
         {!sent &&
@@ -42,7 +45,7 @@ export default function EditProfile() {
         <div className="flex flex-col w-full max-w-md space-y-12 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
           <div>
             <h2 className="text-3xl text-center font-semibold text-emerald-500 md:text-[220%]">
-              Editar Perfil
+              {t("editarPerfil")}
             </h2>
           </div>
 
@@ -54,7 +57,7 @@ export default function EditProfile() {
               onChange={handleChange}
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               required
-              placeholder="Nome"
+              placeholder={t("nome")}
             />
 
             <input
@@ -64,7 +67,7 @@ export default function EditProfile() {
               onChange={handleChange}
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               required
-              placeholder="Email "
+              placeholder={t("email")}
             />
 
             <input
@@ -74,7 +77,7 @@ export default function EditProfile() {
               onChange={handleChange}
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               required
-              placeholder="Senha"
+              placeholder={t("senha")}
             />
 
             <select
@@ -83,8 +86,8 @@ export default function EditProfile() {
               value={formData.type}
               onChange={handleChange}
             >
-              <option value="normal">Normal</option>
-              <option value="admin">Admin</option>
+              <option value="normal">{t("normal")}</option>
+              <option value="admin">{t("administrador")}</option>
             </select>
           </div>
 
@@ -93,13 +96,13 @@ export default function EditProfile() {
               onClick={handleCancel}
               className="text-emerald-950 rounded-full py-2 px-2 text-lg font-semibold"
             >
-              Cancelar
+              {t("cancelar")}
             </button>
             <button
               onClick={handleSave}
               className="bg-emerald-950 rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-500"
             >
-              Salvar
+              {t("salvar")}
             </button>
           </div>
         </div>

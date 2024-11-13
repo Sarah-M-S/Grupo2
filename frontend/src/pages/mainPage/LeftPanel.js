@@ -5,6 +5,7 @@ import profile from "../images/profile.png";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useTranslation } from "react-i18next";
 
 export default function LeftPanel({ state, onDisplayChange }) {
   const { logout } = useLogout();
@@ -32,6 +33,8 @@ export default function LeftPanel({ state, onDisplayChange }) {
     onDisplayChange(key);
   };
 
+  const { t } = useTranslation();
+
   return (
     <div className="absolute h-screen w-[18%] bg-slate-50 rounded-r-3xl py-16 px-8">
       <div className="flex flex-col items-center h-full justify-around">
@@ -51,7 +54,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
               state === "found" ? "underline text-emerald-500" : ""
             }`}
           >
-            Lista de Achados
+            {t("listaAchados")}
           </button>
 
           {payload.user.admin  && (
@@ -61,7 +64,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
                 state === "reports" ? "underline text-emerald-500" : ""
               }`}
             >
-              Lista de Reportes
+              {t("listaReportes")}
             </button>
           )}
 
@@ -72,7 +75,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
                 state === "users" ? "underline text-emerald-500" : ""
               }`}
             >
-              Lista de Usuários
+              {t("listaUsuarios")}
             </button>
           )}
 
@@ -81,7 +84,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
               onClick={handleAddFound}
               className="font-semibold text-emerald-950 text-lg"
             >
-              Adicionar Achado
+              {t("adicionarAchado")}
             </button>
           )}
 
@@ -89,19 +92,19 @@ export default function LeftPanel({ state, onDisplayChange }) {
             onClick={handleReportForm}
             className="font-semibold text-emerald-950 text-lg"
           >
-            Reportar Perda
+            {t("reportarPerda")}
           </button>
           <button
             onClick={handleEditProfile}
             className="font-semibold text-emerald-950 text-lg"
           >
-            Editar Perfil
+            {t("editarPerfil")}
           </button>
         </div>
 
         <div className="flex flex-row space-x-4 h-[30%] items-end">
-          <button onClick={handleHelp}>Ajuda</button>
-          <button onClick={logout}>Logout</button>
+          <button onClick={handleHelp}>{t("ajuda")}</button>
+          <button onClick={logout}>{t("logout")}</button>
         </div>
       </div>
     </div>

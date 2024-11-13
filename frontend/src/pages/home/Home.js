@@ -1,6 +1,7 @@
 import logo from "../images/logo.png";
 import cookie from "../images/cookie.png";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function Home() {
   const navigate = useNavigate();
@@ -25,6 +26,8 @@ function Home() {
     navigate("/cookies");
   };
 
+  const { t } = useTranslation();
+
   return (
     <div className="w-svw h-svh flex-col">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
@@ -32,7 +35,7 @@ function Home() {
           <div className="">
             <img src={logo} />
             <h2 className="text-[220%] font-semibold">
-              Perdeu? iChei! Encontre o que é seu com um toque.
+            {t("iChei")}
             </h2>
           </div>
 
@@ -41,13 +44,13 @@ function Home() {
               onClick={handleLogin}
               className="bg-white rounded-full py-2 px-12 text-[180%] font-semibold"
             >
-              Login
+              {t("login")}
             </button>
             <button
               onClick={handleRegister}
               className="bg-white rounded-full py-2 px-12 text-[180%] font-semibold"
             >
-              Cadastro
+              {t("cadastro")}
             </button>
           </div>
         </div>

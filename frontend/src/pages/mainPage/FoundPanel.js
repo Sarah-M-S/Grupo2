@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import ObjectCard from "../card/ObjectCard";
 import useFetchData from "../../hooks/useFetchData";
+import { useTranslation } from "react-i18next";
 
 export default function FoundPanel() {
   const { loading, data } = useFetchData("/list/item/achados");
+
+  const { t } = useTranslation();
 
   return (
     <>
@@ -24,7 +27,7 @@ export default function FoundPanel() {
           </ul>
         </div>
       )}
-      {loading && <p>loading</p>}
+      {loading && <p>{t("carregando")}</p>}
     </>
   );
 }

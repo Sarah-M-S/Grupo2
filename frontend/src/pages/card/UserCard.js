@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function UserCard({user}) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -13,6 +14,7 @@ export default function UserCard({user}) {
     setIsExpanded(!isExpanded);
   };
 
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col items-center space-y-4">
       {/* Primeiro card (expandido por padrão) */}
@@ -25,9 +27,9 @@ export default function UserCard({user}) {
         </div>
         {isExpanded && (
           <div className="mt-4 flex flex-row space-x-16">
-            <p>Email: {user.mail}</p>
-            <p>Telefone: {user.phone}</p>
-            <button onClick={handleEdit}>Editar</button>
+            <p>{t("email")}: {user.mail}</p>
+            <p>{t("telefone")}: {user.phone}</p>
+            <button onClick={handleEdit}>{t("editar")}</button>
           </div>
         )}
       </div>

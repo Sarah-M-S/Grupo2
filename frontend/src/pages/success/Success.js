@@ -1,8 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function Success({message, route}) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleBackClick = () => {
     navigate(route);
@@ -19,7 +21,7 @@ export default function Success({message, route}) {
             onClick={handleBackClick}
             className=" bg-emerald-950 text-emerald-500 rounded-full py-2 px-2 text-lg font-bold"
           >
-            Voltar
+            {t("voltar")}
           </button>
         </div>
       </div>

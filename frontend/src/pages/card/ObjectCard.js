@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ObjectCard({object}) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -6,6 +7,8 @@ export default function ObjectCard({object}) {
   const toggleCard = () => {
     setIsExpanded(!isExpanded);
   };
+
+  const { t } = useTranslation();
 
   return (
     <div className="flex flex-col items-center space-y-4">
@@ -19,8 +22,8 @@ export default function ObjectCard({object}) {
         </div>
         {isExpanded && (
           <div className="mt-4 flex flex-row space-x-16">
-            <p>Local: {object.place}</p>
-            <p>Data de Encontro: {object.date}</p>
+            <p>{t("local")}: {object.place}</p>
+            <p>{t("dataEncontro")}: {object.date}</p>
           </div>
         )}
       </div>

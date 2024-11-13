@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import ForwardButton from "./ForwardButton";
 
+import { useTranslation } from "react-i18next";
+
 export default function ObjectDetails({onNext}) {
 
   const [formData, setFormData] = useState({
@@ -16,6 +18,8 @@ export default function ObjectDetails({onNext}) {
     }));
   };
 
+  const { t } = useTranslation();
+
   const handleNext = () => {
     onNext(formData);
   };
@@ -25,10 +29,10 @@ export default function ObjectDetails({onNext}) {
       <div className="flex flex-col w-full max-w-md space-y-12 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
         <div className="flex flex-col space-y-8">
           <h2 className="text-3xl text-start font-semibold text-emerald-950 md:text-[220%]">
-            Detalhes
+            {t("objetoDetalhes")}
           </h2>
           <h3 className="text-xl text-start font-semibold text-emerald-950 md:text-[100%]">
-            Tem algum detalhe a mais para ajudar a identificar o objeto perdido?
+            {t("objetoTextoDetalhes")}
           </h3>
 
           <div className="flex flex-col space-y-4">
@@ -38,7 +42,7 @@ export default function ObjectDetails({onNext}) {
               rows="10"
               className="rounded-xl w-full max-h-36 min-h-36 py-2 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               required
-              placeholder="Detalhes"
+              placeholder={t("objetoDetalhes")}
               value={formData.details}
               onChange={handleChange}
             />

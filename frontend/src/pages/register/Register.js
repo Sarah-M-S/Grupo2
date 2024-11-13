@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useRegister from "../../hooks/useRegister";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -32,13 +33,15 @@ export default function Register() {
     }));
   };
 
+  const { t } = useTranslation();
+
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
         <div className="flex flex-col w-full max-w-md space-y-10 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
           <div>
             <h2 className="text-3xl text-center font-semibold text-emerald-500 md:text-[220%]">
-              Cadastro
+            {t("cadastro")}
             </h2>
           </div>
 
@@ -50,7 +53,7 @@ export default function Register() {
               onChange={handleChange}
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
-              placeholder="Nome Completo"
+              placeholder={t("nomeCompleto")}
             />
 
             <input
@@ -60,7 +63,7 @@ export default function Register() {
               onChange={handleChange}
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
-              placeholder="Email"
+              placeholder={t("email")}
             />
 
             <input
@@ -70,7 +73,7 @@ export default function Register() {
               onChange={handleChange}
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
-              placeholder="Telefone"
+              placeholder={t("telefone")}
             />
 
             <input
@@ -80,7 +83,7 @@ export default function Register() {
               onChange={handleChange}
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
-              placeholder="Curso"
+              placeholder={t("curso")}
             />
 
             <select
@@ -90,12 +93,12 @@ export default function Register() {
               onChange={handleChange}
             >
               <option value="" disabled hidden>
-                Turno
+              {t("turno")}
               </option>
-              <option value="1">Manhã</option>
-              <option value="2">Tarde</option>
-              <option value="3">Noite</option>
-              <option value="4">Integral</option>
+              <option value="1">{t("manhã")}</option>
+              <option value="2">{t("tarde")}</option>
+              <option value="3">{t("noite")}</option>
+              <option value="4">{t("integral")}</option>
             </select>
 
             <input
@@ -105,7 +108,7 @@ export default function Register() {
               onChange={handleChange}
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
-              placeholder="Senha"
+              placeholder={t("senha")}
             />
 
             <input
@@ -115,7 +118,7 @@ export default function Register() {
               onChange={handleChange}
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
-              placeholder="Confirmação de Senha "
+              placeholder={t("senhaConfirmacao")}
             />
           </div>
 
@@ -124,14 +127,14 @@ export default function Register() {
               onClick={handleBack}
               className="bg-white rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-950"
             >
-              Voltar
+              {t("voltar")}
             </button>
             {!loading && (
               <button
                 onClick={handleRegister}
                 className="bg-emerald-950 rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-500"
               >
-                Cadastrar
+                {t("cadastrar")}
               </button>
             )}
 
@@ -140,7 +143,7 @@ export default function Register() {
                 className="bg-emerald-950 rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-500"
                 disabled
               >
-                loading
+                {t("carregando")}
               </button>
             )}
             {error && <p>{error}</p>}

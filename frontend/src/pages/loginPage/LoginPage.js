@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
+import { useTranslation } from "react-i18next";
 
 export default function LoginPage() {
   const buttonRef = useRef(null);
@@ -46,13 +47,15 @@ export default function LoginPage() {
     };
   }, []);
 
+  const { t } = useTranslation();
+
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
         <div className="flex flex-col w-full max-w-md space-y-12 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
           <div>
             <h2 className="text-3xl text-center font-semibold text-emerald-500 md:text-[220%]">
-              Login
+            {t("login")}
             </h2>
           </div>
 
@@ -64,7 +67,7 @@ export default function LoginPage() {
               onChange={handleChange}
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               required
-              placeholder="Login"
+              placeholder={t("login")}
             />
 
             <input
@@ -74,7 +77,7 @@ export default function LoginPage() {
               onChange={handleChange}
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               required
-              placeholder="Senha"
+              placeholder={t("senha")}
             />
           </div>
           <div className="flex flex-col space-y-4">
@@ -83,14 +86,14 @@ export default function LoginPage() {
                 onClick={handleForgotPassword}
                 className="text-emerald-950 rounded-full py-2 px-2 text-lg font-semibold"
               >
-                Esqueci minha senha
+                {t("esqueciSenha")}
               </button>
               <button
                 ref={buttonRef}
                 onClick={handleLogin}
                 className="bg-emerald-950 rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-500"
               >
-                Entrar
+                {t("entrar")}
               </button>
             </div>
             <div>
@@ -98,7 +101,7 @@ export default function LoginPage() {
                 onClick={handleRegister}
                 className="text-emerald-950 rounded-full px-2 text-sm font-semibold"
               >
-                Ainda não tem conta? Faça seu cadastro!
+                {t("signIn")}
               </button>
             </div>
           </div>

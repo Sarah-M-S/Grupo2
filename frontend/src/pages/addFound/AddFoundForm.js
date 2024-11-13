@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Success from "../success/Success";
 import useFetchValues from "../../hooks/useFetchValues";
 import usePostFound from "../../hooks/usePostFound";
+import { useTranslation } from "react-i18next";
 
 export default function AddFoundForm() {
   const [formData, setFormData] = useState({
@@ -40,12 +41,14 @@ export default function AddFoundForm() {
     navigate("/mainPage");
   };
 
+  const { t } = useTranslation();
+
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
         {sent && (
           <Success
-            message={"Objeto adicionado com sucesso!"}
+            message={t("objetoAdicionadoSucesso")}
             route={"/mainPage"}
           />
         )}
@@ -54,7 +57,7 @@ export default function AddFoundForm() {
           <div className="flex flex-col w-full max-w-md space-y-8 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
             <div>
               <h2 className="text-xl text-center font-semibold text-emerald-500 md:text-[180%]">
-                Adicionar Achado
+                {t("adicionarAchado")}
               </h2>
             </div>
 
@@ -67,7 +70,7 @@ export default function AddFoundForm() {
                 required
               >
                 <option value="" disabled hidden>
-                  Categoria
+                {t("categoria")}
                 </option>
                 {categories &&
                   categories.categorias.map((categoria) => (
@@ -80,7 +83,7 @@ export default function AddFoundForm() {
                   ))}
                 {!places && (
                   <option value="" disabled hidden>
-                    Categoria
+                    {t("categoria")}
                   </option>
                 )}
               </select>
@@ -92,7 +95,7 @@ export default function AddFoundForm() {
                 value={formData.object}
                 onChange={handleChange}
                 required
-                placeholder="Objeto"
+                placeholder={t("objeto")}
               />
 
               <select
@@ -102,7 +105,7 @@ export default function AddFoundForm() {
                 onChange={handleChange}
               >
                 <option value="" disabled hidden>
-                  Cor
+                {t("cor")}
                 </option>
                 {colors &&
                   colors.cor.map((cor) => (
@@ -112,7 +115,7 @@ export default function AddFoundForm() {
                   ))}
                 {!places && (
                   <option value="" disabled hidden>
-                    Categoria
+                    {t("categoria")}
                   </option>
                 )}
               </select>
@@ -124,7 +127,7 @@ export default function AddFoundForm() {
                 value={formData.brand}
                 onChange={handleChange}
                 required
-                placeholder="Marca"
+                placeholder={t("marca")}
               />
 
               <textarea
@@ -133,7 +136,7 @@ export default function AddFoundForm() {
                 rows="8"
                 className="rounded-xl w-full max-h-24 min-h-24 py-2 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
                 required
-                placeholder="Detalhes"
+                placeholder={t("objetoDetalhes")}
                 value={formData.details}
                 onChange={handleChange}
               />
@@ -153,7 +156,7 @@ export default function AddFoundForm() {
                 onChange={handleChange}
               >
                 <option value="" disabled hidden>
-                  Local
+                {t("local")}
                 </option>
                 {places &&
                   places.locais.map((place) => (
@@ -163,7 +166,7 @@ export default function AddFoundForm() {
                   ))}
                 {!places && (
                   <option value="" disabled hidden>
-                    Local
+                    {t("local")}
                   </option>
                 )}
               </select>
@@ -176,7 +179,7 @@ export default function AddFoundForm() {
                 disabled={!dependencies}
               >
                 <option value="" disabled hidden>
-                  Dependência
+                {t("dependencia")}
                 </option>
                 {dependencies &&
                   dependencies.dependencias.map((dependencia) => (
@@ -189,7 +192,7 @@ export default function AddFoundForm() {
                   ))}
                 {!places && (
                   <option value="" disabled hidden>
-                    Dependência
+                    {t("dependencia")}
                   </option>
                 )}
               </select>
@@ -200,13 +203,13 @@ export default function AddFoundForm() {
                 onClick={handleCancel}
                 className="text-emerald-950 rounded-full py-2 px-2 text-lg font-semibold"
               >
-                Cancelar
+                {t("cancelar")}
               </button>
               <button
                 onClick={handleSave}
                 className="bg-emerald-950 rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-500"
               >
-                Salvar
+                {t("salvar")}
               </button>
             </div>
           </div>

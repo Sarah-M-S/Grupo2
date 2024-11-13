@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import ObjectCard from "../card/ObjectCard";
 import useFetchData from "../../hooks/useFetchData";
 import UserCard from "../card/UserCard";
+import { useTranslation } from "react-i18next";
 
 export default function UserPanel() {
   const { loading, data } = useFetchData("/admin/list/usuarios");
   console.log(data)
+
+  const { t } = useTranslation();
 
   return (
     <>
@@ -21,7 +24,7 @@ export default function UserPanel() {
           </ul>
         </div>
       )}
-      {loading && <p>loading</p>}
+      {loading && <p>{t("carregando")}</p>}
     </>
   );
 }

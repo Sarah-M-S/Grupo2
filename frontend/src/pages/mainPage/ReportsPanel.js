@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import ObjectCard from "../card/ObjectCard";
 import useFetchData from "../../hooks/useFetchData";
+import { useTranslation } from "react-i18next";
+
 
 export default function ReportsPanel() {
   const { loading, data } = useFetchData("/admin/list/item/perdidos");
-
+  const { t } = useTranslation();
   return (
     <>
       {data && (
@@ -24,7 +26,7 @@ export default function ReportsPanel() {
           </ul>
         </div>
       )}
-      {loading && <p>loading</p>}
+      {loading && <p>{t("carregando")}</p>}
     </>
   );
 }
