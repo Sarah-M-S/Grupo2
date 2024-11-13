@@ -101,6 +101,90 @@ router.get('/admin/list/item/perdidos/filtro', async (req, res) => {
   }
 });
 
+//Listar itens por id
+router.get("  :id?", (req, res) => {
+  const { id } = req.params;
+
+  item.findAll({
+    where: {
+      id_item : id
+    },
+    order: [['createdAt', 'DESC']]
+  })
+  .then(itens => {
+    res.json({ itens });
+  })
+  .catch(error => {
+    res.status(500).json({ error: error.message });
+  });
+});
+
+//editar info itens
+router.post('/admin/editItem', (req, res) => {
+  var idItem = req.body.item.idItem;
+  var titulo = req.body.item.titulo;
+  var descricao = req.body.item.descricao;
+  var categoria = req.body.item.categoria;
+  var cor = req.body.item.cor;
+  var marca = req.body.item.marca;
+  var localPerda = req.body.item.localPerda;
+  var dependencia_perda = req.body.item.dependenciaPerda;
+  var localEncontro = req.body.item.localEncontro;
+  var dependenciaEncontro = req.body.item.dependenciaEncontro;
+  var dataPerda = req.body.item.dataPerda;
+  var dataEntrada = req.body.item.dataEntrada;
+  var dataDevolucao = req.body.item.dataDevolucao;
+  var situacao = req.body.item.situacao;
+  var usuarioCadastrante = req.body.item.usuarioCadastrante;
+  var usuarioResgatante = req.body.item.usuarioResgatante;
+  var usuarioDevolucao = req.body.item.usuarioDevolucao;
+  var usuarioPerda = req.body.item.usuarioPerda;
+
+   item.update({
+     // id_item : idItem,
+      titulo: titulo,
+      descricao: descricao,
+      categoria: categoria,
+      cor: cor,
+      marca: marca,
+      local_perda: localPerda,
+      dependencia_perda: dependencia_perda,
+      local_encontro: localEncontro,
+      dependencia_encontro: dependenciaEncontro,
+      data_perda : dataPerda,
+      data_entrada : dataEntrada,
+      data_devolucao : dataDevolucao,
+      situacao : situacao,
+      usuario_cadastrante : usuarioCadastrante,
+      usuario_resgatante : usuarioResgatante,
+      funcionario_devolucao: usuarioDevolucao,
+      usuario_perda: usuarioPerda 
+  },
+      {
+          where: {
+            id_item: idItem
+          }
+      }).then(async (result) => {
+        if (result[0] === 0) {
+          return res.status(404).json({
+            sucesso: false,
+            mensagem: 'Item não encontrado para atualização.'
+          });
+        }
+  
+        // Buscar o item atualizado para retornar
+        const itemAtualizado = await item.findOne({ where: { id_item: idItem } });
+        res.status(200).json({ item: itemAtualizado });
+      })
+      .catch((erro) => {
+        res.status(500).json({
+          sucesso: false,
+          mensagem: 'Erro ao atualizar o item.',
+          erro: erro.message
+        });
+      });
+
+});
 
 //usuarios--------------------------------------------------------------------------
 //Listar usuarios
