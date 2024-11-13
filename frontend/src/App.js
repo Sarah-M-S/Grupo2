@@ -20,6 +20,7 @@ import { useAuthContext } from "./hooks/useAuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import OpenRoute from "./components/OpenRoute";
 import AdminRoute from "./components/AdminRoute";
+import AddLocalAndDependencie from "./pages/addLocalAndDependencie/AddLocalAndDependencie";
 
 const App = () => {
   const { authIsReady, user } = useAuthContext();
@@ -50,6 +51,7 @@ const App = () => {
             <Route path="/reportForm" element={<ProtectedRoute><ReportFormPage /></ProtectedRoute>}></Route>
             <Route path="/editProfile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>}></Route>
             <Route path="/addFound" element={<AdminRoute><ProtectedRoute><AddFoundForm /></ProtectedRoute></AdminRoute>}></Route>
+            <Route path="/addLocalAndDependencie" element={<AdminRoute><ProtectedRoute><AddLocalAndDependencie /></ProtectedRoute></AdminRoute>}></Route>
 
             {/* Antigas rotas */}
 

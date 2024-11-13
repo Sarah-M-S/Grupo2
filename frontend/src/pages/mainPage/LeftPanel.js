@@ -17,11 +17,15 @@ export default function LeftPanel({ state, onDisplayChange }) {
   };
 
   const handleEditProfile = () => {
-    navigate("/editProfile", {state: payload.user});
+    navigate("/editProfile", { state: payload.user });
   };
 
   const handleAddFound = () => {
     navigate("/addFound");
+  };
+
+  const handleAddLocalAndDependencie = () => {
+    navigate("/addLocalAndDependencie");
   };
 
   const handleHelp = () => {
@@ -57,7 +61,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
             {t("listaAchados")}
           </button>
 
-          {payload.user.admin  && (
+          {payload.user.admin && (
             <button
               onClick={() => handleDisplay("reports")}
               className={`font-semibold text-emerald-950 text-lg ${
@@ -68,7 +72,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
             </button>
           )}
 
-          {payload.user.admin  && (
+          {payload.user.admin && (
             <button
               onClick={() => handleDisplay("users")}
               className={`font-semibold text-emerald-950 text-lg ${
@@ -79,12 +83,21 @@ export default function LeftPanel({ state, onDisplayChange }) {
             </button>
           )}
 
-          {payload.user.admin  && (
+          {payload.user.admin && (
             <button
               onClick={handleAddFound}
               className="font-semibold text-emerald-950 text-lg"
             >
               {t("adicionarAchado")}
+            </button>
+          )}
+
+          {payload.user.admin && (
+            <button
+              onClick={handleAddLocalAndDependencie}
+              className="font-semibold text-emerald-950 text-lg"
+            >
+              Adicionar Local e Dependencia
             </button>
           )}
 
