@@ -11,6 +11,8 @@ export default function DataConfirm({ onRestart, onNext, dataToConfirm, isSubmit
     dataToConfirm.place
   );
 
+  
+
   const handleNext = () => {
 
     onNext();

@@ -75,8 +75,7 @@ export default function ObjectCard({ object, isFound }) {
                     <b>{t("local")}: </b>
                     {places
                       ? places.locais.find(
-                          (place) =>
-                            place.id_local === +object.item.local_perda
+                          (place) => place.id_local === +object.item.local_perda
                         ).titulo
                       : ""}
                   </p>
@@ -95,7 +94,7 @@ export default function ObjectCard({ object, isFound }) {
 
               <p>
                 <b>{t("dataEncontro")}: </b>
-                {formatDate(object.item.data_entrada)}
+                {isFound ? formatDate(object.item.data_entrada) : formatDate(object.item.data_perda)}
               </p>
             </div>
           </div>
