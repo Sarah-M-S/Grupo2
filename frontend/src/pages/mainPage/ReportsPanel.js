@@ -3,7 +3,6 @@ import ObjectCard from "../card/ObjectCard";
 import useFetchData from "../../hooks/useFetchData";
 import { useTranslation } from "react-i18next";
 
-
 export default function ReportsPanel() {
   const { loading, data } = useFetchData("/admin/list/item/perdidos");
   const { t } = useTranslation();
@@ -16,10 +15,9 @@ export default function ReportsPanel() {
               <li key={item.id_item}>
                 <ObjectCard
                   object={{
-                    object: item.titulo,
-                    place: item.local_perda,
-                    date: item.data_perda,
+                    item,
                   }}
+                  isFound={false}
                 />
               </li>
             ))}

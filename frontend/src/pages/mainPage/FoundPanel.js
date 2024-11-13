@@ -17,10 +17,9 @@ export default function FoundPanel() {
               <li key={item.id_item}>
                 <ObjectCard
                   object={{
-                    object: item.titulo,
-                    place: item.local_perda,
-                    date: item.data_perda,
+                    item,
                   }}
+                  isFound={true}
                 />
               </li>
             ))}
