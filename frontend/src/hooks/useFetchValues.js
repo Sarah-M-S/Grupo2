@@ -8,6 +8,8 @@ const useFetchValues = (id_local) => {
   const [places, setPlaces] = useState(null);
   const [dependencies, setDependencies] = useState(null);
   const [colors, setColors] = useState(null);
+  const [courses, setCourses] = useState(null);
+
 
   const fetchData = async () => {
     setError(null);
@@ -17,6 +19,7 @@ const useFetchValues = (id_local) => {
       await fetchCategories();
       await fetchColors();
       await fetchPlaces();
+      await fetchCourses();
       if (id_local) {
         await fetchDependencies();
       }
@@ -129,13 +132,38 @@ const useFetchValues = (id_local) => {
     }
   };
 
+  const fetchCourses = async () => {
+    setError(null);
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        "http://localhost:8083/list/cursos"
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const result = await response.json();
+      if (!isCanceled) {
+        setCourses(result);
+        setLoading(false);
+      }
+    } catch (error) {
+      if (!isCanceled) {
+        setError(error);
+        setLoading(false);
+      }
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
     setIsCanceled(false);
     fetchData();
     return () => setIsCanceled(true);
   }, [id_local]);
 
-  return { loading, error, categories, places, colors, dependencies };
+  return { loading, error, categories, places, colors, dependencies, courses };
 };
 
 export default useFetchValues;

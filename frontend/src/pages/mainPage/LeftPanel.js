@@ -17,7 +17,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
   };
 
   const handleEditProfile = () => {
-    navigate("/editProfile");
+    navigate("/editProfile", {state: payload.user});
   };
 
   const handleAddFound = () => {

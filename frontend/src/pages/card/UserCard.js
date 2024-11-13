@@ -5,9 +5,10 @@ import { useTranslation } from "react-i18next";
 export default function UserCard({user}) {
   const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
+  console.log(user)
 
   const handleEdit = () => {
-    navigate("/editProfile")
+    navigate("/editProfile", {state: user})
   }
 
   const toggleCard = () => {
@@ -20,7 +21,7 @@ export default function UserCard({user}) {
       {/* Primeiro card (expandido por padrão) */}
       <div className={`w-full p-4 bg-white rounded-3xl shadow-md transition-all duration-100 ${isExpanded ? "h-24" : "h-16"}`}>
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold">{user.name}</h2>
+          <h2 className="text-xl font-semibold">{user.nome}</h2>
           <button onClick={toggleCard} className="text-emerald-500">
             {isExpanded ? "Menos" : "Detalhes"}
           </button>

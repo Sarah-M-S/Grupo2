@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 
 export default function UserPanel() {
   const { loading, data } = useFetchData("/admin/list/usuarios");
-  console.log(data)
 
   const { t } = useTranslation();
 
@@ -17,8 +16,7 @@ export default function UserPanel() {
           <ul className="flex flex-col space-y-2">
             {data.usuario.map((user) => (
               <li key={user.id_usuario}>
-                <UserCard user={{name:user.nome, mail:user.email, phone:user.telefone}}/>
-                
+                <UserCard user={user}/>
               </li>
             ))}
           </ul>

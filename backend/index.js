@@ -179,6 +179,17 @@ app.get("/list/locais/dependencias/:id", (req, res) => {
   });
 });
 
+//---------------------------------------------------------------------------
+//Listar cursos
+app.get("/list/cursos", (req, res) => {
+  curso.findAll(
+ ).then(curso => {
+    res.json({ curso: curso });
+}).catch(error => {
+    res.status(500).json({ error: error.message });
+});
+});
+
 // Formulario ---------------------------------------------------------------
 // Reportar item perdido - Usario comum
 app.post("/cadastrarPerda", (req, res) => {
