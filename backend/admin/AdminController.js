@@ -128,6 +128,28 @@ router.get('/admin/list/usuarios/:id', (req, res) => {
 
 });
 
+//procurar usuario por nome
+router.get("/admin/search/usuario/", (req, res) => {
+  const { nome } = req.query; // Obtém o nome da query string na URL (ex: ?nome=João)
+  console.log(nome)
+  console.log("teste")
+
+  // Define a condição de busca com base no nome (se fornecido)
+  const whereCondition = nome ? { nome: { [Op.like]: `%${nome}%` } } : {};
+
+  usuario.findAll({
+    where: whereCondition // Usa a condição de busca
+  })
+  .then(usuarios => {
+    res.json({ usuarios }); // Retorna os usuários encontrados em JSON
+  })
+  .catch(error => {
+    console.error(error); // Loga o erro no console para depuração
+    res.status(500).json({ error: error.message }); // Retorna um erro 500 com a mensagem
+  });
+});
+  
+
 //formularios--------------------------------------------------------------------------
 
 // Adicionar achado
