@@ -17,6 +17,8 @@ const { json, raw } = require("body-parser");
 const nodemailer = require("nodemailer");
 const item = require("../Model/Item");
 const usuario = require("../Model/usuario");
+const local = require("../Model/local");
+const dependencia = require("../Model/dependencia");
 
 
 //=================================================================================
@@ -297,7 +299,67 @@ router.post('/admin/editUsuario', (req, res) => {
 });
 
 
+// add locais 
+router.post('/admin/addLocal', (req, res) => {
+  const { titulo } = req.body;
+console.log("ok")
+   // Verifica se o título foi fornecido
+  if (!titulo) {
+    return res.status(400).json({ 
+      sucesso: false,
+      mensagem: 'O título é obrigatório.'
+    });
+  }
 
+ // Cria o novo local
+  local.create({ titulo })
+    .then(novoLocal => {
+      res.status(201).json({
+        sucesso: true,
+        mensagem: 'Local inserido com sucesso.',
+        local: novoLocal // Retorna o local recém-criado
+      });
+    })
+    .catch(erro => {
+      console.error(erro); // Loga o erro para depuração
+      res.status(500).json({
+        sucesso: false,
+        mensagem: 'Erro ao inserir o local.',
+        erro: erro.message
+      });
+    });
+});
+
+// add dependencia -----------------------------------------------------------
+router.post('/admin/addDependencia', (req, res) => {
+  const { titulo, local_pai } = req.body;
+
+  // Verifica se o título e o local_pai foram fornecidos
+  if (!titulo || !local_pai) {
+    return res.status(400).json({
+      sucesso: false,
+      mensagem: 'O título e o local pai são obrigatórios.'
+    });
+  }
+
+  // Cria a nova dependência
+  dependencia.create({ titulo, local_pai })
+    .then(novaDependencia => {
+      res.status(201).json({
+        sucesso: true,
+        mensagem: 'Dependência inserida com sucesso.',
+        dependencia: novaDependencia // Retorna a dependência recém-criada
+      });
+    })
+    .catch(erro => {
+      console.error(erro); // Loga o erro para depuração
+      res.status(500).json({
+        sucesso: false,
+        mensagem: 'Erro ao inserir a dependência.',
+        erro: erro.message
+      });
+    });
+});
 
 
 
