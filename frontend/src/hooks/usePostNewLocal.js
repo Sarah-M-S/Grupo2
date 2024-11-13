@@ -8,12 +8,11 @@ const usePostNewLocal = () => {
   const postNewLocal = async (formData) => {
     if(formData.place !== "new"){
         const newFormData = { dependencie:formData.dependencie, place: formData.place}
-        console.log(newFormData)
+        postDependencie(newFormData)
     } else {
         const res = await postPlace(formData.newPlace)
-        .then(res => {
-            console.log(res.json())
-        })
+        const newFormData = { dependencie:formData.dependencie, place: res.local.id_local}
+        postDependencie(newFormData)
     }
   }
 
@@ -35,6 +34,7 @@ const usePostNewLocal = () => {
       }
 
       const data = await response.json();
+      return data;
       console.log("Sucesso:", data);
     } catch (error) {
       setError(error.message);
@@ -49,7 +49,7 @@ const usePostNewLocal = () => {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:8083/admin/addLocal", {
+      const response = await fetch("http://localhost:8083/admin/addDependencia", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
