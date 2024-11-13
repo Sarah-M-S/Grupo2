@@ -15,7 +15,7 @@ const adminAuth = require("../middleware/adminAuth");
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config");
 const { where } = require("sequelize");
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
 const { json, raw } = require("body-parser");
 const nodemailer = require("nodemailer");
 const usuario = require("../Model/usuario");
@@ -37,50 +37,48 @@ router.use(
 //itens----------------------------------------------------------------------------
 //Listar itens perdidos
 router.get("/admin/list/item/perdidos", (req, res) => {
-  item.findAll({
-    where : {
-      situacao : 1 //perdido
-    },
-    order: [
-      ['createdAt', 'DESC']
-    ]
-
-  }).then(itens => {
-    res.json({ itens: itens });
-}).catch(error => {
-    res.status(500).json({ error: error.message });
+  item
+    .findAll({
+      where: {
+        situacao: 1, //perdido
+      },
+      order: [["createdAt", "DESC"]],
+    })
+    .then((itens) => {
+      res.json({ itens: itens });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: error.message });
+    });
 });
-});
-
 
 //listar itens perdidos com filtro
-router.get('/admin/list/item/perdidos/filtro', async (req, res) => {
-  try  {
+router.get("/admin/list/item/perdidos/filtro", async (req, res) => {
+  try {
     const { local_perda, dependencia_perda, data_perda, categoria } = req.query;
 
-  
-    let conditions = {situacao : 1};
-    
+    let conditions = { situacao: 1 };
+
     if (local_perda) {
       conditions.local_perda = local_perda;
     }
-    
+
     if (dependencia_perda) {
       conditions.dependencia_perda = dependencia_perda;
     }
-    
+
     if (data_perda) {
       const startOfDay = new Date(data_perda);
       startOfDay.setUTCHours(0, 0, 0, 0);
       const endOfDay = new Date(data_perda);
       endOfDay.setUTCHours(23, 59, 59, 999);
-      
+
       conditions.data_perda = {
-        [Op.between]: [startOfDay, endOfDay]
+        [Op.between]: [startOfDay, endOfDay],
       };
-      console.log(conditions.data_perda)
+      console.log(conditions.data_perda);
     }
-    
+
     if (categoria) {
       conditions.categoria = categoria;
     }
@@ -88,50 +86,51 @@ router.get('/admin/list/item/perdidos/filtro', async (req, res) => {
     // Consulta com filtros opcionais
     const itens = await item.findAll({
       where: conditions,
-      
     });
 
     res.status(200).json({
       sucesso: true,
-      mensagem: 'Itens filtrados com sucesso',
-      itens: itens
+      mensagem: "Itens filtrados com sucesso",
+      itens: itens,
     });
   } catch (erro) {
     res.status(500).json({
       sucesso: false,
-      mensagem: 'Erro ao filtrar os itens',
-      erro: erro.message
+      mensagem: "Erro ao filtrar os itens",
+      erro: erro.message,
     });
   }
 });
 
-
 //usuarios--------------------------------------------------------------------------
 //Listar usuarios
 router.get("/admin/list/usuarios", (req, res) => {
-  usuario.findAll({
-  }).then(usuario => {
-    res.json({ usuario: usuario });
-}).catch(error => {
-    res.status(500).json({ error: error.message });
-});
+  usuario
+    .findAll({})
+    .then((usuario) => {
+      res.json({ usuario: usuario });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: error.message });
+    });
 });
 
 //listar usuario por id
-router.get('/admin/list/usuarios/:id', (req, res) => {
-
+router.get("/admin/list/usuarios/:id", (req, res) => {
   const id = req.params.id;
 
-  usuario.findOne({
+  usuario
+    .findOne({
       where: {
-          id_usuario: id
-      }
-  }).then(usuario => {
-    res.json({ usuario: usuario });
-}).catch(error => {
-    res.status(500).json({ error: error.message });
-});
-
+        id_usuario: id,
+      },
+    })
+    .then((usuario) => {
+      res.json({ usuario: usuario });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: error.message });
+    });
 });
 
 //formularios--------------------------------------------------------------------------
@@ -148,35 +147,35 @@ router.post("/admin/adicionarAchado", (req, res) => {
   var dataEntrada = req.body.achado.dataEntrada;
   var situacao = 2; //encontrados
   // Enviar o ID do admin
-  var usuarioCadastrante =  req.body.achado.usuarioCadastrante;
- 
+  var usuarioCadastrante = req.body.achado.usuarioCadastrante;
 
-  item.create({
-    titulo: tituloItem,
-    descricao: descricao,
-    categoria: categoria,
-    cor: cor,
-    marca: marca,
-    local_encontro: localEncontro,
-    dependencia_encontro: dependencia,
-    data_entrada: dataEntrada,
-    situacao: situacao,
-    usuario_cadastrante: usuarioCadastrante,
-  })
+  item
+    .create({
+      titulo: tituloItem,
+      descricao: descricao,
+      categoria: categoria,
+      cor: cor,
+      marca: marca,
+      local_encontro: localEncontro,
+      dependencia_encontro: dependencia,
+      data_entrada: dataEntrada,
+      situacao: situacao,
+      usuario_cadastrante: usuarioCadastrante,
+    })
     .then((itemCriado) => {
       // Retorna uma resposta de sucesso com o item criado
       res.status(201).json({
         sucesso: true,
-        mensagem: 'Item cadastrado com sucesso!',
-        dados: itemCriado
+        mensagem: "Item cadastrado com sucesso!",
+        dados: itemCriado,
       });
     })
     .catch((erro) => {
       // Retorna uma resposta de erro com a mensagem de erro
       res.status(500).json({
         sucesso: false,
-        mensagem: 'Erro ao cadastrar o item.',
-        erro: erro.message
+        mensagem: "Erro ao cadastrar o item.",
+        erro: erro.message,
       });
     });
 });
@@ -192,43 +191,45 @@ router.post("/admin/reportarPerda", (req, res) => {
   var dependencia = req.body.itemPerdido.dependencia;
   var dataPerda = req.body.itemPerdido.dataPerda;
   var situacao = 1; //perdido
-  var usuarioCadastrante =  req.session.usuario != null ?  req.session.usuario : 22;
+  var usuarioCadastrante =
+    req.session.usuario != null ? req.session.usuario : 22;
   var usuarioPerda = req.body.itemPerdido.usuarioPerda;
- 
-  item.create({
-    titulo: tituloItem,
-    descricao: descricao,
-    categoria: categoria,
-    cor: cor,
-    marca: marca,
-    local_perda: localPerda,
-    dependencia_perda: dependencia,
-    data_perda: dataPerda,
-    situacao: situacao,
-    usuario_cadastrante: usuarioCadastrante,
-    usuario_perda: usuarioPerda
-  })
+
+  item
+    .create({
+      titulo: tituloItem,
+      descricao: descricao,
+      categoria: categoria,
+      cor: cor,
+      marca: marca,
+      local_perda: localPerda,
+      dependencia_perda: dependencia,
+      data_perda: dataPerda,
+      situacao: situacao,
+      usuario_cadastrante: usuarioCadastrante,
+      usuario_perda: usuarioPerda,
+    })
     .then((itemCriado) => {
       // Retorna uma resposta de sucesso com o item criado
       res.status(201).json({
         sucesso: true,
-        mensagem: 'Item cadastrado com sucesso!',
-        dados: itemCriado
+        mensagem: "Item cadastrado com sucesso!",
+        dados: itemCriado,
       });
     })
     .catch((erro) => {
       // Retorna uma resposta de erro com a mensagem de erro
       res.status(500).json({
         sucesso: false,
-        mensagem: 'Erro ao cadastrar o item.',
-        erro: erro.message
+        mensagem: "Erro ao cadastrar o item.",
+        erro: erro.message,
       });
     });
 });
 
 // Editar Usuário -----------------------------------------------------------------------------------
 
-router.post('/admin/editUsuario', (req, res) => {
+router.post("/admin/editUsuario", (req, res) => {
   var idUsuario = req.body.usuario.idUsuario;
   var nome = req.body.usuario.nomeUsuario;
   var email = req.body.usuario.email;
@@ -239,121 +240,57 @@ router.post('/admin/editUsuario', (req, res) => {
   var ativoFlag = req.body.usuario.ativoFlag;
   var adminFlag = req.body.usuario.adminFlag;
 
-
   if (!email || !senha) {
-      return res.status(400).send('E-mail e senha são obrigatórios.');
-
+    return res.status(400).send("E-mail e senha são obrigatórios.");
   }
 
   var salt = bcrypt.genSaltSync(10);
   var hash = bcrypt.hashSync(senha, salt);
 
-   usuario.update({
-      id_usuario : idUsuario,
-      nome: nome,
-      email: email,
-      senha: hash,
-      telefone: telefone,
-      turno: turno,
-      curso: curso,
-      ativo: ativoFlag,
-      admin: adminFlag
-
-  },
+  usuario
+    .update(
       {
-          where: {
-              id_usuario: idUsuario
-          }
-      }).then((usuario) => {
-        // Retorna uma resposta de sucesso
-        res.status(201).json({
-          sucesso: true,
-          mensagem: 'Usuario atualizado com sucesso'
-        });
-      })
-      .catch((erro) => {
-        // Retorna uma resposta de erro com a mensagem de erro
-        res.status(500).json({
-          sucesso: false,
-          mensagem: 'Erro ao atualizar o usuario.',
-          erro: erro.message
-        });
+        id_usuario: idUsuario,
+        nome: nome,
+        email: email,
+        senha: hash,
+        telefone: telefone,
+        turno: turno,
+        curso: curso,
+        ativo: ativoFlag,
+        admin: adminFlag,
+      },
+      {
+        where: {
+          id_usuario: idUsuario,
+        },
+      }
+    )
+    .then(async () => {
+      // Busca o usuário atualizado após a atualização
+      const usuarioAtualizado = await usuario.findOne({
+        where: { id_usuario: idUsuario },
       });
-
+      if (usuarioAtualizado) {
+        res.status(200).json({
+          sucesso: true,
+          user: usuarioAtualizado,
+        });
+      } else {
+        res.status(404).json({
+          sucesso: false,
+          mensagem: "Usuário não encontrado após a atualização.",
+        });
+      }
+    })
+    .catch((erro) => {
+      res.status(500).json({
+        sucesso: false,
+        mensagem: "Erro ao atualizar o usuário.",
+        erro: erro.message,
+      });
+    });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //Rotas da router
 
@@ -399,10 +336,11 @@ router.post("/users/create", async (req, res) => {
   var nome = req.body.name;
   var senha = req.body.password;
   var email = req.body.email;
-  var telefone = req.body.phone
+  var telefone = req.body.phone;
   var admin = true;
   var turno = req.body.shift;
   var status = true;
+  var ativoFlag = 1;
 
   var salt = bcrypt.genSaltSync(10);
   var senhaHash = bcrypt.hashSync(senha, salt);
@@ -415,11 +353,10 @@ router.post("/users/create", async (req, res) => {
       email: email,
       admin: admin,
       turno: turno,
-      telefone:telefone,
+      telefone: telefone,
       status: status,
+      ativo: ativoFlag,
     });
-
-    console.log(user)
 
     const token = jwt.sign({ id: user.id }, config.secret, {
       algorithm: "HS256",
@@ -427,7 +364,7 @@ router.post("/users/create", async (req, res) => {
       expiresIn: 86400, // 24 hours
     });
 
-    console.log(user.dataValues)
+    console.log(user.dataValues);
 
     res.status(200).send({
       user: user.dataValues,
@@ -440,11 +377,14 @@ router.post("/users/create", async (req, res) => {
 
 //checagem do token
 router.get("/admin", adminAuth, async (req, res) => {
-  if(req.userId === undefined){
-    return res.json( null );
+  if (req.userId === undefined) {
+    return res.json(null);
   }
-  const user = await usuario.findOne({ where: { id_usuario: req.userId } })
-  return res.json({ user: user.dataValues });
+  const user = await usuario.findOne({ where: { id_usuario: req.userId } });
+  if (user) {
+    return res.json({ user: user.dataValues });
+  }
+  return res.json(null);
 });
 
 // listagem de admins
@@ -460,6 +400,7 @@ router.post("/autenticar", (req, res) => {
   var password = req.body.password;
 
   usuario.findOne({ where: { email: email } }).then((user) => {
+    console.log(user)
     if (user != undefined) {
       var correct = bcrypt.compareSync(password, user.senha);
       if (correct) {
@@ -479,10 +420,10 @@ router.post("/autenticar", (req, res) => {
           accessToken: token,
         });
       } else {
-        res.status(401).send("Acesso Negado");
+        res.status(404).send("Acesso Negado");
       }
     } else {
-      res.status(401).send("Acesso Negado");
+      res.status(405).send("Acesso Negado");
     }
   });
 });

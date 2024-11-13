@@ -20,10 +20,8 @@ const adminAuth = (req, res, next) => {
 
             if (err) {
    
-
                 return res.status(401).send({
                     message: "Unauthorized!",
-                    
                 });
             }
             req.userId = decoded.id;

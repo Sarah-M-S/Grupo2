@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useRegister from "../../hooks/useRegister";
 import { useNavigate } from "react-router-dom";
+import useFetchValues from "../../hooks/useFetchValues";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -9,11 +10,12 @@ export default function Register() {
     name: "",
     email: "",
     phone: "",
-    course: "",
+    course: 20,
     shift: "",
     password: "",
     passwordConfirm: "",
   });
+  const { courses } = useFetchValues();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -73,15 +75,28 @@ export default function Register() {
               placeholder="Telefone"
             />
 
-            <input
-              type="text"
+            <select
+              className="rounded-xl w-full h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               name="course"
               value={formData.course}
               onChange={handleChange}
-              className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-md"
               required
-              placeholder="Curso"
-            />
+            >
+              <option value="" disabled hidden>
+                Curso
+              </option>
+              {courses &&
+                courses.curso.map((curso) => (
+                  <option key={curso.id_curso} value={curso.id_curso}>
+                    {curso.nome}
+                  </option>
+                ))}
+              {!courses && (
+                <option value="" disabled hidden>
+                  Curso
+                </option>
+              )}
+            </select>
 
             <select
               className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
