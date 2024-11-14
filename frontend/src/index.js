@@ -5,12 +5,15 @@ import App from "./App";
 import "./i18n/index";
 import { AuthContextProvider } from "./context.js/AuthContext";
 import { BrowserRouter } from "react-router-dom";
+import { SearchContextProvider } from "./context.js/SearchContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <AuthContextProvider>
     <BrowserRouter>
-      <App />
+      <SearchContextProvider>
+        <App />
+      </SearchContextProvider>
     </BrowserRouter>
   </AuthContextProvider>
 );

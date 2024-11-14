@@ -231,8 +231,8 @@ router.get("/admin/search/usuario/", (req, res) => {
   usuario.findAll({
     where: whereCondition // Usa a condição de busca
   })
-  .then(usuarios => {
-    res.json({ usuarios }); // Retorna os usuários encontrados em JSON
+  .then(usuario => {
+    res.json({ usuario }); // Retorna os usuários encontrados em JSON
   })
   .catch(error => {
     console.error(error); // Loga o erro no console para depuração

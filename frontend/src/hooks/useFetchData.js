@@ -9,6 +9,7 @@ const useFetchData = (url) => {
   const fetchData = async () => {
     setError(null);
     setLoading(true);
+    console.log(url)
 
     try {
       const response = await fetch("http://localhost:8083" + url);
@@ -33,7 +34,7 @@ const useFetchData = (url) => {
     setIsCanceled(false);
     fetchData();
     return () => setIsCanceled(true);
-  }, []);
+  }, [url]);
 
   return { loading, data, error };
 };
