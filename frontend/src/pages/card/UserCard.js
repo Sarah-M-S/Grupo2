@@ -30,14 +30,18 @@ export default function UserCard({ user }) {
           </button>
         </div>
         {isExpanded && (
-          <div className="mt-4 flex flex-row space-x-16">
-            <p>
-              {t("email")}: {user.mail}
-            </p>
-            <p>
-              {t("telefone")}: {user.phone}
-            </p>
-            <button onClick={handleEdit}>{t("editar")}</button>
+          <div className="mt-4 flex flex-row space-x-16 justify-between">
+            <div className="flex flex-row space-x-16">
+              <p>
+                {t("email")}: {user.email}
+              </p>
+              <p>
+                {t("telefone")}: {user.telefone}
+              </p>
+            </div>
+            <button onClick={handleEdit} className="text-emerald-500">
+              {t("editar")}
+            </button>
           </div>
         )}
       </div>

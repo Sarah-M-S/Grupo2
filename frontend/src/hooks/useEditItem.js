@@ -1,36 +1,40 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 
-const usePostFound = () => {
+const useEditItem = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
-  const { payload } = useAuthContext()
+  const { payload } = useAuthContext();
 
-  const postFound = async (formData) => {
+  const editItem = async (formData) => {
     setIsSubmitting(true);
     setError(null);
 
-    // Monta o objeto com os nomes em português
-    const achado = {
-      tituloItem: formData.object,
+    const item = {
+      idItem: formData.idItem,
+      titulo: formData.object,
       descricao: formData.details,
       marca: formData.brand,
       categoria: formData.category,
       cor: formData.color,
       localEncontro: formData.place,
-      dependencia: formData.dependencie,
+      dependenciaEncontro: formData.dependencie,
       dataEntrada: formData.date,
-      usuarioCadastrante: payload.user.id_usuario
+      situacao: formData.situation,
+      usuarioCadastrante: payload.user.id_usuario,
     };
 
     try {
-      const response = await fetch("http://localhost:8083/admin/adicionarAchado", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ achado }),
-      });
+      const response = await fetch(
+        "http://localhost:8083/admin/editItem",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ item }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Erro ao enviar o formulário");
@@ -46,7 +50,7 @@ const usePostFound = () => {
     }
   };
 
-  return { isSubmitting, error, postFound };
+  return { isSubmitting, error, editItem };
 };
 
-export default usePostFound;
+export default useEditItem;

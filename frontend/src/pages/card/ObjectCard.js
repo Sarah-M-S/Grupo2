@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import useFetchValues from "../../hooks/useFetchValues";
+import { useNavigate } from "react-router-dom";
 
 export default function ObjectCard({ object, isFound }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const navigate = useNavigate();
   const { places, categories, dependencies } = useFetchValues(
     isFound ? object.item.local_encontro : object.item.local_perda
   );
@@ -12,16 +14,22 @@ export default function ObjectCard({ object, isFound }) {
     setIsExpanded(!isExpanded);
   };
 
-  const formatDate = (dateString) => {
-    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
-    return new Date(dateString).toLocaleDateString("pt-BR", options);
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate() + 1).padStart(2, '0');
+    return `${day}-${month}-${year}`;
+  }
+
+  const handleEdit = () => {
+    navigate("/editItem", {state: object});
   };
 
   const { t } = useTranslation();
 
   return (
     <div className="flex flex-col items-center space-y-4">
-      {/* Primeiro card (expandido por padrão) */}
       <div
         className={`w-full p-4 bg-white rounded-3xl shadow-md transition-all duration-100 ${
           isExpanded ? "h-24" : "h-16"
@@ -35,67 +43,77 @@ export default function ObjectCard({ object, isFound }) {
         </div>
         {isExpanded && (
           <div className="flex flex-col space-y-2">
-            <div className="mt-4 flex flex-row space-x-4">
-              <h2>
-                <b>Categoria: </b>
-                {categories
-                  ? categories.categorias.find(
-                      (categoria) =>
-                        categoria.id_categoria === +object.item.categoria
-                    ).nome
-                  : ""}
-              </h2>
+            <div className="mt-4 flex flex-row space-x-4 justify-between">
+              <div className="flex flex-row space-x-4">
+                <h2>
+                  <b>Categoria: </b>
+                  {categories
+                    ? categories.categorias.find(
+                        (categoria) =>
+                          categoria.id_categoria === +object.item.categoria
+                      ).nome
+                    : ""}
+                </h2>
+                {isFound && (
+                  <div className="inline-flex">
+                    <p>
+                      <b>{t("local")}: </b>
+                      {places
+                        ? places.locais.find(
+                            (place) =>
+                              place.id_local === +object.item.local_encontro
+                          ).titulo
+                        : ""}
+                    </p>
+                    <p>-</p>
+                    <p>
+                      {object.item.dependencia_encontro
+                        ? dependencies.dependencias.find(
+                            (dependencie) =>
+                              dependencie.id_dependencia ===
+                              +object.item.dependencia_encontro
+                          ).titulo
+                        : ""}
+                    </p>
+                  </div>
+                )}
+
+                {!isFound && (
+                  <div className="inline-flex">
+                    <p>
+                      <b>{t("local")}: </b>
+                      {places
+                        ? places.locais.find(
+                            (place) =>
+                              place.id_local === +object.item.local_perda
+                          ).titulo
+                        : ""}
+                    </p>
+                    <p>-</p>
+                    <p>
+                      {object.item.dependencia_perda
+                        ? dependencies.dependencias.find(
+                            (dependencie) =>
+                              dependencie.id_dependencia ===
+                              +object.item.dependencia_perda
+                          ).titulo
+                        : ""}
+                    </p>
+                  </div>
+                )}
+
+                <p>
+                  <b>{t("dataEncontro")}: </b>
+                  {isFound
+                    ? formatDate(object.item.data_entrada)
+                    : formatDate(object.item.data_perda)}
+                </p>
+              </div>
               {isFound && (
-                <div className="inline-flex">
-                  <p>
-                    <b>{t("local")}: </b>
-                    {places
-                      ? places.locais.find(
-                          (place) =>
-                            place.id_local === +object.item.local_encontro
-                        ).titulo
-                      : ""}
-                  </p>
-                  <p>-</p>
-                  <p>
-                    {object.item.dependencia_encontro
-                      ? dependencies.dependencias.find(
-                          (dependencie) =>
-                            dependencie.id_dependencia ===
-                            +object.item.dependencia_encontro
-                        ).titulo
-                      : ""}
-                  </p>
-                </div>
+                <button onClick={handleEdit} className="text-emerald-500">
+                  {t("editar")}
+                </button>
               )}
-
-              {!isFound && (
-                <div className="inline-flex">
-                  <p>
-                    <b>{t("local")}: </b>
-                    {places
-                      ? places.locais.find(
-                          (place) => place.id_local === +object.item.local_perda
-                        ).titulo
-                      : ""}
-                  </p>
-                  <p>-</p>
-                  <p>
-                    {object.item.dependencia_perda
-                      ? dependencies.dependencias.find(
-                          (dependencie) =>
-                            dependencie.id_dependencia ===
-                            +object.item.dependencia_perda
-                        ).titulo
-                      : ""}
-                  </p>
-                </div>
-              )}
-
-              <p>
-                <b>{t("dataEncontro")}: </b>
-                {isFound ? formatDate(object.item.data_entrada) : formatDate(object.item.data_perda)}
-              </p>
             </div>
           </div>
         )}

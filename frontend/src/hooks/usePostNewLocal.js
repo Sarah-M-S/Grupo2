@@ -35,7 +35,6 @@ const usePostNewLocal = () => {
 
       const data = await response.json();
       return data;
-      console.log("Sucesso:", data);
     } catch (error) {
       setError(error.message);
       console.error("Erro:", error);
@@ -62,7 +61,6 @@ const usePostNewLocal = () => {
       }
 
       const data = await response.json();
-      console.log("Sucesso:", data);
     } catch (error) {
       setError(error.message);
       console.error("Erro:", error);
