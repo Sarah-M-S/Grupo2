@@ -21,6 +21,8 @@ const nodemailer = require("nodemailer");
 const usuario = require("../Model/usuario");
 const local = require("../Model/local");
 const dependencia = require("../Model/dependencia");
+const enviarEmailItemSemelhante = require('../nodemailer/email-item-semelhante')
+const enviarEmailConfirmacao = require('../nodemailer/email-confirmacao')
 
 const item = require("../Model/Item");
 
@@ -302,7 +304,8 @@ router.post("/admin/reportarPerda", (req, res) => {
   var usuarioCadastrante =
     req.session.usuario != null ? req.session.usuario : 22;
   var usuarioPerda = req.body.itemPerdido.usuarioPerda;
-
+  var email = email; //alterar
+  var nome = nome; //alterar
   item
     .create({
       titulo: tituloItem,
@@ -316,6 +319,10 @@ router.post("/admin/reportarPerda", (req, res) => {
       situacao: situacao,
       usuario_cadastrante: usuarioCadastrante,
       usuario_perda: usuarioPerda,
+    })
+    .then(() =>{
+      //////////////ALTERAR ESSE EMAIL POSTERIORMENTE e NOME) !!!!!!!!!
+      return enviarEmailConfirmacao(email, nome, tituloItem); 
     })
     .then((itemCriado) => {
       // Retorna uma resposta de sucesso com o item criado

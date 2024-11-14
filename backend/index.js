@@ -29,6 +29,7 @@ const { Op } = require('sequelize');
 //const dotenv = require('dotenv');
 
 
+
 //=================================================================================
 
 //configs
