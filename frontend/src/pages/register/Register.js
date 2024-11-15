@@ -16,6 +16,7 @@ export default function Register() {
   const regexEmail = /\S+@\S+\.\S+/;
   const phoneRegex = /^(\d{2})\s?(\d{4,5})-?(\d{4})$/;
   const fullNameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)+$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
 
   const handleRegister = () => {
   if(nomeCompleto === '' || !fullNameRegex.test(nomeCompleto)){
@@ -34,8 +35,8 @@ export default function Register() {
         alert('Preencha o Turno');
       } else if (senha === '') {
         alert('Preencha a Senha');
-      } else if (senha.length < 6) {
-        alert('A senha deve ter pelo menos 6 caracteres');
+      } else if (!passwordRegex.test(senha)) {
+        alert('A senha deve ter pelo menos 6 caracteres, incluindo uma letra maiúscula, uma minúscula e um caractere especial');
       } else if (confirmacaoSenha === '') {
         alert('Preencha a Confirmação de Senha');
       } else if (senha !== confirmacaoSenha) {

@@ -23,10 +23,15 @@ export default function EditProfile() {
   };
 
   const handleSave = () => {
-    
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
+
     if (!formData.name || !formData.email || !formData.password || !formData.type) {
       setError("Todos os campos são obrigatórios!");
       return; // Prevent submission if any field is empty
+    }
+    if (!passwordRegex.test(formData.password)) {
+      setError("A senha deve ter pelo menos 6 caracteres, começando com uma letra maiúscula, uma letra minúscula e um caractere especial.");
+      return;
     }
 
     // Reset error if validation passes
