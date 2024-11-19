@@ -361,19 +361,12 @@ router.post("/admin/editUsuario", (req, res) => {
   var idUsuario = req.body.usuario.idUsuario;
   var nome = req.body.usuario.nomeUsuario;
   var email = req.body.usuario.email;
-  var senha = req.body.usuario.senha;
+  //var senha = req.body.usuario.senha;
   var telefone = req.body.usuario.telefone;
   var turno = req.body.usuario.turno;
   var curso = req.body.usuario.curso;
   var ativoFlag = req.body.usuario.ativoFlag;
   var adminFlag = req.body.usuario.adminFlag;
-
-  if (!email || !senha) {
-    return res.status(400).send("E-mail e senha são obrigatórios.");
-  }
-
-  var salt = bcrypt.genSaltSync(10);
-  var hash = bcrypt.hashSync(senha, salt);
 
   usuario
     .update(
@@ -381,7 +374,6 @@ router.post("/admin/editUsuario", (req, res) => {
         id_usuario: idUsuario,
         nome: nome,
         email: email,
-        senha: hash,
         telefone: telefone,
         turno: turno,
         curso: curso,

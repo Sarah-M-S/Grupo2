@@ -28,8 +28,8 @@ const { where } = require("sequelize");
 const { Op } = require('sequelize');
 //const dotenv = require('dotenv');
 
-const enviarEmailItemSemelhante = require('../nodemailer/email-item-semelhante')
-const enviarEmailConfirmacao = require('../nodemailer/email-confirmacao')
+//const enviarEmailItemSemelhante = require('../nodemailer/email-item-semelhante')
+const enviarEmailConfirmacao = require('../backend/nodemailer/email-confirmacao')
 
 //=================================================================================
 
