@@ -28,7 +28,8 @@ const { where } = require("sequelize");
 const { Op } = require('sequelize');
 //const dotenv = require('dotenv');
 
-
+const enviarEmailItemSemelhante = require('../nodemailer/email-item-semelhante')
+const enviarEmailConfirmacao = require('../nodemailer/email-confirmacao')
 
 //=================================================================================
 
@@ -220,6 +221,21 @@ app.post("/cadastrarPerda", (req, res) => {
     usuario_perda: usuarioPerda
   })
     .then((itemCriado) => {
+      const id = usuarioPerda;
+      
+      usuario
+        .findOne({
+          where: {
+            id_usuario: id
+          }
+        }).then(usuario => {
+
+          enviarEmailConfirmacao(usuario.email, usuario.nome, tituloItem)
+
+        }).catch(error => {
+          res.status(500).json({ error: error.message });
+        });
+
       // Retorna uma resposta de sucesso com o item criado
       res.status(201).json({
         sucesso: true,

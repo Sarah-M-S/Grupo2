@@ -112,16 +112,16 @@ router.get("  :id?", (req, res) => {
 
   item.findAll({
     where: {
-      id_item : id
+      id_item: id
     },
     order: [['createdAt', 'DESC']]
   })
-  .then(itens => {
-    res.json({ itens });
-  })
-  .catch(error => {
-    res.status(500).json({ error: error.message });
-  });
+    .then(itens => {
+      res.json({ itens });
+    })
+    .catch(error => {
+      res.status(500).json({ error: error.message });
+    });
 });
 
 //editar info itens
@@ -145,49 +145,49 @@ router.post('/admin/editItem', (req, res) => {
   var usuarioDevolucao = req.body.item.usuarioDevolucao;
   var usuarioPerda = req.body.item.usuarioPerda;
 
-   item.update({
-     // id_item : idItem,
-      titulo: titulo,
-      descricao: descricao,
-      categoria: categoria,
-      cor: cor,
-      marca: marca,
-      local_perda: localPerda,
-      dependencia_perda: dependencia_perda,
-      local_encontro: localEncontro,
-      dependencia_encontro: dependenciaEncontro,
-      data_perda : dataPerda,
-      data_entrada : dataEntrada,
-      data_devolucao : dataDevolucao,
-      situacao : situacao,
-      usuario_cadastrante : usuarioCadastrante,
-      usuario_resgatante : usuarioResgatante,
-      funcionario_devolucao: usuarioDevolucao,
-      usuario_perda: usuarioPerda 
+  item.update({
+    // id_item : idItem,
+    titulo: titulo,
+    descricao: descricao,
+    categoria: categoria,
+    cor: cor,
+    marca: marca,
+    local_perda: localPerda,
+    dependencia_perda: dependencia_perda,
+    local_encontro: localEncontro,
+    dependencia_encontro: dependenciaEncontro,
+    data_perda: dataPerda,
+    data_entrada: dataEntrada,
+    data_devolucao: dataDevolucao,
+    situacao: situacao,
+    usuario_cadastrante: usuarioCadastrante,
+    usuario_resgatante: usuarioResgatante,
+    funcionario_devolucao: usuarioDevolucao,
+    usuario_perda: usuarioPerda
   },
-      {
-          where: {
-            id_item: idItem
-          }
-      }).then(async (result) => {
-        if (result[0] === 0) {
-          return res.status(404).json({
-            sucesso: false,
-            mensagem: 'Item não encontrado para atualização.'
-          });
-        }
-  
-        // Buscar o item atualizado para retornar
-        const itemAtualizado = await item.findOne({ where: { id_item: idItem } });
-        res.status(200).json({ item: itemAtualizado });
-      })
-      .catch((erro) => {
-        res.status(500).json({
+    {
+      where: {
+        id_item: idItem
+      }
+    }).then(async (result) => {
+      if (result[0] === 0) {
+        return res.status(404).json({
           sucesso: false,
-          mensagem: 'Erro ao atualizar o item.',
-          erro: erro.message
+          mensagem: 'Item não encontrado para atualização.'
         });
+      }
+
+      // Buscar o item atualizado para retornar
+      const itemAtualizado = await item.findOne({ where: { id_item: idItem } });
+      res.status(200).json({ item: itemAtualizado });
+    })
+    .catch((erro) => {
+      res.status(500).json({
+        sucesso: false,
+        mensagem: 'Erro ao atualizar o item.',
+        erro: erro.message
       });
+    });
 
 });
 
@@ -211,13 +211,13 @@ router.get("/admin/list/usuarios/:id", (req, res) => {
   usuario
     .findOne({
       where: {
-          id_usuario: id
+        id_usuario: id
       }
-  }).then(usuario => {
-    res.json({ usuario: usuario });
-}).catch(error => {
-    res.status(500).json({ error: error.message });
-});
+    }).then(usuario => {
+      res.json({ usuario: usuario });
+    }).catch(error => {
+      res.status(500).json({ error: error.message });
+    });
 
 });
 
@@ -233,15 +233,15 @@ router.get("/admin/search/usuario/", (req, res) => {
   usuario.findAll({
     where: whereCondition // Usa a condição de busca
   })
-  .then(usuario => {
-    res.json({ usuario }); // Retorna os usuários encontrados em JSON
-  })
-  .catch(error => {
-    console.error(error); // Loga o erro no console para depuração
-    res.status(500).json({ error: error.message }); // Retorna um erro 500 com a mensagem
-  });
+    .then(usuario => {
+      res.json({ usuario }); // Retorna os usuários encontrados em JSON
+    })
+    .catch(error => {
+      console.error(error); // Loga o erro no console para depuração
+      res.status(500).json({ error: error.message }); // Retorna um erro 500 com a mensagem
+    });
 });
-  
+
 
 //formularios--------------------------------------------------------------------------
 
@@ -304,8 +304,10 @@ router.post("/admin/reportarPerda", (req, res) => {
   var usuarioCadastrante =
     req.session.usuario != null ? req.session.usuario : 22;
   var usuarioPerda = req.body.itemPerdido.usuarioPerda;
-  var email = email; //alterar
-  var nome = nome; //alterar
+  
+
+  console.log(usuarioPerda);
+
   item
     .create({
       titulo: tituloItem,
@@ -320,11 +322,22 @@ router.post("/admin/reportarPerda", (req, res) => {
       usuario_cadastrante: usuarioCadastrante,
       usuario_perda: usuarioPerda,
     })
-    .then(() =>{
-      //////////////ALTERAR ESSE EMAIL POSTERIORMENTE e NOME) !!!!!!!!!
-      return enviarEmailConfirmacao(email, nome, tituloItem); 
-    })
     .then((itemCriado) => {
+      const id = usuarioPerda;
+
+      usuario
+        .findOne({
+          where: {
+            id_usuario: id
+          }
+        }).then(usuario => {
+
+          enviarEmailConfirmacao(usuario.email, usuario.nome, tituloItem)
+
+        }).catch(error => {
+          res.status(500).json({ error: error.message });
+        });
+
       // Retorna uma resposta de sucesso com o item criado
       res.status(201).json({
         sucesso: true,
@@ -411,16 +424,16 @@ router.post("/admin/editUsuario", (req, res) => {
 // add locais 
 router.post('/admin/addLocal', (req, res) => {
   const { titulo } = req.body;
-console.log("ok")
-   // Verifica se o título foi fornecido
+  console.log("ok")
+  // Verifica se o título foi fornecido
   if (!titulo) {
-    return res.status(400).json({ 
+    return res.status(400).json({
       sucesso: false,
       mensagem: 'O título é obrigatório.'
     });
   }
 
- // Cria o novo local
+  // Cria o novo local
   local.create({ titulo })
     .then(novoLocal => {
       res.status(201).json({
