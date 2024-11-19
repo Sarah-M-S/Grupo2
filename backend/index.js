@@ -2,10 +2,6 @@
 const express = require("express");
 const cors = require('cors')
 const app = express();
-const itemPerdido = require("./Model/ItemPerdido");
-const itemCadastrado = require("./Model/itemCadastrado");
-const administrador = require("./Model/Administrador");
-
 const usuario = require("./Model/usuario");
 const curso = require("./Model/curso");
 const categoria = require("./Model/categoria");
@@ -22,6 +18,7 @@ const i18next = require("i18next")
 const en = require('./views/locales/en')
 const pt = require('./views/locales/pt')
 const zh = require('./views/locales/zh');
+const bcrypt = require("bcryptjs");
 
 const nodemailer = require('nodemailer');
 const { where } = require("sequelize");
@@ -194,6 +191,49 @@ app.get("/list/cursos", (req, res) => {
 });
 
 // Formulario ---------------------------------------------------------------
+//editar senha
+app.post('/editSenha', (req, res) => {
+  var idUsuario = req.body.usuario.idUsuario;
+  var senha = req.body.usuario.senha;
+
+  if (!senha) {
+      return res.status(400).send('Senha obrigatória.');
+
+  }
+
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(senha, salt);
+
+   usuario.update({
+      senha: hash
+  },
+      {
+          where: {
+              id_usuario: idUsuario
+          }
+      }).then((usuario) => {
+
+        res.status(201).json({
+          sucesso: true,
+          mensagem: 'senha atualizada com sucesso'
+        });
+      })
+      .catch((erro) => {
+        // Retorna uma resposta de erro com a mensagem de erro
+        res.status(500).json({
+          sucesso: false,
+          mensagem: 'Erro ao atualizar o senha.',
+          erro: erro.message
+        });
+      });
+
+});
+
+
+
+
+
+
 // Reportar item perdido - Usario comum
 app.post("/cadastrarPerda", (req, res) => {
   var tituloItem = req.body.itemPerdido.tituloItem;
@@ -266,68 +306,7 @@ app.get("/leitura", (req, res)=>{
   })
 })
 
-//--------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//-------------------------------------------------------------------------------------
 
 //formularios de perda
 //rotas do i18next

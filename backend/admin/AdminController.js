@@ -2,15 +2,12 @@
 const express = require("express");
 const cors = require("cors");
 const router = express.Router();
-const Administrador = require("../Model/Administrador");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
-const itemPerdido = require("../Model/ItemPerdido");
 const i18next = require("i18next");
 const en = require("../views/locales/en");
 const pt = require("../views/locales/pt");
 const zh = require("../views/locales/zh");
-const itemCadastrado = require("../Model/itemCadastrado");
 const adminAuth = require("../middleware/adminAuth");
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config");
@@ -23,7 +20,6 @@ const local = require("../Model/local");
 const dependencia = require("../Model/dependencia");
 const enviarEmailItemSemelhante = require('../nodemailer/email-item-semelhante')
 const enviarEmailConfirmacao = require('../nodemailer/email-confirmacao')
-
 const item = require("../Model/Item");
 
 //=================================================================================
