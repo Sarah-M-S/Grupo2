@@ -1,5 +1,5 @@
 <h1 align="center">Projeto Integrado - iChei</h1>
-![logo](https://github.com/user-attachments/assets/a495f380-ecb2-4c25-8631-0b66bc3a30f2)
+![logo](frontend/src/pages/images/logo.png)
 
 Criação de um aplicativo web para gerenciamento de itens perdidos em instituições de ensino, visando aumentar a eficiência na recuperação desses objetos e facilitar o controle pela equipe administrativa. Devido à frequente perda de itens pessoais em ambientes acadêmicos e à ausência de um sistema eficaz para gerenciar essas ocorrências, torna-se conveniente desenvolver uma solução que atenda às necessidades dos alunos e da instituição. O sistema será simples e objetivo, visando melhorar significativamente a experiência dos alunos e otimizar os processos de gestão de itens perdidos nas instituições de ensino, fornecendo insights valiosos para futuros desenvolvimentos de aplicativos semelhantes.
 
