@@ -21,6 +21,7 @@ const dependencia = require("../Model/dependencia");
 const enviarEmailItemSemelhante = require('../nodemailer/email-item-semelhante')
 const enviarEmailConfirmacao = require('../nodemailer/email-confirmacao')
 const item = require("../Model/Item");
+const rodarMatch = require("../match");
 
 //=================================================================================
 
@@ -33,6 +34,7 @@ router.use(
 router.use(
   session({ secret: "miasdknndsalininadnh", cookie: { maxAge: 30000 } })
 );
+
 //=================================================================================
 //itens----------------------------------------------------------------------------
 //Listar itens perdidos
@@ -269,12 +271,17 @@ router.post("/admin/adicionarAchado", (req, res) => {
       usuario_cadastrante: usuarioCadastrante,
     })
     .then((itemCriado) => {
+
+      rodarMatch(itemCriado)
       // Retorna uma resposta de sucesso com o item criado
       res.status(201).json({
         sucesso: true,
         mensagem: "Item cadastrado com sucesso!",
         dados: itemCriado,
       });
+
+      
+      
     })
     .catch((erro) => {
       // Retorna uma resposta de erro com a mensagem de erro

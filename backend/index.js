@@ -2,6 +2,18 @@
 const express = require("express");
 const cors = require('cors')
 const app = express();
+const bodyParser = require("body-parser");
+const adminController = require("./admin/AdminController")
+const session = require("express-session")
+const i18next = require("i18next")
+const en = require('./views/locales/en')
+const pt = require('./views/locales/pt')
+const zh = require('./views/locales/zh');
+const bcrypt = require("bcryptjs");
+const nodemailer = require('nodemailer');
+const { where } = require("sequelize");
+const { Op } = require('sequelize');
+
 const usuario = require("./Model/usuario");
 const curso = require("./Model/curso");
 const categoria = require("./Model/categoria");
@@ -11,19 +23,6 @@ const turno = require("./Model/turno");
 const status_item = require("./Model/status_item");
 const dependencia = require("./Model/dependencia");
 const local = require("./Model/local");
-const bodyParser = require("body-parser");
-const adminController = require("./admin/AdminController")
-const session = require("express-session")
-const i18next = require("i18next")
-const en = require('./views/locales/en')
-const pt = require('./views/locales/pt')
-const zh = require('./views/locales/zh');
-const bcrypt = require("bcryptjs");
-
-const nodemailer = require('nodemailer');
-const { where } = require("sequelize");
-const { Op } = require('sequelize');
-//const dotenv = require('dotenv');
 
 //const enviarEmailItemSemelhante = require('../nodemailer/email-item-semelhante')
 const enviarEmailConfirmacao = require('../backend/nodemailer/email-confirmacao')
@@ -56,11 +55,8 @@ i18next.init({
   }
 })
 //=================================================================================
-
 //rotas
-
 //itens----------------------------------------------------------------------------
-
 //Listar itens no estoque
 app.get("/list/item/achados", (req, res) => {
   item.findAll({
@@ -77,7 +73,6 @@ app.get("/list/item/achados", (req, res) => {
     res.status(500).json({ error: error.message });
 });
 });
-
 
 //listar achados com filtro
 app.get('/list/item/achados/filtro', async (req, res) => {
@@ -150,8 +145,6 @@ app.get("/list/item/cores", (req, res) => {
     res.status(500).json({ error: error.message });
 });
 });
-
-
 
 //locais----------------------------------------------------------------------------
 //Listar locais
@@ -229,11 +222,6 @@ app.post('/editSenha', (req, res) => {
 
 });
 
-
-
-
-
-
 // Reportar item perdido - Usario comum
 app.post("/cadastrarPerda", (req, res) => {
   var tituloItem = req.body.itemPerdido.tituloItem;
@@ -246,7 +234,6 @@ app.post("/cadastrarPerda", (req, res) => {
   var situacao = 1; //perdido
   var usuarioCadastrante =  req.session.usuario != null ?  req.session.usuario : 22;
   var usuarioPerda = req.session.usuario != null ?  req.session.usuario : 22;
-
 
   item.create({
     titulo: tituloItem,
@@ -293,8 +280,6 @@ app.post("/cadastrarPerda", (req, res) => {
     });
 });
 
-
-
 app.get("/session", (req, res)=>{
   req.session.nome = "teste usuario"
   res.send("ok")
@@ -330,8 +315,6 @@ app.get("/formularioPerda/zh", (req, res) => {
  app.get("/logar", (req, res) => {
   res.render("login")
 });
-
-
 
 //=================================================================================
 
@@ -417,7 +400,5 @@ dependencia
   .catch((err) => {
     console.error("Erro ao criar tabelas:", err);
   });
-
-
 
 app.listen("8083");
