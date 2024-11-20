@@ -1,4 +1,4 @@
-# Grupo2
+# iChei
 
 <!-- Contribuidores ativos -->
 
