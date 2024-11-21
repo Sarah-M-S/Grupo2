@@ -22,7 +22,7 @@ import OpenRoute from "./components/OpenRoute";
 import AdminRoute from "./components/AdminRoute";
 import AddLocalAndDependencie from "./pages/addLocalAndDependencie/AddLocalAndDependencie";
 import EditItem from "./pages/editItem/EditItem";
-import { SearchContext } from "./context.js/SearchContext";
+import { SearchContext } from "./context/SearchContext";
 
 const App = () => {
   const { authIsReady, user } = useAuthContext();

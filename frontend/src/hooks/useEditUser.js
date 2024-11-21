@@ -1,4 +1,4 @@
-import {  useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 
 const useEditUser = () => {
@@ -6,12 +6,12 @@ const useEditUser = () => {
   const [error, setError] = useState(null);
   const { dispatch } = useAuthContext();
 
-  const editUser = async (formData) => {
+  const editUser = async (formData, isDifferentUser) => {
     setIsSubmitting(true);
     setError(null);
 
     const usuario = {
-      idUsuario : formData.userId,
+      idUsuario: formData.userId,
       nomeUsuario: formData.name,
       email: formData.email,
       senha: formData.password,
@@ -19,7 +19,7 @@ const useEditUser = () => {
       turno: formData.shift,
       curso: formData.course,
       ativoFlag: true,
-      adminFlag: formData.type  
+      adminFlag: formData.type,
     };
 
     try {
@@ -29,16 +29,17 @@ const useEditUser = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ usuario }),
-      }).then(res => res.json())
+      }).then((res) => res.json());
 
-      console.log(res)
+      console.log(res);
       const payload = {
         accessToken: localStorage.getItem("accessToken"),
-        user: res
+        user: res,
+      };
+
+      if (!isDifferentUser) {
+        dispatch({ type: "EDIT_USER", payload: payload });
       }
-
-      dispatch({ type: "EDIT_USER", payload: payload });
-
     } catch (error) {
       setError(error.message);
       console.error("Erro:", error);

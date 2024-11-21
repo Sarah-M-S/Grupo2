@@ -34,7 +34,7 @@ export default function EditProfile() {
   };
 
   const handleSave = () => {
-    editUser(formData);
+    editUser(formData, isDifferentUser);
     setSent(true);
   };
 
