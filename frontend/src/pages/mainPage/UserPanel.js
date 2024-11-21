@@ -10,8 +10,6 @@ export default function UserPanel() {
   const [url, setUrl] = useState("/admin/list/usuarios");
   const { loading, data } = useFetchData(url);
 
-  console.log(data)
-
   useEffect(() => {
     if (display === "users") {
       const query = search ? `/admin/search/usuario/?nome=${search}` : "/admin/list/usuarios";

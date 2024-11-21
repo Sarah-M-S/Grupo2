@@ -14,8 +14,6 @@ export default function EditProfile() {
     userId: state.id_usuario,
     name: state.nome,
     email: state.email,
-    password: "",
-    confirmPassword: "",
     type: state.admin,
     course: state.curso,
     shift: state.turno,
@@ -90,30 +88,6 @@ export default function EditProfile() {
                 required
                 placeholder="Email"
               />
-
-              {!isDifferentUser && (
-                <>
-                  <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="rounded-xl w-full h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
-                    required
-                    placeholder="Alterar Senha"
-                  />
-
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    className="rounded-xl w-full h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
-                    required
-                    placeholder="Confirma Nova Senha"
-                  />
-                </>
-              )}
 
               {payload.user.admin && (
                 <select

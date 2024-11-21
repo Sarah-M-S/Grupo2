@@ -30,7 +30,7 @@ export default function MainPage() {
           <div className="flex flex-col pt-2 space-y-4 h-full w-[82%] px-16">
 
             {/* filtros */}
-            <Filters />
+            <Filters display={display}/>
 
             {/* items */}
             

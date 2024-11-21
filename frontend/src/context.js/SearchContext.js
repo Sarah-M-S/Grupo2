@@ -12,7 +12,7 @@ export const SearchContextProvider = ({ children }) => {
     display: null
   });
 
-  console.log("Search state", state);
+  // console.log("Search state", state);
 
   return (
     <SearchContext.Provider value={{ ...state, dispatch }}>
