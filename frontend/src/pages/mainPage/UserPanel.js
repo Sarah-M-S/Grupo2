@@ -4,9 +4,9 @@ import UserCard from "../card/UserCard";
 import { useTranslation } from "react-i18next";
 import { useSearchContext } from "../../hooks/useSearchContext";
 
-export default function UserPanel() {
+export default function UserPanel({ display }) {
   const { t } = useTranslation();
-  const { dispatch, search, display } = useSearchContext();
+  const { dispatch, search } = useSearchContext();
   const [url, setUrl] = useState("/admin/list/usuarios");
   const { loading, data } = useFetchData(url);
 
@@ -15,9 +15,6 @@ export default function UserPanel() {
       const query = search ? `/admin/search/usuario/?nome=${search}` : "/admin/list/usuarios";
       setUrl(query);
     }
-    return () => {
-      dispatch({search: null, display: null})
-    };
   }, [search, display]);
 
   return (

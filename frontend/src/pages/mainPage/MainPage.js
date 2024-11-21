@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import LeftPanel from "./LeftPanel";
 import SearchBar from "./SearchBar";
@@ -6,12 +6,18 @@ import Filters from "./Filters";
 import FoundPanel from "./FoundPanel";
 import ReportsPanel from "./ReportsPanel";
 import UserPanel from "./UserPanel";
+import { useSearchContext } from "../../hooks/useSearchContext";
 
 export default function MainPage() {
   const [display, setDisplay] = useState("found");
   const handleDisplay = (key) => {
     setDisplay(key)
   };
+  const { dispatch } = useSearchContext();
+
+  useEffect(() => {
+    dispatch({display: null, category: null, date: null, place: null, search: null})
+  }, [display]);
 
 
   return (
@@ -36,15 +42,15 @@ export default function MainPage() {
             
               {/* cards de objeto */}
               {display === "found" && 
-                <FoundPanel/>
+                <FoundPanel display={display}/>
               }
 
               {display === "reports" && 
-              <ReportsPanel />
+              <ReportsPanel display={display}/>
               }
 
               {display === "users" && 
-              <UserPanel />
+              <UserPanel display={display}/>
               }
             
           </div>

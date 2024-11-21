@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useFetchValues from "../../hooks/useFetchValues";
+import { useSearchContext } from "../../hooks/useSearchContext";
 
 export default function Filters({ display }) {
   const [formData, setFormData] = useState({
-    category: "",
-    date: "",
-    place: "",
+    categoryData: "",
+    dateData: "",
+    placeData: "",
   });
+  const { dispatch } = useSearchContext();
   const { categories, places, colors, dependencies, courses } =
     useFetchValues();
   const { t } = useTranslation();
@@ -20,17 +22,40 @@ export default function Filters({ display }) {
     }));
   };
 
+  const dispatchFilter = () => {
+    if(formData.categoryData !== ""){
+      dispatch({category: formData.categoryData, display: display})
+    }
+    if(formData.dateData !== ""){
+      dispatch({date: formData.dateData, display: display})
+    }
+    if(formData.placeData !== ""){
+      dispatch({place: formData.placeData, display: display})
+    }
+  }
+
   const handleReset = () => {
     setFormData({
-      category: "",
-      date: "",
-      place: "",
+      categoryData: "",
+      dateData: "",
+      placeData: "",
     });
+    dispatch({display: null, category: null, date: null, place: null, search: null})
   };
 
   useEffect(() => {
-    console.log(formData)
+    dispatchFilter()
   }, [formData]);
+
+  useEffect(() => {
+    setFormData({
+      categoryData: "",
+      dateData: "",
+      placeData: "",
+    });
+  }, [display]);
+
+
 
   return (
     <div className="w-full h-12 flex flex-row items-center space-x-8">
@@ -38,8 +63,8 @@ export default function Filters({ display }) {
         <div className="w-full flex flex-row items-center justify-between space-x-8">
           <select
             className="rounded-xl h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
-            name="category"
-            value={formData.category}
+            name="categoryData"
+            value={formData.categoryData}
             onChange={handleChange}
             required
           >
@@ -65,15 +90,15 @@ export default function Filters({ display }) {
           <input
             className="rounded-xl h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
             type="date"
-            name="date"
-            value={formData.date}
+            name="dateData"
+            value={formData.dateData}
             onChange={handleChange}
           />
 
           <select
             className="rounded-xl h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
-            name="place"
-            value={formData.place}
+            name="placeData"
+            value={formData.placeData}
             onChange={handleChange}
           >
             <option value="" disabled hidden>

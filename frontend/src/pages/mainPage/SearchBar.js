@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import searchIcon from "../images/search.png";
 import { useSearchContext } from "../../hooks/useSearchContext";
@@ -6,11 +6,18 @@ import { useSearchContext } from "../../hooks/useSearchContext";
 export default function SearchBar({ display }) {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
-  const { dispatch } = useSearchContext();
+  const { dispatch, search } = useSearchContext();
 
   const handleSearch = () => {
-    return dispatch({ display: display, search: searchQuery });
+    return dispatch({ display: display, search: searchQuery !== "" ? searchQuery : null });
   };
+
+  useEffect(() => {
+    console.log("Search ",search)
+    if (!search) {
+      setSearchQuery("");
+    }
+  }, [search]);
 
   return (
     <div className="flex justify-end min-h-24 bg-emerald-600">
