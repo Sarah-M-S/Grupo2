@@ -59,12 +59,12 @@ router.get("/admin/list/item/perdidos/filtro", async (req, res) => {
 
   try {
     // Desestruturação dos filtros da query string
-    const { 
-      titulo, 
-      local_perda, 
-      dependencia_perda, 
-      data_perda, 
-      categoria 
+    const {
+      titulo,
+      local_perda,
+      dependencia_perda,
+      data_perda,
+      categoria
     } = req.query;
 
     // Definição das condições iniciais para itens perdidos
@@ -91,7 +91,7 @@ router.get("/admin/list/item/perdidos/filtro", async (req, res) => {
       startOfDay.setUTCHours(0, 0, 0, 0);
       const endOfDay = new Date(data_perda);
       endOfDay.setUTCHours(23, 59, 59, 999);
-      
+
       conditions.data_perda = {
         [Op.between]: [startOfDay, endOfDay],
       };
@@ -125,7 +125,7 @@ router.get("/admin/list/item/perdidos/filtro", async (req, res) => {
 
 
 //Listar itens por id
-router.get("  :id?", (req, res) => {
+router.get("/admin/list/item/:id", (req, res) => {
   const { id } = req.params;
 
   item.findAll({
@@ -300,8 +300,8 @@ router.post("/admin/adicionarAchado", (req, res) => {
         dados: itemCriado,
       });
 
-      
-      
+
+
     })
     .catch((erro) => {
       // Retorna uma resposta de erro com a mensagem de erro
@@ -327,7 +327,7 @@ router.post("/admin/reportarPerda", (req, res) => {
   var usuarioCadastrante =
     req.session.usuario != null ? req.session.usuario : 22;
   var usuarioPerda = req.body.itemPerdido.usuarioPerda;
-  
+
 
   console.log(usuarioPerda);
 
@@ -374,6 +374,85 @@ router.post("/admin/reportarPerda", (req, res) => {
         sucesso: false,
         mensagem: "Erro ao cadastrar o item.",
         erro: erro.message,
+      });
+    });
+});
+
+// Devolver item ------------------------------------------------------------------------------------
+
+// retornar perdidos baseado no usuario
+router.get("/admin/reportesUser/:idUser", (req, res) => {
+  const { idUser } = req.params;
+  console.log(idUser)
+
+  item.findAll({
+    where: {
+      usuario_perda: idUser,
+      situacao: 1
+    },
+    order: [['createdAt', 'DESC']]
+  })
+    .then(itens => {
+      res.json({ itens });
+    })
+    .catch(error => {
+      res.status(500).json({ error: error.message });
+    });
+});
+
+router.post("/admin/devolverItem", (req, res) => {
+
+  var idReporte = req.body.devolucao.reporte;
+  var idAchado = req.body.devolucao.achado;
+  var dataDevolucao = req.body.devolucao.dataDevolucao;
+  var usuarioResgatante = req.body.devolucao.resgatante;
+  var funcionarioDevolucao = req.body.devolucao.funcionario;
+
+  // matando o reporte
+  item.update({
+    data_devolucao: dataDevolucao,
+    usuario_resgatante: usuarioResgatante,
+    funcionario_devolucao: funcionarioDevolucao,
+    situacao: 3
+  },
+    {
+      where: {
+        id_item: idReporte,
+        situacao: 1
+      }
+    }).then(() => {
+      // mudando de achado para devolvido
+      item.update({
+        data_devolucao: dataDevolucao,
+        usuario_resgatante: usuarioResgatante,
+        funcionario_devolucao: funcionarioDevolucao,
+        situacao: 3
+      },
+        {
+          where: {
+            id_item: idAchado,
+            situacao: 2
+          }
+        }).then(() => {
+          res.status(201).json({
+            sucesso: true,
+            mensagem: 'item devolvido com sucesso'
+          });
+
+        }).catch((erro) => {
+          res.status(500).json({
+            sucesso: false,
+            mensagem: 'Erro ao devolver item.',
+            erro: erro.message
+          });
+        });
+    })
+    .catch((erro) => {
+      // Retorna uma resposta de erro com a mensagem de erro
+      res.status(500).json({
+        sucesso: false,
+        mensagem: 'Erro ao devolver item.',
+        erro: erro.message
       });
     });
 });
