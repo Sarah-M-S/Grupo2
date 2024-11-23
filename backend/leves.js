@@ -1,5 +1,3 @@
-const item = require("../Model/Item");
-
 // Função para normalizar texto (remover acentos, transformar em minúsculas, etc.)
 function normalizarTexto(texto) {
     return texto

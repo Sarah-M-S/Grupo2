@@ -56,53 +56,73 @@ router.get("/admin/list/item/perdidos", (req, res) => {
 
 //listar itens perdidos com filtro
 router.get("/admin/list/item/perdidos/filtro", async (req, res) => {
+
   try {
-    const { local_perda, dependencia_perda, data_perda, categoria } = req.query;
+    // Desestruturação dos filtros da query string
+    const { 
+      titulo, 
+      local_perda, 
+      dependencia_perda, 
+      data_perda, 
+      categoria 
+    } = req.query;
 
-    let conditions = { situacao: 1 };
+    // Definição das condições iniciais para itens perdidos
+    let conditions = { situacao: 1 }; // Apenas itens com situação "perdido"
 
+    // Adiciona o filtro por nome se fornecido
+    if (titulo) {
+      conditions.titulo = { [Op.like]: `%${titulo}%` };
+    }
+
+    // Filtro por local de encontro
     if (local_perda) {
       conditions.local_perda = local_perda;
     }
 
+    // Filtro por dependência de encontro
     if (dependencia_perda) {
       conditions.dependencia_perda = dependencia_perda;
     }
 
+    // Filtro por data de entrada
     if (data_perda) {
       const startOfDay = new Date(data_perda);
       startOfDay.setUTCHours(0, 0, 0, 0);
       const endOfDay = new Date(data_perda);
       endOfDay.setUTCHours(23, 59, 59, 999);
-
+      
       conditions.data_perda = {
         [Op.between]: [startOfDay, endOfDay],
       };
-      console.log(conditions.data_perda);
     }
 
+    // Filtro por categoria
     if (categoria) {
       conditions.categoria = categoria;
     }
 
-    // Consulta com filtros opcionais
+    // Consulta ao banco de dados com as condições
     const itens = await item.findAll({
       where: conditions,
     });
 
+    // Resposta bem-sucedida
     res.status(200).json({
       sucesso: true,
-      mensagem: "Itens filtrados com sucesso",
+      mensagem: 'Itens filtrados com sucesso',
       itens: itens,
     });
   } catch (erro) {
+    console.error('Erro ao filtrar itens:', erro.message);
     res.status(500).json({
       sucesso: false,
-      mensagem: "Erro ao filtrar os itens",
+      mensagem: 'Erro ao filtrar os itens',
       erro: erro.message,
     });
   }
 });
+
 
 //Listar itens por id
 router.get("  :id?", (req, res) => {

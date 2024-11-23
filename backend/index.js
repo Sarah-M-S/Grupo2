@@ -76,20 +76,36 @@ app.get("/list/item/achados", (req, res) => {
 
 //listar achados com filtro
 app.get('/list/item/achados/filtro', async (req, res) => {
-  try  {
-    const { local_encontro, dependencia_encontro, data_entrada, categoria } = req.query;
+  try {
+    // Desestruturação dos filtros da query string
+    const { 
+      titulo, 
+      local_encontro, 
+      dependencia_encontro, 
+      data_entrada, 
+      categoria 
+    } = req.query;
 
+    // Definição das condições iniciais para itens encontrados
+    let conditions = { situacao: 2 }; // Apenas itens com situação "achado"
+
+    // Adiciona o filtro por nome se fornecido
+    if (titulo) {
+      conditions.titulo = { [Op.like]: `%${titulo}%` };
+    }
   
-    let conditions = {situacao : 2};
-    
+
+    // Filtro por local de encontro
     if (local_encontro) {
       conditions.local_encontro = local_encontro;
     }
-    
+
+    // Filtro por dependência de encontro
     if (dependencia_encontro) {
       conditions.dependencia_encontro = dependencia_encontro;
     }
-    
+
+    // Filtro por data de entrada
     if (data_entrada) {
       const startOfDay = new Date(data_entrada);
       startOfDay.setUTCHours(0, 0, 0, 0);
@@ -97,34 +113,36 @@ app.get('/list/item/achados/filtro', async (req, res) => {
       endOfDay.setUTCHours(23, 59, 59, 999);
       
       conditions.data_entrada = {
-        [Op.between]: [startOfDay, endOfDay]
+        [Op.between]: [startOfDay, endOfDay],
       };
-
     }
-    
+
+    // Filtro por categoria
     if (categoria) {
       conditions.categoria = categoria;
     }
 
-    // Consulta com filtros opcionais
+    // Consulta ao banco de dados com as condições
     const itens = await item.findAll({
       where: conditions,
-      
     });
 
+    // Resposta bem-sucedida
     res.status(200).json({
       sucesso: true,
       mensagem: 'Itens filtrados com sucesso',
-      itens: itens
+      itens: itens,
     });
   } catch (erro) {
+    console.error('Erro ao filtrar itens:', erro.message);
     res.status(500).json({
       sucesso: false,
       mensagem: 'Erro ao filtrar os itens',
-      erro: erro.message
+      erro: erro.message,
     });
   }
 });
+
 
 //Listar categoria de itens
 app.get("/list/item/categorias", (req, res) => {

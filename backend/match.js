@@ -1,25 +1,32 @@
+// Importacoes -------------------------------------------------------------------------------------
 const itemModel = require("../backend/Model/Item");
 const { json } = require("body-parser");
 const levenshtein = require("fast-levenshtein");
+//--------------------------------------------------------------------------------------------------
 
-// Função para normalizar texto
+//==================================================================================================
+//Funções
+
+// Função para normalizar texto 
 function normalizarTexto(texto) {
     return texto
         .toLowerCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, ""); // Remove acentos
 }
+//--------------------------------------------------------------------------------------------------
 
 // Função para tokenizar e filtrar palavras irrelevantes
 function tokenizar(titulo) {
-    const palavrasIrrelevantes = ["do", "da", "de", "e", "um", "uma", "os", "as"]; // Ajuste conforme necessário
+    const palavrasIrrelevantes = ["do", "da", "de", "e", "um", "uma", "os", "as"];
     return normalizarTexto(titulo)
         .split(" ")
         .filter(palavra => !palavrasIrrelevantes.includes(palavra)); // Remove palavras irrelevantes
 }
+//---------------------------------------------------------------------------------------------------
 
-// Algoritmo de match (já fornecido anteriormente)
 function verificarMatchSemantico(tituloItem, tabela) {
+
     const tokensItem = tokenizar(tituloItem);
 
     const matches = tabela.map(item => {
@@ -37,6 +44,7 @@ function verificarMatchSemantico(tituloItem, tabela) {
     return matchesFiltrados;
 }
 
+//----------------------------------------------------------------------------------------------------
 // Função principal rodarMatch
 function rodarMatch(item) {
     if (item.situacao === 1) {
@@ -44,6 +52,7 @@ function rodarMatch(item) {
         return;
     }
 
+    // item achado cruzando os perdidos do banco
     if (item.situacao === 2) {
         console.log("Item achado, verificando matches...");
 
@@ -59,6 +68,7 @@ function rodarMatch(item) {
                 const tabelaItens = itens.map((registro) => ({
                     id: registro.id_item,
                     titulo: registro.titulo,
+                    potencialMatch: 10
                 }));
                 // Rodar o algoritmo de match
                 const resultados = verificarMatchSemantico(item.titulo, tabelaItens);
