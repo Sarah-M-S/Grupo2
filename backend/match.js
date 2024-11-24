@@ -4,6 +4,7 @@ const usuario = require("../backend/Model/usuario");
 const { json } = require("body-parser");
 const levenshtein = require("fast-levenshtein");
 const { Op } = require("sequelize");
+const enviarEmailItemSemelhante = require('../backend/nodemailer/email-item-semelhante')
 
 // Função para normalizar texto
 function normalizarTexto(texto) {
@@ -41,11 +42,7 @@ function verificarMatchSemantico(tituloItem, tabela) {
 // Função principal rodarMatch
 function rodarMatch(item) {
 
-    //verificacao perdido ou achado
-    if (item.situacao === 1) {
-        console.log("Item perdido, sem necessidade de match.");
-        return;
-    }
+
     if (item.situacao === 2) {
 
         itemModel
@@ -68,6 +65,7 @@ function rodarMatch(item) {
                     cor: registro.cor,
                     marca: registro.marca,
                     usrPerda: registro.usuario_perda,
+                    itmPerdido: registro.titulo,
                     potencialMatch: 0
                 }));
 
@@ -89,7 +87,7 @@ function rodarMatch(item) {
                 //console.log(tabelaItens)
 
                 // disparar email
-                var idUsuariosEmail = []
+    
                 tabelaItens.forEach(elemento => {
                     
                  if(elemento.potencialMatch >= 65){
@@ -101,10 +99,13 @@ function rodarMatch(item) {
                           }
                         }).then(usuario => {
                         //console.log(usuario)
-                        idUsuariosEmail.push({id_usr: elemento.usrPerda, id_item:elemento.id, email: usuario.email })
+                        var idUsuariosEmail = ({id_usr: elemento.usrPerda, id_item:elemento.id, email: usuario.email, nome: usuario.nome,
+                             perdido: elemento.itmPerdido, potencialMatch : elemento.potencialMatch, itemAchado: item.titulo })
                         
-                        console.log(idUsuariosEmail)
-                        
+                       console.log(idUsuariosEmail)
+                       enviarEmailItemSemelhante(usuario.email, usuario.nome, elemento.itmPerdido, elemento.potencialMatch, item.titulo);
+                         
+
                         }).catch(error => {
                           console.log("erro no disparo de email" +  error )
                         });
