@@ -11,6 +11,7 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,10 +29,18 @@ export default function LoginPage() {
     navigate("/register");
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     login(formData.email, formData.password);
   };
+
+  useEffect(() => {
+    if (error) {
+      setErrorMessage("Há problemas com as credenciais.");
+    } else {
+      setErrorMessage("");
+    }
+  })
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -55,7 +64,7 @@ export default function LoginPage() {
         <div className="flex flex-col w-full max-w-md space-y-12 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
           <div>
             <h2 className="text-3xl text-center font-semibold text-emerald-500 md:text-[220%]">
-            {t("login")}
+              {t("login")}
             </h2>
           </div>
 
@@ -80,6 +89,11 @@ export default function LoginPage() {
               placeholder={t("senha")}
             />
           </div>
+          {errorMessage && (
+            <div className="text-red-500 text-center font-semibold">
+              {errorMessage}
+            </div>
+          )}
           <div className="flex flex-col space-y-4">
             <div className="flex flex-row justify-between">
               <button
