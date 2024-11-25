@@ -11,48 +11,48 @@ import { useSearchContext } from "../../hooks/useSearchContext";
 export default function MainPage() {
   const [display, setDisplay] = useState("found");
   const handleDisplay = (key) => {
-    setDisplay(key)
+    setDisplay(key);
   };
   const { dispatch } = useSearchContext();
 
   useEffect(() => {
-    dispatch({display: null, category: null, date: null, place: null, search: null})
+    dispatch({
+      display: null,
+      category: null,
+      date: null,
+      place: null,
+      search: null,
+    });
   }, [display]);
-
 
   return (
     <div className="flex h-screen w-screen overflow-clip">
       {/* área da esquerda */}
-      <LeftPanel state={display} onDisplayChange={handleDisplay}/>
+      <LeftPanel state={display} onDisplayChange={handleDisplay} />
 
       {/* área principal */}
       <div className="flex flex-col h-screen w-screen">
-
         {/* area da pesquisa */}
-        <SearchBar display={display}/>
+        <div className="pl-64 py-8 flex items-center justify-center w-[full] bg-emerald-900">
+          <div className="w-[40%]">
+            <SearchBar display={display} />
+          </div>
+        </div>
 
         {/* lista */}
         <div className="flex justify-end h-full">
           <div className="flex flex-col pt-2 space-y-4 h-full w-[82%] px-16">
-
             {/* filtros */}
-            <Filters display={display}/>
+            <Filters display={display} />
 
             {/* items */}
-            
-              {/* cards de objeto */}
-              {display === "found" && 
-                <FoundPanel display={display}/>
-              }
 
-              {display === "reports" && 
-              <ReportsPanel display={display}/>
-              }
+            {/* cards de objeto */}
+            {display === "found" && <FoundPanel display={display} />}
 
-              {display === "users" && 
-              <UserPanel display={display}/>
-              }
-            
+            {display === "reports" && <ReportsPanel display={display} />}
+
+            {display === "users" && <UserPanel display={display} />}
           </div>
         </div>
       </div>

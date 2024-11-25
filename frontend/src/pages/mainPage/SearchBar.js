@@ -13,16 +13,13 @@ export default function SearchBar({ display }) {
   };
 
   useEffect(() => {
-    console.log("Search ",search)
     if (!search) {
       setSearchQuery("");
     }
   }, [search]);
 
   return (
-    <div className="flex justify-end min-h-24 bg-emerald-600">
-      <div className="flex items-center justify-center w-[82%]">
-        <div className="rounded-full h-10 w-[60%] px-4 bg-emerald-100 text-emerald-950 font-semibold text-md flex flex-row justify-between">
+        <div className="rounded-full h-10 w-[100%] px-4 bg-emerald-100 text-emerald-950 font-semibold text-md flex flex-row justify-between">
           <input
             type="text"
             name="name"
@@ -41,7 +38,5 @@ export default function SearchBar({ display }) {
             <img src={searchIcon} alt="Search" />
           </button>
         </div>
-      </div>
-    </div>
   );
 }

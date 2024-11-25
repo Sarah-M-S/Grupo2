@@ -23,6 +23,7 @@ import AdminRoute from "./components/AdminRoute";
 import AddLocalAndDependencie from "./pages/addLocalAndDependencie/AddLocalAndDependencie";
 import EditItem from "./pages/editItem/EditItem";
 import { SearchContext } from "./context/SearchContext";
+import Return from "./pages/return/Return";
 
 const App = () => {
   const { authIsReady, user } = useAuthContext();
@@ -54,6 +55,7 @@ const App = () => {
             <Route path="/editProfile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>}></Route>
             <Route path="/addFound" element={<AdminRoute><ProtectedRoute><AddFoundForm /></ProtectedRoute></AdminRoute>}></Route>
             <Route path="/editItem" element={<AdminRoute><ProtectedRoute><EditItem /></ProtectedRoute></AdminRoute>}></Route>
+            <Route path="/return" element={<AdminRoute><ProtectedRoute><Return /></ProtectedRoute></AdminRoute>}></Route>
             <Route path="/addLocalAndDependencie" element={<AdminRoute><ProtectedRoute><AddLocalAndDependencie /></ProtectedRoute></AdminRoute>}></Route>
 
             {/* Antigas rotas */}

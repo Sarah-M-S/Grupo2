@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import useFetchValues from "../../hooks/useFetchValues";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function ObjectCard({ object, isFound }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -9,6 +10,7 @@ export default function ObjectCard({ object, isFound }) {
   const { places, categories, dependencies } = useFetchValues(
     isFound ? object.item.local_encontro : object.item.local_perda
   );
+  const { payload } = useAuthContext()
 
   const toggleCard = () => {
     setIsExpanded(!isExpanded);
@@ -17,13 +19,17 @@ export default function ObjectCard({ object, isFound }) {
   function formatDate(dateString) {
     const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate() + 1).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate() + 1).padStart(2, "0");
     return `${day}-${month}-${year}`;
   }
 
   const handleEdit = () => {
-    navigate("/editItem", {state: object});
+    navigate("/editItem", { state: object });
+  };
+
+  const handleReturn = () => {
+    navigate("/return", { state: object });
   };
 
   const { t } = useTranslation();
@@ -109,10 +115,15 @@ export default function ObjectCard({ object, isFound }) {
                     : formatDate(object.item.data_perda)}
                 </p>
               </div>
-              {isFound && (
-                <button onClick={handleEdit} className="text-emerald-500">
-                  {t("editar")}
-                </button>
+              {(isFound && payload.user.admin) && (
+                <div className="flex flex-row space-x-4">
+                  <button onClick={handleEdit} className="text-emerald-500">
+                    {t("editar")}
+                  </button>
+                  <button onClick={handleReturn} className="text-emerald-500">
+                    Devolver
+                  </button>
+                </div>
               )}
             </div>
           </div>

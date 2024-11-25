@@ -43,7 +43,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
     if(!payload.user){
       navigate("/login")
     }
-  }, []);
+  }, [payload]);
 
   return (
     <div className="absolute h-screen w-[18%] bg-slate-50 rounded-r-3xl py-16 px-8">

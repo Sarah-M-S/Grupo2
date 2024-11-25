@@ -716,7 +716,7 @@ router.post("/users/create", async (req, res) => {
     const token = jwt.sign({ id: user.id }, config.secret, {
       algorithm: "HS256",
       allowInsecureKeySizes: true,
-      expiresIn: 86400, // 24 hours
+      expiresIn: 1800, // 30 minutos
     });
 
     console.log(user.dataValues);
