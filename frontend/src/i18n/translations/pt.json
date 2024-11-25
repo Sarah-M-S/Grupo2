@@ -64,7 +64,10 @@
         "editar": "Editar",
         "objetoAdicionadoSucesso": "Objeto adicionado com sucesso!",
         "dependencia": "Dependência",
-        "bloco": "Bloco"
+        "bloco": "Bloco",
+        "adicionarLocalDependencia": "Adicionar local e dependência",
+        "novoLocal": "Novo Local",
+        "adicionar": "Adicionar"
         
         
 

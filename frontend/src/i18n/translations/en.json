@@ -65,8 +65,10 @@
         "editar": "Edit",
         "objetoAdicionadoSucesso": "Item successfully added!",
         "dependencia": "Dependency",
-        "bloco": "Building"
-
+        "bloco": "Building",
+        "adicionarLocalDependencia": "Add new place and dependency",
+        "novoLocal": "New place",
+        "adicionar": "Add"
 
 
         
