@@ -38,6 +38,10 @@ export default function EditProfile() {
     setSent(true);
   };
 
+  const handleChangePassword = () => {
+    navigate("/changePassword");
+  };
+
   const handleCancel = () => {
     navigate("/mainPage");
   };
@@ -47,18 +51,13 @@ export default function EditProfile() {
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
-        {sent && (
-          <Success
-            message={t("successMessage")}
-            route={"/mainPage"}
-          />
-        )}
+        {sent && <Success message={t("successMessage")} route={"/mainPage"} />}
 
         {!sent && (
           <div className="flex flex-col w-full max-w-md space-y-8 bg-white rounded-3xl py-8 px-8 md:w-[30%]">
             <div>
               <h2 className="text-3xl text-center font-semibold text-emerald-500 md:text-[220%]">
-               {t("editarPerfil")}
+                {t("editarPerfil")}
               </h2>
             </div>
 
@@ -154,6 +153,16 @@ export default function EditProfile() {
                 required
                 placeholder={t("telefone")}
               />
+              {!isDifferentUser && (
+                <div className="flex justify-start px-2 font-bold">
+                  <button
+                    onClick={handleChangePassword}
+                    className="text-emerald-600 "
+                  >
+                    Mudar senha
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="flex flex-row justify-between">

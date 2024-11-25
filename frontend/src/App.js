@@ -24,6 +24,7 @@ import AddLocalAndDependencie from "./pages/addLocalAndDependencie/AddLocalAndDe
 import EditItem from "./pages/editItem/EditItem";
 import { SearchContext } from "./context/SearchContext";
 import Return from "./pages/return/Return";
+import ChangePassword from "./pages/changePassword/ChangePassword";
 
 const App = () => {
   const { authIsReady, user } = useAuthContext();
@@ -51,6 +52,7 @@ const App = () => {
 
             {/* Novas rotas que devem ser protegidas no login */}
             <Route path="/mainPage" element={<ProtectedRoute><MainPage /></ProtectedRoute>}></Route>
+            <Route path="/changePassword" element={<ProtectedRoute><ChangePassword /></ProtectedRoute>}></Route>
             <Route path="/reportForm" element={<ProtectedRoute><ReportFormPage /></ProtectedRoute>}></Route>
             <Route path="/editProfile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>}></Route>
             <Route path="/addFound" element={<AdminRoute><ProtectedRoute><AddFoundForm /></ProtectedRoute></AdminRoute>}></Route>
