@@ -1,10 +1,13 @@
 import {  useState } from "react";
 import { useAuthContext } from "./useAuthContext";
+import useAddress from "../components/useAddress";
 
 const usePostFound = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const { payload } = useAuthContext()
+  const { backend } = useAddress()
+
 
   const postFound = async (formData) => {
     setIsSubmitting(true);
@@ -24,7 +27,7 @@ const usePostFound = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8083/admin/adicionarAchado", {
+      const response = await fetch(backend + "/admin/adicionarAchado", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

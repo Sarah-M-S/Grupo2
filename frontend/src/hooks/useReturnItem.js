@@ -1,8 +1,11 @@
 import {  useState } from "react";
+import useAddress from "../components/useAddress";
 
 const useReturnItem = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const { backend } = useAddress()
+
 
   const returnItem = async (devolucao) => {
     setIsSubmitting(true);
@@ -10,7 +13,7 @@ const useReturnItem = () => {
 
 
     try {
-      const response = await fetch("http://localhost:8083/admin/devolverItem/", {
+      const response = await fetch(backend + "/admin/devolverItem/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

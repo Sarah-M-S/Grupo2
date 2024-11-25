@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
+import useAddress from "../components/useAddress";
 
 const useEditUser = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const { dispatch } = useAuthContext();
-
+  const { backend } = useAddress()
+  
   const editUser = async (formData, isDifferentUser) => {
     setIsSubmitting(true);
     setError(null);
@@ -23,7 +25,7 @@ const useEditUser = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:8083/admin/editUsuario", {
+      const res = await fetch(backend + "/admin/editUsuario", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

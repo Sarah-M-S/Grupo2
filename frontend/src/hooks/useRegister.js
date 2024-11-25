@@ -1,17 +1,20 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
+import useAddress from "../components/useAddress";
 
 const useRegister = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { dispatch } = useAuthContext();
+  const { backend } = useAddress()
+
 
   const registerUser = async (userData) => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8083/users/create', {
+      const response = await fetch(backend + '/users/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

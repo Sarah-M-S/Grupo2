@@ -1,9 +1,10 @@
 import {  useState } from "react";
+import useAddress from "../components/useAddress";
 
 const usePostNewLocal = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
-
+  const { backend } = useAddress()
 
   const postNewLocal = async (formData) => {
     if(formData.place !== "new"){
@@ -21,7 +22,7 @@ const usePostNewLocal = () => {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:8083/admin/addLocal", {
+      const response = await fetch(backend + "/admin/addLocal", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +49,7 @@ const usePostNewLocal = () => {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:8083/admin/addDependencia", {
+      const response = await fetch(backend + "/admin/addDependencia", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

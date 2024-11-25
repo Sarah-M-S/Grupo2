@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
+import useAddress from "../components/useAddress";
 
 export const useTokenCheck = () => {
   const [isCanceled, setIsCanceled] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { dispatch } = useAuthContext();
+  const { backend } = useAddress()
+
 
   const checkToken = async () => {
     setError(null);
@@ -22,7 +25,7 @@ export const useTokenCheck = () => {
     console.log("token:", token);
 
     try {
-      const res = await fetch("http://localhost:8083/admin", {
+      const res = await fetch(backend + "/admin", {
         method: "GET",
         headers: {
           "access-token": localStorage.getItem("token"),

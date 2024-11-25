@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import useAddress from "../components/useAddress";
 
 const useFetchValues = (id_local) => {
   const [isCanceled, setIsCanceled] = useState(false);
@@ -9,7 +10,7 @@ const useFetchValues = (id_local) => {
   const [dependencies, setDependencies] = useState(null);
   const [colors, setColors] = useState(null);
   const [courses, setCourses] = useState(null);
-
+  const { backend } = useAddress()
 
   const fetchData = async () => {
     setError(null);
@@ -42,7 +43,7 @@ const useFetchValues = (id_local) => {
 
     try {
       const response = await fetch(
-        "http://localhost:8083/list/item/categorias"
+        backend + "/list/item/categorias"
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -66,7 +67,7 @@ const useFetchValues = (id_local) => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8083/list/locais");
+      const response = await fetch(backend + "/list/locais");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -89,7 +90,7 @@ const useFetchValues = (id_local) => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8083/list/item/cores");
+      const response = await fetch(backend + "/list/item/cores");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -113,7 +114,7 @@ const useFetchValues = (id_local) => {
 
     try {
       const response = await fetch(
-        "http://localhost:8083/list/locais/dependencias/" + id_local
+        backend + "/list/locais/dependencias/" + id_local
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -138,7 +139,7 @@ const useFetchValues = (id_local) => {
 
     try {
       const response = await fetch(
-        "http://localhost:8083/list/cursos"
+        backend + "/list/cursos"
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");

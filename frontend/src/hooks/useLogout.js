@@ -6,7 +6,6 @@ export const useLogout = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { dispatch } = useAuthContext();
-  const { user } = useAuthContext();
 
   const logout = async () => {
     setError(null);

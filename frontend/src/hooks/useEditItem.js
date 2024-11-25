@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
+import useAddress from "../components/useAddress";
 
 const useEditItem = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const { payload } = useAuthContext();
+  const { backend } = useAddress()
+
 
   const editItem = async (formData) => {
     setIsSubmitting(true);
@@ -26,7 +29,8 @@ const useEditItem = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:8083/admin/editItem",
+        backend +
+        "/admin/editItem",
         {
           method: "POST",
           headers: {
