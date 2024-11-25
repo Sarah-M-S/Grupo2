@@ -1,6 +1,8 @@
 const transporter = require('./nodemailerTransporter');
+const path = require('path');
+const fs = require('fs');
 
-function enviarEmailItemSemelhante(email, nome, itemPerdido) {
+function enviarEmailItemSemelhante(email, nome, itemPerdido, porcentagemSemelhanca, itemEncontrado) {
     const templatePath = path.join(__dirname, 'templates', 'email-item-semelhante-template.html');
     fs.readFile(templatePath, 'utf8', (err, data) => {
         if (err) {
@@ -11,7 +13,9 @@ function enviarEmailItemSemelhante(email, nome, itemPerdido) {
         // Substitui os placeholders pelo conteúdo dinâmico
         const htmlContent = data
             .replace(/{{nome}}/g, nome)
-            .replace(/{{itemPerdido}}/g, itemPerdido);
+            .replace(/{{itemPerdido}}/g, itemPerdido)
+            .replace(/{{itemEncontrado}}/g, itemEncontrado)
+            .replace(/{{porcentagemSemelhanca}}/g, porcentagemSemelhanca);
 
         const mailOptions = {
             from: "'Equipe iChei' grupo2pi1a5@gmail.com",

@@ -18,7 +18,7 @@ function enviarEmailConfirmacao(email, nome, itemPerdido) {
         const mailOptions = {
             from: "'Equipe iChei' grupo2pi1a5@gmail.com",
             to: email,
-            subject: `iChei - Notificação - item semelhante encontrado: ${itemPerdido}`,
+            subject: `iChei - Notificação - Perda reportada: ${itemPerdido}`,
             html: htmlContent,
             attachments: [
                 {
