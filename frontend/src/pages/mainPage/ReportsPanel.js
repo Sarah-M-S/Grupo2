@@ -12,7 +12,7 @@ export default function ReportsPanel() {
 
   useEffect(() => {
     let query = "/admin/list/item/perdidos/filtro?";
-    if (search) query += `nome=${search}&`;
+    if (search) query += `titulo=${search}&`;
     if (category) query += `categoria=${category}&`;
     if (date) query += `data_perda=${date}&`;
     if (place) query += `local_perda=${place}&`;

@@ -767,7 +767,7 @@ router.post("/autenticar", (req, res) => {
         const token = jwt.sign({ id: user.id_usuario }, config.secret, {
           algorithm: "HS256",
           allowInsecureKeySizes: true,
-          expiresIn: 86400, // 24 hours
+          expiresIn: 1800, // 30 minutos
         });
 
         res.status(200).send({
