@@ -58,7 +58,7 @@ export default function EditProfile() {
           <div className="flex flex-col w-full max-w-md space-y-8 bg-white rounded-3xl py-8 px-8 md:w-[30%]">
             <div>
               <h2 className="text-3xl text-center font-semibold text-emerald-500 md:text-[220%]">
-                Editar Perfil
+               {t("editarPerfil")}
               </h2>
             </div>
 
@@ -72,7 +72,7 @@ export default function EditProfile() {
                   isDifferentUser ? "bg-gray-200" : "bg-emerald-100"
                 }`}
                 required
-                placeholder="Nome"
+                placeholder={t("nome")}
                 disabled={isDifferentUser}
               />
 
@@ -86,7 +86,7 @@ export default function EditProfile() {
                 }`}
                 disabled={isDifferentUser}
                 required
-                placeholder="Email"
+                placeholder={t("email")}
               />
 
               {payload.user.admin && (
@@ -152,7 +152,7 @@ export default function EditProfile() {
                 }`}
                 disabled={isDifferentUser}
                 required
-                placeholder="Telefone"
+                placeholder={t("telefone")}
               />
             </div>
 
@@ -161,7 +161,7 @@ export default function EditProfile() {
                 onClick={handleCancel}
                 className="text-emerald-950 rounded-full py-2 px-2 text-lg font-semibold"
               >
-                Cancelar
+                {t("cancelar")}
               </button>
               <button
                 onClick={handleSave}

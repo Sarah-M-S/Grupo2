@@ -72,7 +72,7 @@ function Home() {
             <button className="pr-16">
               <p 
               onClick={handleWhoWeAre}
-              className="text-[120%] font-semibold">Quem Somos</p>
+              className="text-[120%] font-semibold">{t("quemSomos")}</p>
             </button>
           </div>
         </div>

@@ -11,6 +11,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
   const { logout } = useLogout();
   const { payload } = useAuthContext();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleReportForm = () => {
     navigate("/reportForm");
@@ -37,7 +38,6 @@ export default function LeftPanel({ state, onDisplayChange }) {
     onDisplayChange(key);
   };
 
-  const { t } = useTranslation();
 
   return (
     <div className="absolute h-screen w-[18%] bg-slate-50 rounded-r-3xl py-16 px-8">
@@ -97,7 +97,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
               onClick={handleAddLocalAndDependencie}
               className="font-semibold text-emerald-950 text-lg"
             >
-              Adicionar Local e Dependencia
+              {t("adicionarLocalDependencia")}
             </button>
           )}
 

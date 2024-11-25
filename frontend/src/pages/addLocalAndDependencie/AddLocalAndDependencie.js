@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useFetchValues from "../../hooks/useFetchValues";
 import usePostNewLocal from "../../hooks/usePostNewLocal";
 import Success from "../success/Success";
+import { useTranslation } from "react-i18next";
 
 export default function AddLocalAndDependencie() {
   const { places } = useFetchValues();
@@ -47,6 +48,8 @@ export default function AddLocalAndDependencie() {
     };
   }, []);
 
+  const { t } = useTranslation();
+
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
@@ -61,7 +64,7 @@ export default function AddLocalAndDependencie() {
           <div className="flex flex-col w-full max-w-md space-y-12 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
             <div>
               <h2 className="text-3xl text-center font-semibold text-emerald-500 md:text-[220%]">
-                Adicionar Local e Dependencia
+                {t("adicionarLocalDependencia")}
               </h2>
             </div>
 
@@ -73,7 +76,7 @@ export default function AddLocalAndDependencie() {
                 onChange={handleChange}
               >
                 <option value="" disabled hidden>
-                  Local
+                {t("local")}
                 </option>
 
                 {places &&
@@ -82,10 +85,10 @@ export default function AddLocalAndDependencie() {
                       {place.titulo}
                     </option>
                   ))}
-                <option value="new">Novo Local</option>
+                <option value="new">{t("novoLocal")}</option>
                 {!places && (
                   <option value="" disabled hidden>
-                    Local
+                    {t("local")}
                   </option>
                 )}
               </select>
@@ -117,14 +120,14 @@ export default function AddLocalAndDependencie() {
                   onClick={handleCancel}
                   className="text-emerald-950 rounded-full py-2 px-2 text-lg font-semibold"
                 >
-                  Cancelar
+                  {t("cancelar")}
                 </button>
                 <button
                   ref={buttonRef}
                   onClick={handleSubmitt}
                   className="bg-emerald-950 rounded-2xl py-2 px-12 text-lg font-semibold text-emerald-500"
                 >
-                  Adicionar
+                  {t("adicionar")}
                 </button>
               </div>
             </div>

@@ -64,7 +64,11 @@
         "editar": "编辑",
         "objetoAdicionadoSucesso": "对象添加成功",
         "dependencia": "依赖",
-        "bloco": "建筑"
+        "bloco": "建筑",
+        "adicionarLocalDependencia": "新增位置和依賴項",
+        "nome": "姓名",
+        "novoLocal": "新地方",
+        "adicionar": "添加"
         
 
     }
