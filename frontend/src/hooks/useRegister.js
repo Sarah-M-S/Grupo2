@@ -6,7 +6,7 @@ const useRegister = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { dispatch } = useAuthContext();
-  const { backend } = useAddress()
+  const { backend } = useAddress();
 
 
   const registerUser = async (userData) => {

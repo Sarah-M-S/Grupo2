@@ -26,9 +26,16 @@ const rodarMatch = require("../match");
 //=================================================================================
 
 //Config da router
+const allowedOrigins = ["http://localhost:3000", "http://frontend:3000"];
 router.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: (origin, callback) => {
+      if (allowedOrigins.includes(origin) || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
 router.use(
