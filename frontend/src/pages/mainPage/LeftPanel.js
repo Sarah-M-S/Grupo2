@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import logo from "../images/dark-logo.png";
 import profile from "../images/profile.png";
@@ -38,6 +38,12 @@ export default function LeftPanel({ state, onDisplayChange }) {
   };
 
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if(!payload.user){
+      navigate("/login")
+    }
+  }, []);
 
   return (
     <div className="absolute h-screen w-[18%] bg-slate-50 rounded-r-3xl py-16 px-8">
