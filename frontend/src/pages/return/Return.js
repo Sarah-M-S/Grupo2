@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSearchContext } from "../../hooks/useSearchContext";
 import useFetchData from "../../hooks/useFetchData";
 import useFetchValues from "../../hooks/useFetchValues";
@@ -25,6 +25,7 @@ export default function Return() {
   const [selectedReport, setSelectedReport] = useState(null);
   const { returnItem } = useReturnItem();
   const [sent, setSent] = useState(false);
+  const navigate = useNavigate()
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -32,6 +33,10 @@ export default function Return() {
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate() + 1).padStart(2, "0");
     return `${day}-${month}-${year}`;
+  }
+
+  const handleBack = () => {
+    navigate("/mainPage")
   }
 
   const handleSubmit = () => {
@@ -177,6 +182,12 @@ export default function Return() {
                 }`}
               >
                 Devolver
+              </button>
+              <button
+                onClick={handleBack}
+                className="bg-white text-emerald-600 font-bold"
+              >
+                Voltar
               </button>
             </div>
           </div>

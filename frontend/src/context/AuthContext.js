@@ -1,6 +1,8 @@
 import { createContext, useEffect, useReducer } from "react";
+import useAddress from "../components/useAddress";
 
 export const AuthContext = createContext();
+
 
 export const authReducer = (state, action) => {
   switch (action.type) {
@@ -24,6 +26,8 @@ export const authReducer = (state, action) => {
 };
 
 export const AuthContextProvider = ({ children }) => {
+  const { backend } = useAddress()
+
   const [state, dispatch] = useReducer(authReducer, {
     payload: null,
     authIsReady: false,
@@ -39,7 +43,7 @@ export const AuthContextProvider = ({ children }) => {
       }
 
       try {
-        const res = await fetch("http://localhost:8083/admin", {
+        const res = await fetch(backend + "/admin", {
           method: "GET",
           headers: {
             "access-token": token,
@@ -59,7 +63,7 @@ export const AuthContextProvider = ({ children }) => {
     unsub();
   }, []);
 
-  console.log("Auth State", state);
+  // console.log("Auth State", state);
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>
