@@ -61,6 +61,23 @@ router.get("/admin/list/item/perdidos", (req, res) => {
     });
 });
 
+//Listar itens achados
+router.get("/admin/list/item/devolvido", (req, res) => {
+  item
+    .findAll({
+      where: {
+        situacao: 3, //achado
+      },
+      order: [["createdAt", "DESC"]],
+    })
+    .then((itens) => {
+      res.json({ itens: itens });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: error.message });
+    });
+});
+
 //listar itens perdidos com filtro
 router.get("/admin/list/item/perdidos/filtro", async (req, res) => {
 
@@ -129,6 +146,77 @@ router.get("/admin/list/item/perdidos/filtro", async (req, res) => {
     });
   }
 });
+
+//listar itens devolvidos com filtro
+router.get("/admin/list/item/devolvidos/filtro", async (req, res) => {
+
+  try {
+    // Desestruturação dos filtros da query string
+    const {
+      titulo,
+      local_encontro,
+      dependencia_encontro,
+      data_devolucao,
+      categoria
+    } = req.query;
+
+    // Definição das condições iniciais para itens devolvidos
+    let conditions = { situacao: 3  }; // Apenas itens com situação "devolvidos"
+
+    // Adiciona o filtro por nome se fornecido
+    if (titulo) {
+      conditions.titulo = { [Op.like]: `%${titulo}%` };
+    }
+
+    // Filtro por local de encontro
+    if (local_encontro) {
+      conditions.local_encontro = local_encontro;
+    }
+
+    // Filtro por dependência de encontro
+    if (dependencia_encontro) {
+      conditions.dependencia_encontro = dependencia_encontro;
+    }
+
+    // Filtro por data de entrada
+    if (data_devolucao) {
+      const startOfDay = new Date(data_devolucao);
+      startOfDay.setUTCHours(0, 0, 0, 0);
+      const endOfDay = new Date(data_devolucao);
+      endOfDay.setUTCHours(23, 59, 59, 999);
+
+      conditions.data_devolucao = {
+        [Op.between]: [startOfDay, endOfDay],
+      };
+    }
+
+    // Filtro por categoria
+    if (categoria) {
+      conditions.categoria = categoria;
+    }
+
+    // Consulta ao banco de dados com as condições
+    const itens = await item.findAll({
+      where: conditions,
+    });
+
+    // Resposta bem-sucedida
+    res.status(200).json({
+      sucesso: true,
+      mensagem: 'Itens filtrados com sucesso',
+      itens: itens,
+    });
+  } catch (erro) {
+    console.error('Erro ao filtrar itens:', erro.message);
+    res.status(500).json({
+      sucesso: false,
+      mensagem: 'Erro ao filtrar os itens',
+      erro: erro.message,
+    });
+  }
+});
+
+
 
 
 //Listar itens por id
