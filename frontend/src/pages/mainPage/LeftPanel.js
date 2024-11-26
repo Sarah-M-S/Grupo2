@@ -18,7 +18,9 @@ export default function LeftPanel({ state, onDisplayChange }) {
   };
 
   const handleEditProfile = () => {
-    payload.user ? navigate("/editProfile", { state: payload.user }) : navigate("/login");
+    payload.user
+      ? navigate("/editProfile", { state: payload.user })
+      : navigate("/login");
   };
 
   const handleAddFound = () => {
@@ -30,7 +32,6 @@ export default function LeftPanel({ state, onDisplayChange }) {
   };
 
   const handleHelp = () => {
-    // IMPLEMENTAR LOGOUT
     navigate("/help");
   };
 
@@ -38,10 +39,9 @@ export default function LeftPanel({ state, onDisplayChange }) {
     onDisplayChange(key);
   };
 
-
   useEffect(() => {
-    if(!payload.user){
-      navigate("/login")
+    if (!payload.user) {
+      navigate("/login");
     }
   }, [payload]);
 
@@ -75,6 +75,17 @@ export default function LeftPanel({ state, onDisplayChange }) {
               }`}
             >
               {t("listaReportes")}
+            </button>
+          )}
+
+          {payload.user.admin && (
+            <button
+              onClick={() => handleDisplay("returned")}
+              className={`font-semibold text-emerald-950 text-lg ${
+                state === "returned" ? "underline text-emerald-500" : ""
+              }`}
+            >
+              {"Devolvidos"}
             </button>
           )}
 

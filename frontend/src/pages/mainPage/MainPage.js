@@ -7,6 +7,7 @@ import FoundPanel from "./FoundPanel";
 import ReportsPanel from "./ReportsPanel";
 import UserPanel from "./UserPanel";
 import { useSearchContext } from "../../hooks/useSearchContext";
+import ReturnedPanel from "./RetunedPanel";
 
 export default function MainPage() {
   const [display, setDisplay] = useState("found");
@@ -53,6 +54,8 @@ export default function MainPage() {
             {display === "reports" && <ReportsPanel display={display} />}
 
             {display === "users" && <UserPanel display={display} />}
+
+            {display === "returned" && <ReturnedPanel display={display} />}
           </div>
         </div>
       </div>
