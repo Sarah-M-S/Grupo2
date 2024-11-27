@@ -508,7 +508,7 @@ router.post("/admin/devolverItem", (req, res) => {
     data_devolucao: dataDevolucao,
     usuario_resgatante: usuarioResgatante,
     funcionario_devolucao: funcionarioDevolucao,
-    situacao: 3
+    situacao: 4 // inativo
   },
     {
       where: {
