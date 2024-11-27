@@ -13,18 +13,18 @@ export default function Register() {
   const navigate = useNavigate();
   const { registerUser, loading, error } = useRegister();
   const [formData, setFormData] = useState({
-    name: null,
-    email: null,
-    phone: null,
-    course: 20,
-    shift: null,
-    password: null,
-    passwordConfirm: null,
+    name: "",
+    email: "",
+    phone: "",
+    course: "",
+    shift: "",
+    password: "",
+    passwordConfirm: "",
   });
   const { courses } = useFetchValues();
 
   const handleRegister = (e) => {
-    var error = false
+    var error = false;
     e.preventDefault();
 
     if (formData.name === "" || !fullNameRegex.test(formData.name)) {
@@ -36,12 +36,17 @@ export default function Register() {
     } else if (formData.phone === "" || !phoneRegex.test(formData.phone)) {
       error = true;
       alert("Insira um telefone válido");
-    }
-    // else if (formData.course === '') {
-    //   alert('Preencha o Curso');
-    // } else if (turno === '') {
-    //   alert('Preencha o Turno');
-    else if (formData.password === "") {
+    } else if (formData.course === "") {
+      setFormData((prevData) => ({
+        ...prevData,
+        [formData.course]: null,
+      }));
+    } else if (formData.shift === "") {
+      setFormData((prevData) => ({
+        ...prevData,
+        [formData.shift]: null,
+      }));
+    } else if (formData.password === "") {
       error = true;
       alert("Preencha a Senha");
     } else if (!passwordRegex.test(formData.password)) {
@@ -119,7 +124,7 @@ export default function Register() {
             />
 
             <select
-              className="rounded-xl w-full h-8 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
+              className="rounded-xl w-full h-10 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               name="course"
               value={formData.course}
               onChange={handleChange}
@@ -128,12 +133,15 @@ export default function Register() {
               <option value="" disabled hidden>
                 {t("curso")}
               </option>
+
               {courses &&
                 courses.curso.map((curso) => (
                   <option key={curso.id_curso} value={curso.id_curso}>
                     {curso.nome}
                   </option>
                 ))}
+
+              <option value="">{"Nenhum"}</option>
               {!courses && (
                 <option value="" disabled hidden>
                   {t("curso")}
@@ -154,6 +162,7 @@ export default function Register() {
               <option value="2">{t("tarde")}</option>
               <option value="3">{t("noite")}</option>
               <option value="4">{t("integral")}</option>
+              <option value="">{"Nenhum"}</option>
             </select>
 
             <input
