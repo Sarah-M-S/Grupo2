@@ -5,6 +5,7 @@ const { json } = require("body-parser");
 const levenshtein = require("fast-levenshtein");
 const { Op } = require("sequelize");
 const enviarEmailItemSemelhante = require('../backend/nodemailer/email-item-semelhante')
+const enviarEmailItemEstoque = require('../backend/nodemailer/email-semeante-estoque')
 
 // Função para normalizar texto
 function normalizarTexto(texto) {
@@ -42,7 +43,86 @@ function verificarMatchSemantico(tituloItem, tabela) {
 }
 // Função principal rodarMatch
 function rodarMatch(item) {
+    if (item.situacao === 1) {
 
+        itemModel
+        .findAll({
+            where: {
+              situacao: 2, // Procurar apenas itens perdidos
+              [Op.or]: [  // Condição "OU"
+                { categoria: item.categoria },
+                { cor: item.cor },
+                { marca: item.marca }
+              ]  
+            },  
+            order: [["createdAt", "DESC"]], // Ordenação por data de criação
+          }).then((itens) => {
+
+                var tabelaItens = itens.map((registro) => ({
+                    id: registro.id_item,
+                    titulo: registro.titulo,
+                    categoria: registro.categoria,
+                    cor: registro.cor,
+                    marca: registro.marca,
+                   // usrPerda: registro.usuario_perda,
+                   // itmPerdido: registro.titulo,
+                    potencialMatch: 0
+                }));
+
+                tabelaItens.forEach(elemento => {
+                    console.log("Elemento: ", elemento)
+                    if(elemento.categoria == item.categoria){
+                        elemento.potencialMatch += 25
+                    }
+                    if(elemento.cor == item.cor){
+                        elemento.potencialMatch += 25
+                    }
+                    if( normalizarTexto(elemento.marca) == normalizarTexto(item.marca)){
+                        elemento.potencialMatch += 25
+                    }
+                })
+
+                // Rodar o algoritmo de match
+                const resultados = verificarMatchSemantico(item.titulo, tabelaItens);
+                //console.log("Possíveis matches:", resultados);
+                //console.log(tabelaItens)
+
+                // disparar email
+                var itensEstoque = [];
+                tabelaItens.forEach(elemento => {
+                    
+                 if(elemento.potencialMatch >= 65){
+                    console.log("ate aqui veio")
+   
+                    itensEstoque.push(elemento)
+
+                    }
+                   
+                })
+                console.log(itensEstoque)
+
+                if(itensEstoque != []){
+                  
+                    usuario
+                    .findOne({
+                      where: {
+                        id_usuario: item.usuario_perda
+                      }
+                    }).then(usuario => {
+                        enviarEmailItemEstoque(usuario.mail, usuario.nome, item.titulo, itensEstoque)
+
+                    }).catch(error => {
+                      console.log("erro no disparo de email" +  error )
+                    });
+
+
+                }
+            })
+            .catch((error) => {
+                console.error("Erro ao buscar itens:", error.message);
+            });
+
+    }
 
     if (item.situacao === 2) {
 
@@ -71,7 +151,7 @@ function rodarMatch(item) {
                 }));
 
                 tabelaItens.forEach(elemento => {
-                    console.log("Elemento: ", elemento)
+                    //console.log("Elemento: ", elemento)
                     if(elemento.categoria == item.categoria){
                         elemento.potencialMatch += 25
                     }
@@ -100,7 +180,7 @@ function rodarMatch(item) {
                             id_usuario: elemento.usrPerda
                           }
                         }).then(usuario => {
-                        //console.log(usuario)
+                        console.log(usuario)
                         var idUsuariosEmail = ({id_usr: elemento.usrPerda, id_item:elemento.id, email: usuario.email, nome: usuario.nome,
                              perdido: elemento.itmPerdido, potencialMatch : elemento.potencialMatch, itemAchado: item.titulo })
                         

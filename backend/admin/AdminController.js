@@ -423,9 +423,6 @@ router.post("/admin/reportarPerda", (req, res) => {
     req.session.usuario != null ? req.session.usuario : 22;
   var usuarioPerda = req.body.itemPerdido.usuarioPerda;
 
-
-  console.log(usuarioPerda);
-
   item
     .create({
       titulo: tituloItem,
@@ -450,7 +447,8 @@ router.post("/admin/reportarPerda", (req, res) => {
           }
         }).then(usuario => {
 
-          enviarEmailConfirmacao(usuario.email, usuario.nome, tituloItem)
+          enviarEmailConfirmacao(usuario.email, usuario.nome, tituloItem);
+          rodarMatch(itemCriado);
 
         }).catch(error => {
           res.status(500).json({ error: error.message });

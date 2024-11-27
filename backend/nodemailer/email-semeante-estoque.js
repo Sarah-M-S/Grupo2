@@ -2,8 +2,8 @@ const transporter = require('./nodemailerTransporter');
 const path = require('path');
 const fs = require('fs');
 
-function enviarEmailItemSemelhante(email, nome, itemPerdido, porcentagemSemelhanca, itemEncontrado) {
-    const templatePath = path.join(__dirname, 'templates', 'email-item-semelhante-template.html');
+function enviarEmailItemEstoque(email, nome, itemPerdido, itemEncontrado) {
+    const templatePath = path.join(__dirname, 'templates', 'email-item-semelhante-template-estoque.html');
     fs.readFile(templatePath, 'utf8', (err, data) => {
         if (err) {
             console.error("Erro ao ler o template de e-mail:", err);
@@ -14,13 +14,13 @@ function enviarEmailItemSemelhante(email, nome, itemPerdido, porcentagemSemelhan
         const htmlContent = data
             .replace(/{{nome}}/g, nome)
             .replace(/{{itemPerdido}}/g, itemPerdido)
-            //.replace(/{{itemEncontrado}}/g, itemEncontrado)
-            .replace(/{{porcentagemSemelhanca}}/g, porcentagemSemelhanca);
+            .replace(/{{itemEncontrado}}/g, itemEncontrado);
+            
 
         const mailOptions = {
             from: "'Equipe iChei' grupo2pi1a5@gmail.com",
             to: email,
-            subject: `iChei - Notificação: item semelhante encontrado ${itemPerdido}`,
+            subject: `iChei - Notificação: itens semelhantes no estoque`,
             html: htmlContent,
             attachments: [
                 {
@@ -42,4 +42,4 @@ function enviarEmailItemSemelhante(email, nome, itemPerdido, porcentagemSemelhan
 }
 
 
-module.exports = enviarEmailItemSemelhante;
+module.exports = enviarEmailItemEstoque;
