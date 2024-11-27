@@ -20,12 +20,15 @@ const usePostReport = () => {
       descricao: formData.details,
       categoria: formData.category,
       cor: formData.color,
+      marca: formData.brand ? formData.brand : "",
       localPerda: formData.place,
       dependencia: formData.dependencie,
       dataPerda: formData.date,
       situacao: "1",
       usuarioPerda: payload.user.id_usuario
     };
+
+    console.log("itemPerdido: ", itemPerdido)
 
     try {
       const response = await fetch(backend + "/admin/reportarPerda", {

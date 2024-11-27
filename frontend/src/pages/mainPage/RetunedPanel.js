@@ -11,7 +11,7 @@ export default function ReturnedPanel({ display }) {
   const { loading, data } = useFetchData(url);
 
   useEffect(() => {
-    let query = "/admin/list/item/devolvido/filtro?";
+    let query = "/admin/list/item/devolvidos/filtro?";
     if (search) query += `titulo=${search}&`;
     if (category) query += `categoria=${category}&`;
     if (date) query += `data_entrada=${date}&`;
@@ -21,7 +21,7 @@ export default function ReturnedPanel({ display }) {
       query = query.slice(0, -1);
     }
 
-    if (query === "/admin/list/item/devolvido/filtro?") {
+    if (query === "/admin/list/item/devolvidos/filtro?") {
       query = "/admin/list/item/devolvido";
     }
 
@@ -34,6 +34,7 @@ export default function ReturnedPanel({ display }) {
         <div className="max-h-[70%] h-[70%] w-full flex flex-col space-y-2 overflow-y-auto">
           <ul className="flex flex-col space-y-2">
             {data.itens.map((item) => (
+              
               <li key={item.id_item}>
                 <ObjectCard
                   object={{
@@ -42,6 +43,7 @@ export default function ReturnedPanel({ display }) {
                   isFound={false}
                 />
               </li>
+
             ))}
           </ul>
         </div>

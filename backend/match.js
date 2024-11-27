@@ -16,6 +16,7 @@ function normalizarTexto(texto) {
 // Função para tokenizar e filtrar palavras irrelevantes
 function tokenizar(titulo) {
     const palavrasIrrelevantes = ["do", "da", "de", "e", "um", "uma", "os", "as"]; // Ajuste conforme necessário
+    console.log("titulo: ", titulo)
     return normalizarTexto(titulo)
         .split(" ")
         .filter(palavra => !palavrasIrrelevantes.includes(palavra)); // Remove palavras irrelevantes
@@ -70,6 +71,7 @@ function rodarMatch(item) {
                 }));
 
                 tabelaItens.forEach(elemento => {
+                    console.log("Elemento: ", elemento)
                     if(elemento.categoria == item.categoria){
                         elemento.potencialMatch += 25
                     }

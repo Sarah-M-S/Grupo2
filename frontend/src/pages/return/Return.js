@@ -25,7 +25,9 @@ export default function Return() {
   const [selectedReport, setSelectedReport] = useState(null);
   const { returnItem } = useReturnItem();
   const [sent, setSent] = useState(false);
-  const navigate = useNavigate()
+  const [submited, setSubmited] = useState(false);
+
+  const navigate = useNavigate();
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -36,10 +38,21 @@ export default function Return() {
   }
 
   const handleBack = () => {
-    navigate("/mainPage")
-  }
+    navigate("/mainPage");
+  };
 
   const handleSubmit = () => {
+    setSubmited(true);
+  };
+
+  const handleCancel = () => {
+    setSelectedUser(null);
+    setSelectedReport(null);
+    setUserId(null);
+    setSubmited(false);
+  };
+
+  const handleSend = () => {
     const currentDate = new Date();
     const isoDate = currentDate.toISOString();
     var devolucao = {
@@ -49,8 +62,8 @@ export default function Return() {
       resgatante: selectedUser.id_usuario,
       funcionario: payload.user.id_usuario,
     };
+    setSent(true);
     returnItem(devolucao);
-    setSent(true)
   };
 
   useEffect(() => {
@@ -66,6 +79,14 @@ export default function Return() {
     }
   }, [selectedUser]);
 
+  useEffect(() => {
+    if (selectedReport) {
+      if (selectedReport.usuario_perda !== selectedUser.id_usuario) {
+        setSelectedReport(null);
+      }
+    }
+  }, [selectedUser, selectedReport]);
+
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-row items-center justify-center space-x-4">
@@ -76,7 +97,34 @@ export default function Return() {
           />
         )}
 
-        {!sent && (
+        {submited && !sent && (
+          <div className="h-[90%] w-full flex flex-col items-center justify-center space-y-8">
+            <div className="flex flex-col w-full max-w-md space-y-12 bg-white rounded-3xl py-16 px-8 md:w-[100%]">
+              <div className="flex flex-col space-y-8">
+                <h2 className="text-3xl text-start font-semibold text-emerald-950 md:text-[160%] pb-4">
+                  Tem certeza que quer devolver {state.item.titulo} para{" "}
+                  {selectedUser.nome} ?
+                </h2>
+                <div className="flex flex-row w-full justify-between">
+                  <button
+                    onClick={handleCancel}
+                    className=" bg-white w-[40%] text-emerald-950 rounded-full py-2 px-2 text-lg font-bold"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleSend}
+                    className=" bg-emerald-950 w-[40%] text-emerald-500 rounded-full py-2 px-2 text-lg font-bold"
+                  >
+                    Devolver
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {!sent && !submited && (
           <div className="h-[90%] w-full flex flex-row items-center justify-center space-x-4">
             <div className="flex flex-col w-full max-w-md space-y-12 bg-white rounded-3xl py-16 px-8 md:w-[100%]">
               <div className="flex flex-col space-y-2">

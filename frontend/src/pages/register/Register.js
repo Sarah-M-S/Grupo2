@@ -12,7 +12,7 @@ export default function Register() {
     email: "",
     phone: "",
     course: 20,
-    shift: "",
+    shift: null,
     password: "",
     passwordConfirm: "",
   });
