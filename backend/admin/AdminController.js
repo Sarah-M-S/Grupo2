@@ -787,7 +787,7 @@ router.post("/users/create", async (req, res) => {
   var senha = req.body.password;
   var email = req.body.email;
   var telefone = req.body.phone;
-  var admin = true;
+  var admin = false;
   var turno = req.body.shift != "" ? req.body.shift : 0
   console.log(turno);
   var status = true;
