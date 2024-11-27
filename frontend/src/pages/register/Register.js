@@ -5,22 +5,62 @@ import { useTranslation } from "react-i18next";
 import useFetchValues from "../../hooks/useFetchValues";
 
 export default function Register() {
+  const regexEmail = /\S+@\S+\.\S+/;
+  const phoneRegex = /^(\d{2})\s?(\d{4,5})-?(\d{4})$/;
+  const fullNameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)+$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
   const navigate = useNavigate();
   const { registerUser, loading, error } = useRegister();
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
+    name: null,
+    email: null,
+    phone: null,
     course: 20,
     shift: null,
-    password: "",
-    passwordConfirm: "",
+    password: null,
+    passwordConfirm: null,
   });
   const { courses } = useFetchValues();
 
   const handleRegister = (e) => {
+    var error = false
     e.preventDefault();
-    registerUser(formData);
+
+    if (formData.name === "" || !fullNameRegex.test(formData.name)) {
+      error = true;
+      alert("Preencher o Nome Completo");
+    } else if (formData.email === "" || !regexEmail.test(formData.email)) {
+      error = true;
+      alert("Insira um e-mail válido");
+    } else if (formData.phone === "" || !phoneRegex.test(formData.phone)) {
+      error = true;
+      alert("Insira um telefone válido");
+    }
+    // else if (formData.course === '') {
+    //   alert('Preencha o Curso');
+    // } else if (turno === '') {
+    //   alert('Preencha o Turno');
+    else if (formData.password === "") {
+      error = true;
+      alert("Preencha a Senha");
+    } else if (!passwordRegex.test(formData.password)) {
+      error = true;
+      alert(
+        "A senha deve ter pelo menos 6 caracteres, incluindo uma letra maiúscula, uma minúscula e um caractere especial"
+      );
+    } else if (formData.passwordConfirm === "") {
+      error = true;
+      alert("Preencha a Confirmação de Senha");
+    } else if (formData.password !== formData.passwordConfirm) {
+      error = true;
+      alert("As senhas não coincidem");
+    } else {
+      alert("Cadastro realizado com sucesso");
+    }
+    if (!error) {
+      registerUser(formData);
+    }
   };
 
   const handleBack = () => {
@@ -43,7 +83,7 @@ export default function Register() {
         <div className="flex flex-col w-full max-w-md space-y-10 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
           <div>
             <h2 className="text-3xl text-center font-semibold text-emerald-500 md:text-[220%]">
-            {t("cadastro")}
+              {t("cadastro")}
             </h2>
           </div>
 
@@ -86,7 +126,7 @@ export default function Register() {
               required
             >
               <option value="" disabled hidden>
-              {t("curso")}
+                {t("curso")}
               </option>
               {courses &&
                 courses.curso.map((curso) => (
@@ -108,7 +148,7 @@ export default function Register() {
               onChange={handleChange}
             >
               <option value="" disabled hidden>
-              {t("turno")}
+                {t("turno")}
               </option>
               <option value="1">{t("manhã")}</option>
               <option value="2">{t("tarde")}</option>
