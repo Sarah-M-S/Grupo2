@@ -552,6 +552,33 @@ router.post("/admin/devolverItem", (req, res) => {
     });
 });
 
+//inativar item
+router.get("/admin/delete/item/:id", (req, res) => {
+
+  const { id } = req.params;
+
+  item.update({
+    situacao: 4 // inativo
+  },
+    {
+      where: {
+        id_item: id,
+      }
+    }).then(() => {
+      
+          res.status(201).json({
+            sucesso: true,
+            mensagem: 'item inativado com sucesso'
+          });
+
+        }).catch((erro) => {
+          res.status(500).json({
+            sucesso: false,
+            mensagem: 'Erro ao inativar item.',
+            erro: erro.message
+          });
+        }); 
+ })
 // Editar Usuário -----------------------------------------------------------------------------------
 
 router.post("/admin/editUsuario", (req, res) => {
