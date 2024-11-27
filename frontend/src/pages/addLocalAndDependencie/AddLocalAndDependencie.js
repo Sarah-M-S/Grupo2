@@ -30,8 +30,20 @@ export default function AddLocalAndDependencie() {
   };
 
   const handleSubmitt = () => {
-    postNewLocal(formData);
-    setSent(true);
+    var error = false;
+
+    if (formData.place === "" || formData.newPlace === "") {
+      error = true;
+      alert("Preencha o local ou o novo local");
+    } else if (formData.dependencie === "") {
+      error = true;
+      alert("Preencha a nova dependência");
+    }
+
+    if (!error) {
+      postNewLocal(formData);
+      setSent(true);
+    }
   };
 
   useEffect(() => {
@@ -76,7 +88,7 @@ export default function AddLocalAndDependencie() {
                 onChange={handleChange}
               >
                 <option value="" disabled hidden>
-                {t("local")}
+                  {t("local")}
                 </option>
 
                 {places &&
