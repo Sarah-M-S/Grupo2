@@ -4,11 +4,11 @@ import useFetchValues from "../../hooks/useFetchValues";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-export default function ObjectCard({ object, isFound }) {
+export default function ObjectCard({ object, panel }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
   const { places, categories, dependencies } = useFetchValues(
-    isFound ? object.item.local_encontro : object.item.local_perda
+    panel === "found" || panel === "returned" ? object.item.local_encontro : object.item.local_perda
   );
   const { payload } = useAuthContext()
 
@@ -60,7 +60,7 @@ export default function ObjectCard({ object, isFound }) {
                       ).nome
                     : ""}
                 </h2>
-                {isFound && (
+                {panel === "found" || panel === "returned" && (
                   <div className="inline-flex">
                     <p>
                       <b>{t("local")}: </b>
@@ -84,7 +84,7 @@ export default function ObjectCard({ object, isFound }) {
                   </div>
                 )}
 
-                {!isFound && (
+                {panel === "reports" && (
                   <div className="inline-flex">
                     <p>
                       <b>{t("local")}: </b>
@@ -110,12 +110,12 @@ export default function ObjectCard({ object, isFound }) {
 
                 <p>
                   <b>{t("dataEncontro")}: </b>
-                  {isFound
+                  {panel === "found" || panel === "returned"
                     ? formatDate(object.item.data_entrada)
                     : formatDate(object.item.data_perda)}
                 </p>
               </div>
-              {(isFound && payload.user.admin) && (
+              {(panel === "found" && payload.user.admin) && (
                 <div className="flex flex-row space-x-4">
                   <button onClick={handleEdit} className="text-emerald-500">
                     {t("editar")}

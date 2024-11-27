@@ -39,7 +39,7 @@ export default function FoundPanel({ display }) {
                   object={{
                     item,
                   }}
-                  isFound={true}
+                  panel={"found"}
                 />
               </li>
             ))}

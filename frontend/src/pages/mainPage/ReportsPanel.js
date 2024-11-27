@@ -39,7 +39,7 @@ export default function ReportsPanel() {
                   object={{
                     item,
                   }}
-                  isFound={false}
+                  panel={"reports"}
                 />
               </li>
             ))}
