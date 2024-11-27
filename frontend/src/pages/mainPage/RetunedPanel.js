@@ -10,6 +10,7 @@ export default function ReturnedPanel({ display }) {
   const [url, setUrl] = useState("/admin/list/item/devolvido");
   const { loading, data } = useFetchData(url);
 
+
   useEffect(() => {
     let query = "/admin/list/item/devolvidos/filtro?";
     if (search) query += `titulo=${search}&`;

@@ -3,14 +3,19 @@ import { useTranslation } from "react-i18next";
 import useFetchValues from "../../hooks/useFetchValues";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import useFetchData from "../../hooks/useFetchData";
 
 export default function ObjectCard({ object, panel }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
   const { places, categories, dependencies } = useFetchValues(
-    panel === "found" || panel === "returned" ? object.item.local_encontro : object.item.local_perda
+    panel === "found" || panel === "returned"
+      ? object.item.local_encontro
+      : object.item.local_perda
   );
-  const { payload } = useAuthContext()
+  const { payload } = useAuthContext();
+  const [url, setUrl] = useState("/admin/list/usuarios");
+  const { loading, data } = useFetchData(url);
 
   const toggleCard = () => {
     setIsExpanded(!isExpanded);
@@ -60,29 +65,30 @@ export default function ObjectCard({ object, panel }) {
                       ).nome
                     : ""}
                 </h2>
-                {panel === "found" || panel === "returned" && (
-                  <div className="inline-flex">
-                    <p>
-                      <b>{t("local")}: </b>
-                      {places
-                        ? places.locais.find(
-                            (place) =>
-                              place.id_local === +object.item.local_encontro
-                          ).titulo
-                        : ""}
-                    </p>
-                    <p>-</p>
-                    <p>
-                      {object.item.dependencia_encontro
-                        ? dependencies.dependencias.find(
-                            (dependencie) =>
-                              dependencie.id_dependencia ===
-                              +object.item.dependencia_encontro
-                          ).titulo
-                        : ""}
-                    </p>
-                  </div>
-                )}
+                {panel === "found" ||
+                  (panel === "returned" && (
+                    <div className="inline-flex">
+                      <p>
+                        <b>{t("local")}: </b>
+                        {places
+                          ? places.locais.find(
+                              (place) =>
+                                place.id_local === +object.item.local_encontro
+                            ).titulo
+                          : ""}
+                      </p>
+                      <p>-</p>
+                      <p>
+                        {object.item.dependencia_encontro
+                          ? dependencies.dependencias.find(
+                              (dependencie) =>
+                                dependencie.id_dependencia ===
+                                +object.item.dependencia_encontro
+                            ).titulo
+                          : ""}
+                      </p>
+                    </div>
+                  ))}
 
                 {panel === "reports" && (
                   <div className="inline-flex">
@@ -109,13 +115,42 @@ export default function ObjectCard({ object, panel }) {
                 )}
 
                 <p>
-                  <b>{t("dataEncontro")}: </b>
-                  {panel === "found" || panel === "returned"
-                    ? formatDate(object.item.data_entrada)
-                    : formatDate(object.item.data_perda)}
+                  {panel === "found" && (
+                    <div className="flex flex-row space-x-2">
+                      <b>{t("dataEncontro")}: </b>
+                      <p>{formatDate(object.item.data_entrada)}</p>
+                    </div>
+                  )}
+
+                  {panel === "reports" && (
+                    <div className="flex flex-row space-x-2">
+                      <b>Data Perda: </b>
+                      <p>{formatDate(object.item.data_perda)}</p>
+                    </div>
+                  )}
+
+                  {panel === "returned" && (
+                    <div className="flex flex-row space-x-2">
+                      <b>Data Devolução: </b>
+                      <p>{formatDate(object.item.data_devolucao)}</p>
+                    </div>
+                  )}
                 </p>
+
+                {panel === "returned" && (
+                  <div className="flex flex-row space-x-2">
+                    <b>Usuario Resgatante: </b>
+                    <p>{data
+                          ? data.usuario.find(
+                              (user) =>
+                                user.id_usuario === +object.item.usuario_resgatante
+                            ).nome
+                          : ""}</p>
+                  </div>
+                )}
+
               </div>
-              {(panel === "found" && payload.user.admin) && (
+              {panel === "found" && payload.user.admin && (
                 <div className="flex flex-row space-x-4">
                   <button onClick={handleEdit} className="text-emerald-500">
                     {t("editar")}

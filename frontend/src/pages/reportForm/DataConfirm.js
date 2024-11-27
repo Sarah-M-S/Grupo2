@@ -31,10 +31,7 @@ export default function DataConfirm({
     setCheck(!check);
   };
 
-  console.log(selectedUser)
-
   const handleNext = () => {
-    console.log("oi")
     selectedUser ? onNext(selectedUser) : onNext();
   };
 
