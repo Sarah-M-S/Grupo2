@@ -4,7 +4,7 @@ import useFetchData from "../../hooks/useFetchData";
 import { useTranslation } from "react-i18next";
 import { useSearchContext } from "../../hooks/useSearchContext";
 
-export default function ReportsPanel() {
+export default function ReportsPanel({ onDelete }) {
   const { t } = useTranslation();
   const { dispatch, search, category, date, place } = useSearchContext();
   const [url, setUrl] = useState("/admin/list/item/perdidos");
@@ -40,6 +40,7 @@ export default function ReportsPanel() {
                     item,
                   }}
                   panel={"reports"}
+                  onDelete={onDelete}
                 />
               </li>
             ))}

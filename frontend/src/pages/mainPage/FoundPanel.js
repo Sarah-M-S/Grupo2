@@ -4,11 +4,12 @@ import useFetchData from "../../hooks/useFetchData";
 import { useTranslation } from "react-i18next";
 import { useSearchContext } from "../../hooks/useSearchContext";
 
-export default function FoundPanel({ display }) {
+export default function FoundPanel({ onDelete }) {
   const { t } = useTranslation();
   const { dispatch, search, category, date, place } = useSearchContext();
   const [url, setUrl] = useState("/list/item/achados");
   const { loading, data } = useFetchData(url);
+
 
   useEffect(() => {
     let query = "/list/item/achados/filtro?";
@@ -40,6 +41,7 @@ export default function FoundPanel({ display }) {
                     item,
                   }}
                   panel={"found"}
+                  onDelete={onDelete}
                 />
               </li>
             ))}

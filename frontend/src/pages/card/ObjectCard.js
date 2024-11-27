@@ -3,9 +3,10 @@ import { useTranslation } from "react-i18next";
 import useFetchValues from "../../hooks/useFetchValues";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
+
 import useFetchData from "../../hooks/useFetchData";
 
-export default function ObjectCard({ object, panel }) {
+export default function ObjectCard({ object, panel, onDelete }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
   const { places, categories, dependencies } = useFetchValues(
@@ -16,6 +17,7 @@ export default function ObjectCard({ object, panel }) {
   const { payload } = useAuthContext();
   const [url, setUrl] = useState("/admin/list/usuarios");
   const { loading, data } = useFetchData(url);
+  const [ confirmation, setConfirmation ] = useState(false)
 
   const toggleCard = () => {
     setIsExpanded(!isExpanded);
@@ -37,6 +39,10 @@ export default function ObjectCard({ object, panel }) {
     navigate("/return", { state: object });
   };
 
+  const handleDelete = () => {
+    onDelete(object)
+  }
+
   const { t } = useTranslation();
 
   return (
@@ -48,9 +54,16 @@ export default function ObjectCard({ object, panel }) {
       >
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold">{object.item.titulo}</h2>
-          <button onClick={toggleCard} className="text-emerald-500">
-            {isExpanded ? "Menos" : "Detalhes"}
-          </button>
+          <div className="flex flex-rox space-x-2">
+            {payload.user.admin && (
+              <button onClick={handleDelete} className="text-emerald-500">
+                Deletar
+              </button>
+            )}
+            <button onClick={toggleCard} className="text-emerald-500">
+              {isExpanded ? "Menos" : "Detalhes"}
+            </button>
+          </div>
         </div>
         {isExpanded && (
           <div className="flex flex-col space-y-2">
@@ -140,15 +153,31 @@ export default function ObjectCard({ object, panel }) {
                 {panel === "returned" && (
                   <div className="flex flex-row space-x-2">
                     <b>Usuario Resgatante: </b>
-                    <p>{data
-                          ? data.usuario.find(
-                              (user) =>
-                                user.id_usuario === +object.item.usuario_resgatante
-                            ).nome
-                          : ""}</p>
+                    <p>
+                      {data
+                        ? data.usuario.find(
+                            (user) =>
+                              user.id_usuario ===
+                              +object.item.usuario_resgatante
+                          ).nome
+                        : ""}
+                    </p>
                   </div>
                 )}
 
+                {panel === "reports" && (
+                  <div className="flex flex-row space-x-2">
+                    <b>Usuario Perda: </b>
+                    <p>
+                      {data
+                        ? data.usuario.find(
+                            (user) =>
+                              user.id_usuario === +object.item.usuario_perda
+                          ).nome
+                        : ""}
+                    </p>
+                  </div>
+                )}
               </div>
               {panel === "found" && payload.user.admin && (
                 <div className="flex flex-row space-x-4">
