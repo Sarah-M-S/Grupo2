@@ -788,7 +788,7 @@ router.post("/users/create", async (req, res) => {
   var email = req.body.email;
   var telefone = req.body.phone;
   var admin = false;
-  var turno = req.body.shift != "" ? req.body.shift : 0
+  var turno = req.body.shift != "" ? req.body.shift : null;
   console.log(turno);
   var status = true;
   var ativoFlag = 1;
