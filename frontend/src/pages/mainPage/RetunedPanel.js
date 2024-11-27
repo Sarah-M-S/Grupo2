@@ -40,7 +40,7 @@ export default function ReturnedPanel({ display }) {
                   object={{
                     item,
                   }}
-                  isFound={false}
+                  isFound={true}
                 />
               </li>
 
