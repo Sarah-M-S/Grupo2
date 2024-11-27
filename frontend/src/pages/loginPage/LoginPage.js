@@ -31,7 +31,20 @@ export default function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    login(formData.email, formData.password);
+    var error = false;
+    if (formData.email === "") {
+      error = true;
+      alert("Preencha o Email");
+    }
+
+    if (formData.password === "") {
+      error = true;
+      alert("Preencha a Senha");
+    }
+
+    if (!error) {
+      login(formData.email, formData.password);
+    }
   };
 
   useEffect(() => {
@@ -40,7 +53,7 @@ export default function LoginPage() {
     } else {
       setErrorMessage("");
     }
-  })
+  });
 
   useEffect(() => {
     const handleKeyDown = (event) => {

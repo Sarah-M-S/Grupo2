@@ -62,7 +62,8 @@ function Home() {
           onClick={handleCookies}>
             <img src={cookie} width="50" height="50" />
           </button>
-
+          
+          {/* 
           <div className="flex space-x-8 items-center">
             <button>
               <p 
@@ -74,7 +75,8 @@ function Home() {
               onClick={handleWhoWeAre}
               className="text-[120%] font-semibold">{t("quemSomos")}</p>
             </button>
-          </div>
+          </div> */}
+
         </div>
       </div>
     </div>

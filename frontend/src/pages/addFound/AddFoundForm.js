@@ -19,7 +19,7 @@ export default function AddFoundForm() {
   const { places, colors, categories, dependencies } = useFetchValues(
     formData.place
   );
-  const { isSubmitting, error, postFound } = usePostFound()
+  const { isSubmitting, error, postFound } = usePostFound();
 
   const [sent, setSent] = useState(false);
   const navigate = useNavigate();
@@ -33,13 +33,45 @@ export default function AddFoundForm() {
   };
 
   const handleSave = () => {
-    postFound(formData)
-    setSent(true);
+    var error = false;
+    const today = new Date();
+    const inputDate = new Date(formData.date);
+
+
+    if (formData.category === "") {
+      error = true;
+      alert("Preencha a categoria");
+    } else if (formData.object === "") {
+      error = true;
+      alert("Preencha o título do objeto");
+    } else if (formData.color === "") {
+      error = true;
+      alert("Preencha a cor do objeto");
+    } else if (formData.date === "") {
+      error = true;
+      alert("Preencha a data");
+    } else if (inputDate > today) {
+      error = true
+      alert("A data não pode ser no futuro.");
+    } else if (formData.place === ""){
+      error = true
+      alert("Preencha o local da perda")
+    } else if (formData.dependencie === ""){
+      error = true
+      alert("Preencha a dependencia da perda")
+    }
+
+    if (!error) {
+      postFound(formData);
+      setSent(true);
+    }
   };
 
   const handleCancel = () => {
     navigate("/mainPage");
   };
+
+  
 
   const { t } = useTranslation();
 
@@ -47,10 +79,7 @@ export default function AddFoundForm() {
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="h-[90%] w-full flex flex-col items-center justify-center">
         {sent && (
-          <Success
-            message={t("objetoAdicionadoSucesso")}
-            route={"/mainPage"}
-          />
+          <Success message={t("objetoAdicionadoSucesso")} route={"/mainPage"} />
         )}
 
         {!sent && (
@@ -70,7 +99,7 @@ export default function AddFoundForm() {
                 required
               >
                 <option value="" disabled hidden>
-                {t("categoria")}
+                  {t("categoria")}
                 </option>
                 {categories &&
                   categories.categorias.map((categoria) => (
@@ -105,7 +134,7 @@ export default function AddFoundForm() {
                 onChange={handleChange}
               >
                 <option value="" disabled hidden>
-                {t("cor")}
+                  {t("cor")}
                 </option>
                 {colors &&
                   colors.cor.map((cor) => (
@@ -156,7 +185,7 @@ export default function AddFoundForm() {
                 onChange={handleChange}
               >
                 <option value="" disabled hidden>
-                {t("local")}
+                  {t("local")}
                 </option>
                 {places &&
                   places.locais.map((place) => (
@@ -179,7 +208,7 @@ export default function AddFoundForm() {
                 disabled={!dependencies}
               >
                 <option value="" disabled hidden>
-                {t("dependencia")}
+                  {t("dependencia")}
                 </option>
                 {dependencies &&
                   dependencies.dependencias.map((dependencia) => (
