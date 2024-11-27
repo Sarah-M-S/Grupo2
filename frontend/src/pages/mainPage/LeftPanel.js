@@ -31,8 +31,8 @@ export default function LeftPanel({ state, onDisplayChange }) {
     navigate("/addLocalAndDependencie");
   };
 
-  const handleHelp = () => {
-    navigate("/help");
+  const handleCookies = () => {
+    navigate("/cookies");
   };
 
   const handleDisplay = (key) => {
@@ -133,7 +133,7 @@ export default function LeftPanel({ state, onDisplayChange }) {
         </div>
 
         <div className="flex flex-row space-x-4 h-[30%] items-end">
-          <button onClick={handleHelp}>{t("ajuda")}</button>
+          <button onClick={handleCookies}>{t("Cookies")}</button>
           <button onClick={logout}>{t("logout")}</button>
         </div>
       </div>

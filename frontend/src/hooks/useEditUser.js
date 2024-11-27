@@ -33,7 +33,7 @@ const useEditUser = () => {
         body: JSON.stringify({ usuario }),
       }).then((res) => res.json());
 
-      console.log(res);
+      // console.log(res);
       const payload = {
         accessToken: localStorage.getItem("accessToken"),
         user: res,
@@ -43,7 +43,7 @@ const useEditUser = () => {
         dispatch({ type: "EDIT_USER", payload: payload });
       }
     } catch (error) {
-      setError(error.message);
+      // setError(error.message);
       console.error("Erro:", error);
     } finally {
       setIsSubmitting(false);

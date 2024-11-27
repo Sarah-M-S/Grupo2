@@ -35,9 +35,7 @@ export default function LoginPage() {
     if (formData.email === "") {
       error = true;
       alert("Preencha o Email");
-    }
-
-    if (formData.password === "") {
+    } else if (formData.password === "") {
       error = true;
       alert("Preencha a Senha");
     }

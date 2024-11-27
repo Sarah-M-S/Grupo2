@@ -4,6 +4,7 @@ import Success from "../success/Success";
 import { useTranslation } from "react-i18next";
 
 export default function ForgotPassword() {
+  const regexEmail = /\S+@\S+\.\S+/;
   const navigate = useNavigate();
   const [sent, setSent] = useState(false);
   const [formData, setFormData] = useState({
@@ -23,29 +24,35 @@ export default function ForgotPassword() {
   };
 
   const handleSave = () => {
-    console.log(formData);
-    setSent(true);
+    var error = false;
+    if (formData.email === "" || !regexEmail.test(formData.email)) {
+      error = true;
+      alert("Insira um e-mail válido");
+    }
+    if (!error) {
+      setSent(true);
+    }
   };
 
   const { t } = useTranslation();
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
-      {sent && 
+      {sent && (
         <Success
           message={`${t("linkRecuperacao")} ${formData.email}`}
-          route ={"/"}
+          route={"/"}
         />
-      }
+      )}
 
-      {!sent && 
+      {!sent && (
         <div className="h-[90%] w-full flex flex-col items-center justify-center">
           <div className="flex flex-col w-full max-w-md space-y-12 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
             <div className="flex flex-col space-y-4">
               <h2 className="text-3xl text-center font-semibold text-emerald-500 md:text-[220%]">
-              {t("esqueciSenha")}
+                {t("esqueciSenha")}
               </h2>
               <h3 className="text-xl text-center font-semibold text-emerald-950 md:text-[100%]">
-              {t("instrucaoRecuperacaoEmail")}
+                {t("instrucaoRecuperacaoEmail")}
               </h3>
             </div>
 
@@ -77,7 +84,7 @@ export default function ForgotPassword() {
             </div>
           </div>
         </div>
-      }
+      )}
     </div>
   );
 }

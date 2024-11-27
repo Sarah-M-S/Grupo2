@@ -40,10 +40,10 @@ const usePostFound = () => {
       }
 
       const data = await response.json();
-      console.log("Sucesso:", data);
+      // console.log("Sucesso:", data);
     } catch (error) {
       setError(error.message);
-      console.error("Erro:", error);
+      // console.error("Erro:", error);
     } finally {
       setIsSubmitting(false);
     }
