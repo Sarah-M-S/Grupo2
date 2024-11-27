@@ -5,6 +5,8 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import useChangePassword from "../../hooks/useChangePassword";
 
 export default function ChangePassword() {
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
   const [sent, setSent] = useState();
   const navigate = useNavigate();
   const { payload } = useAuthContext();
@@ -12,7 +14,7 @@ export default function ChangePassword() {
     newPassword: "",
     confirmNewPassword: "",
   });
-  const { changePassword } = useChangePassword()
+  const { changePassword } = useChangePassword();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,13 +29,30 @@ export default function ChangePassword() {
   };
 
   const handleChangePassword = () => {
-    if (formData.newPassword === formData.confirmNewPassword) {
+    var error = false;
+    if (formData.newPassword === "") {
+      error = true;
+      alert("Preencha a Senha");
+    } else if (!passwordRegex.test(formData.newPassword)) {
+      error = true;
+      alert(
+        "A senha deve ter pelo menos 6 caracteres, incluindo uma letra maiúscula, uma minúscula e um caractere especial"
+      );
+    } else if (formData.confirmNewPassword === "") {
+      error = true;
+      alert("Preencha a Confirmação de Senha");
+    } else if (formData.newPassword !== formData.confirmNewPassword) {
+      error = true;
+      alert("As senhas não coincidem");
+    }
+
+    if (!error) {
       const usuario = {
         idUsuario: payload.user.id_usuario,
         senha: formData.newPassword,
       };
       changePassword(usuario);
-      setSent(true)
+      setSent(true);
     }
   };
 
