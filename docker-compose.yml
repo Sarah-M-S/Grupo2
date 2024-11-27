@@ -1,0 +1,42 @@
+ 
+services:
+  frontend:
+    container_name: frontend
+    image: grupo2pi1a5/frontend:arm
+    depends_on:
+      - backend
+
+  db:
+    container_name: db
+    image: grupo2pi1a5/mariadb:arm
+    ports:
+      - "3306:3306"
+
+
+  backend:
+    container_name: backend
+    image: grupo2pi1a5/backend:arm
+    restart: always
+    depends_on:
+      - db
+
+
+  nginx:
+    container_name: nginx
+    restart: unless-stopped   
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - frontend
+#  certbot:
+#    image: certbot/certbot
+#    container_name: certbot
+#    volumes:
+#      - ./certbot/conf:/etc/letsencrypt
+#      - ./certbot/www:/var/www/certbot
+#    command: certonly --webroot -w /var/www/certbot --force-renewal --email grupopi1a5@gmail.com -d ichei-app.com --ag$
