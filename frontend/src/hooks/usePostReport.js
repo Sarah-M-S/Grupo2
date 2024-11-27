@@ -25,7 +25,7 @@ const usePostReport = () => {
       dependencia: formData.dependencie,
       dataPerda: formData.date,
       situacao: "1",
-      usuarioPerda: payload.user.id_usuario
+      usuarioPerda: formData.user ? formData.user.id_usuario : payload.user.id_usuario
     };
 
     console.log("itemPerdido: ", itemPerdido)

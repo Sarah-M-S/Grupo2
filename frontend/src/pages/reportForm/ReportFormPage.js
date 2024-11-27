@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import Disclaimer from "./Disclaimer";
 import ObjectForm from "./ObjectForm";
@@ -7,7 +7,7 @@ import PlaceDate from "./PlaceDate";
 import DataConfirm from "./DataConfirm";
 import Success from "../success/Success";
 import BackwardButton from "./RestartButton";
-import FinalizeButton from "./FinalizeButton"
+import FinalizeButton from "./FinalizeButton";
 import { useTranslation } from "react-i18next";
 import usePostReport from "../../hooks/usePostReport";
 
@@ -15,6 +15,7 @@ export default function ReportFormPage() {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({});
   const { isSubmitting, error, postFound } = usePostReport();
+  const formDataRef = useRef(formData);
 
   const handleNext = (data) => {
     setFormData((prevData) => ({
@@ -29,12 +30,28 @@ export default function ReportFormPage() {
     setStep(0);
   };
 
-  const handleFinalize = () => {
-    // ENVIAR OS DADOS DO FORMULÁRIO PARA O BACKEND ATRAVÉS DO FETCH
-    console.log(formData)
-    postFound(formData);
-    if (!error) {
-      setStep((prevStep) => prevStep + 1);
+  const handleFinalize = async (user) => {
+    if (user) {
+      console.log("usuario: ", user, "formData: ", formData);
+      await new Promise((resolve) => {
+        setFormData((prevData) => {
+          const updatedData = { ...prevData, user: user };
+          formDataRef.current = updatedData;
+          resolve();
+          return updatedData;
+        });
+      });
+      console.log(formDataRef.current);
+      postFound(formDataRef.current);
+      if (!error) {
+        setStep((prevStep) => prevStep + 1);
+      }
+    } else {
+      
+      postFound(formData);
+      if (!error) {
+        setStep((prevStep) => prevStep + 1);
+      }
     }
   };
 
@@ -60,9 +77,7 @@ export default function ReportFormPage() {
           />
         );
       case 5:
-        return <Success 
-        message={t("mensagemSucesso")}
-        route={"/mainPage"}/>;
+        return <Success message={t("mensagemSucesso")} route={"/mainPage"} />;
       default:
         return <Disclaimer onNext={handleNext} />;
     }

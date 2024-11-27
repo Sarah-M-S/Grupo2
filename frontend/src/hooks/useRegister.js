@@ -23,7 +23,7 @@ const useRegister = () => {
       })
       .then(response => response.json())
 
-      console.log(response)
+      // console.log(response)
       dispatch({ type: 'LOGIN', payload: response})
 
     } catch (err) {

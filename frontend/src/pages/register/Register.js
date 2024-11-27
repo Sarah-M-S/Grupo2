@@ -36,17 +36,7 @@ export default function Register() {
     } else if (formData.phone === "" || !phoneRegex.test(formData.phone)) {
       error = true;
       alert("Insira um telefone válido");
-    } else if (formData.course === "") {
-      setFormData((prevData) => ({
-        ...prevData,
-        [formData.course]: null,
-      }));
-    } else if (formData.shift === "") {
-      setFormData((prevData) => ({
-        ...prevData,
-        [formData.shift]: null,
-      }));
-    } else if (formData.password === "") {
+    }  else if (formData.password === "") {
       error = true;
       alert("Preencha a Senha");
     } else if (!passwordRegex.test(formData.password)) {
@@ -63,6 +53,19 @@ export default function Register() {
     } else {
       alert("Cadastro realizado com sucesso");
     }
+
+    if (formData.course === "") {
+      setFormData((prevData) => ({
+        ...prevData,
+        [formData.course]: null,
+      }));
+    } else if (formData.shift === "") {
+      setFormData((prevData) => ({
+        ...prevData,
+        [formData.shift]: null,
+      }));
+    }
+    
     if (!error) {
       registerUser(formData);
     }
