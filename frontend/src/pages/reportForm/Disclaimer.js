@@ -2,16 +2,18 @@ import React from "react";
 import ForwardButton from "./ForwardButton";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import CancelButton from "./CancelButton";
 
 export default function Disclaimer({ onNext }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  
   const handleNext = () => {
     onNext();
   };
 
   const handleBack = () => {
-    navigate("/mainPage")
-  }
+    navigate("/mainPage");
+  };
 
   const { t } = useTranslation();
 
@@ -28,14 +30,11 @@ export default function Disclaimer({ onNext }) {
         </div>
       </div>
 
-      <ForwardButton onClick={handleNext} />
-      <div className="flex flex-col w-full max-w-md space-y-12 bg-white rounded-3xl py-2 px-8 md:w-[30%]">
-        <button 
-        className="text-emerald-500 rounded-full py-2 px-2 text-lg font-bold"
-        onClick={handleBack}
-        >
-          Cancelar
-        </button>
+      <div className="w-[48%] flex flex-row items-center justify-center space-x-4">
+        <CancelButton onClick={handleBack} />
+
+        <ForwardButton onClick={handleNext} />
+
       </div>
     </div>
   );

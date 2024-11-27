@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import ForwardButton from "./ForwardButton";
 
 import { useTranslation } from "react-i18next";
+import CancelButton from "./CancelButton";
+import { useNavigate } from "react-router-dom";
 
-export default function ObjectDetails({onNext}) {
-
+export default function ObjectDetails({ onNext }) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    details: ""
+    details: "",
   });
 
   const handleChange = (e) => {
@@ -16,6 +18,13 @@ export default function ObjectDetails({onNext}) {
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const handleBack = () => {
+    setFormData(() => ({
+      details: "",
+    }));
+    navigate("/mainPage");
   };
 
   const { t } = useTranslation();
@@ -50,8 +59,11 @@ export default function ObjectDetails({onNext}) {
         </div>
       </div>
 
-      <ForwardButton onClick={handleNext} />
+      <div className="w-[48%] flex flex-row items-center justify-center space-x-4">
+        <CancelButton onClick={handleBack} />
 
+        <ForwardButton onClick={handleNext} />
+      </div>
     </div>
   );
 }

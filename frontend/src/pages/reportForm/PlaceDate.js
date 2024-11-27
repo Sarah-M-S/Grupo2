@@ -4,8 +4,11 @@ import ForwardButton from "./ForwardButton";
 import useFetchValues from "../../hooks/useFetchValues";
 
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import CancelButton from "./CancelButton";
 
 export default function PlaceDate({ onNext }) {
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     date: "",
@@ -52,6 +55,15 @@ export default function PlaceDate({ onNext }) {
     return Object.keys(newErrors).length === 0;
   };
 
+  const handleBack = () => {
+    setFormData(() => ({
+      date: "",
+      place: "",
+      dependencie: "",
+    }));
+    navigate("/mainPage");
+  };
+
   const handleNext = () => {
     if (validateForm()) {
       onNext(formData);
@@ -61,7 +73,7 @@ export default function PlaceDate({ onNext }) {
   return (
     <div className="h-[90%] w-full flex flex-col items-center justify-center space-y-8">
       <div className="flex flex-col w-full max-w-md space-y-12 bg-white rounded-3xl py-16 px-8 md:w-[30%]">
-        <div className="flex flex-col space-y-8">
+        <div className="flex flex-col space-y-4">
           <h2 className="text-3xl text-start font-semibold text-emerald-950 md:text-[220%]">
             {t("localData")}
           </h2>
@@ -69,7 +81,7 @@ export default function PlaceDate({ onNext }) {
             {t("dataPerda")}
           </h3>
 
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-2">
             <input
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               type="date"
@@ -91,7 +103,7 @@ export default function PlaceDate({ onNext }) {
               onChange={handleChange}
             >
               <option value="" disabled hidden>
-              {t("bloco")}
+                {t("bloco")}
               </option>
               {places &&
                 places.locais.map((place) => (
@@ -117,7 +129,7 @@ export default function PlaceDate({ onNext }) {
               disabled={!dependencies}
             >
               <option value="" disabled hidden>
-              {t("dependencia")}
+                {t("dependencia")}
               </option>
               {dependencies &&
                 dependencies.dependencias.map((dependencia) => (
@@ -141,7 +153,11 @@ export default function PlaceDate({ onNext }) {
         </div>
       </div>
 
-      <ForwardButton onClick={handleNext} />
+      <div className="w-[48%] flex flex-row items-center justify-center space-x-4">
+        <CancelButton onClick={handleBack} />
+
+        <ForwardButton onClick={handleNext} />
+      </div>
     </div>
   );
 }

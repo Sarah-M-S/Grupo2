@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import ForwardButton from "./ForwardButton";
 import { useTranslation } from "react-i18next";
 import useFetchValues from "../../hooks/useFetchValues";
+import CancelButton from "./CancelButton";
+import { useNavigate } from "react-router-dom";
 
 export default function ObjectForm({ onNext }) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     category: "",
     object: "",
@@ -32,6 +35,16 @@ export default function ObjectForm({ onNext }) {
     return Object.keys(newErrors).length === 0;
   };
 
+  const handleBack = () => {
+    setFormData((prevData) => ({
+      category: "",
+      object: "",
+      color: "",
+      brand: "",
+    }));
+    navigate("/mainPage");
+  };
+
   const handleNext = () => {
     if (validateForm()) {
       onNext(formData);
@@ -49,7 +62,7 @@ export default function ObjectForm({ onNext }) {
             {t("objetoTextoIdentificacao")}
           </h3>
 
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-2">
             <select
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
               name="category"
@@ -58,7 +71,7 @@ export default function ObjectForm({ onNext }) {
               required
             >
               <option value="" disabled hidden>
-              {t("categoria")}
+                {t("categoria")}
               </option>
               {categories &&
                 categories.categorias.map((categoria) => (
@@ -75,7 +88,9 @@ export default function ObjectForm({ onNext }) {
                 </option>
               )}
             </select>
-            {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
+            {errors.category && (
+              <p className="text-red-500 text-sm -pt-8">{errors.category}</p>
+            )}
 
             <input
               type="text"
@@ -86,7 +101,9 @@ export default function ObjectForm({ onNext }) {
               required
               placeholder={t("objeto")}
             />
-            {errors.object && <p className="text-red-500 text-sm">{errors.object}</p>}
+            {errors.object && (
+              <p className="text-red-500 text-sm">{errors.object}</p>
+            )}
 
             <select
               className="rounded-xl w-full h-12 px-4 bg-emerald-100 text-emerald-950 font-semibold text-lg"
@@ -95,7 +112,7 @@ export default function ObjectForm({ onNext }) {
               onChange={handleChange}
             >
               <option value="" disabled hidden>
-              {t("cor")}
+                {t("cor")}
               </option>
               {colors &&
                 colors.cor.map((cor) => (
@@ -109,7 +126,9 @@ export default function ObjectForm({ onNext }) {
                 </option>
               )}
             </select>
-            {errors.color && <p className="text-red-500 text-sm">{errors.color}</p>}
+            {errors.color && (
+              <p className="text-red-500 text-sm">{errors.color}</p>
+            )}
 
             <input
               type="text"
@@ -123,7 +142,12 @@ export default function ObjectForm({ onNext }) {
           </div>
         </div>
       </div>
-      <ForwardButton onClick={handleNext} />
+
+      <div className="w-[48%] flex flex-row items-center justify-center space-x-4">
+        <CancelButton onClick={handleBack} />
+
+        <ForwardButton onClick={handleNext} />
+      </div>
     </div>
   );
 }
