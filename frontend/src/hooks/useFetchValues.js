@@ -10,7 +10,7 @@ const useFetchValues = (id_local) => {
   const [dependencies, setDependencies] = useState(null);
   const [colors, setColors] = useState(null);
   const [courses, setCourses] = useState(null);
-  const backend = "https://ichei-app.com/api"
+  const { backend } = useAddress()
 
   console.log("endereço: ",backend)
 
@@ -44,7 +44,6 @@ const useFetchValues = (id_local) => {
     setLoading(true);
 
     try {
-      console.log(backend + "/list/item/categorias")
       const response = await fetch(
         backend + "/list/item/categorias"
       );

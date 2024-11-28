@@ -1,5 +1,5 @@
 
 export default function useAddress() {
-  const backend = "https://ichei-app.com/api";
+  const backend = "https://backend";
   return { backend };
 }
