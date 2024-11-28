@@ -12,7 +12,7 @@ const useFetchValues = (id_local) => {
   const [courses, setCourses] = useState(null);
   const backend = "https://ichei-app.com/api"
 
-  console.log(backend)
+  console.log("endereço: ",backend)
 
   const fetchData = async () => {
     setError(null);
