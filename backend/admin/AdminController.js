@@ -769,7 +769,7 @@ router.post('/api/admin/addDependencia', (req, res) => {
 
 //Rotas da router
 
-router.get("/admin/encontrados", (req, res) => {
+router.get("/api/admin/encontrados", (req, res) => {
   itemCadastrado
     .findAll({
       order: [
@@ -784,7 +784,7 @@ router.get("/admin/encontrados", (req, res) => {
     });
 });
 
-router.get("/admin/perdidos", (req, res) => {
+router.get("/api/admin/perdidos", (req, res) => {
   itemPerdido
     .findAll({
       order: [
@@ -800,13 +800,14 @@ router.get("/admin/perdidos", (req, res) => {
 });
 
 //formulario criacao admin
-router.get("/admin/users/create", (req, res) => {
-  res.render("admin/users/create");
+//PONTO DE ATENÇÃO
+router.get("/api/admin/users/create", (req, res) => {
+  res.render("/apiadmin/users/create");
 });
 
 // criacao admin banco
 // To mexendo aqui pra criar os usuários
-router.post("/users/create", async (req, res) => {
+router.post("/api/users/create", async (req, res) => {
   // Precisamos montar corretamente o objeto aqui
   var nome = req.body.name;
   var senha = req.body.password;
@@ -852,7 +853,7 @@ router.post("/users/create", async (req, res) => {
 });
 
 //checagem do token
-router.get("/admin", adminAuth, async (req, res) => {
+router.get("/api/admin", adminAuth, async (req, res) => {
   if (req.userId === undefined) {
     return res.json(null);
   }
@@ -864,14 +865,14 @@ router.get("/admin", adminAuth, async (req, res) => {
 });
 
 // listagem de admins
-router.get("/admin/users/list", adminAuth, (req, res) => {
+router.get("/api/admin/users/list", adminAuth, (req, res) => {
   Administrador.findAll().then((users) => {
     res.render("admin/users/listUsers", { users: users });
   });
 });
 
 //autenticacao de login admins
-router.post("/autenticar", (req, res) => {
+router.post("/api/autenticar", (req, res) => {
   var email = req.body.email;
   var password = req.body.password;
 
@@ -904,18 +905,19 @@ router.post("/autenticar", (req, res) => {
   });
 });
 
-router.post("/logout", (req, res) => {
+router.post("/api/logout", (req, res) => {
   console.log(req.body);
 });
 
 // reporta item perdido
-router.get("/admin/formularioReporte", (req, res) => {
-  res.render("admin/system/formularioReporte", { i18next: i18next });
+//PONTO DE ATENÇÃO
+router.get("/api/admin/formularioReporte", (req, res) => {
+  res.render("/apiadmin/system/formularioReporte", { i18next: i18next });
   i18next.changeLanguage("pt");
 });
 
 //edita admin
-router.get("/admin/users/edit/:id", async (req, res) => {
+router.get("/api/admin/users/edit/:id", async (req, res) => {
   const id = req.params.id;
 
   const user = await Administrador.findOne({
@@ -924,11 +926,11 @@ router.get("/admin/users/edit/:id", async (req, res) => {
     },
   });
 
-  res.render("admin/users/edit", { user: user });
+  res.render("/apiadmin/users/edit", { user: user });
 });
 
 // deleta admin
-router.get("/admin/users/delete/:id", (req, res) => {
+router.get("/api/admin/users/delete/:id", (req, res) => {
   const id = req.params.id;
 
   Administrador.destroy({
@@ -936,11 +938,11 @@ router.get("/admin/users/delete/:id", (req, res) => {
       id: id,
     },
   }).then(() => {
-    res.redirect("/admin/home");
+    res.redirect("/api/admin/home");
   });
 });
 
-router.post("/users/edit", async (req, res) => {
+router.post("/api/users/edit", async (req, res) => {
   var nome = req.body.nome;
   var email = req.body.email;
   var password = req.body.password;
@@ -976,7 +978,7 @@ router.post("/users/edit", async (req, res) => {
 });
 
 //cadastrar item encontrado
-router.post("/cadastrarItem", (req, res) => {
+router.post("/api/cadastrarItem", (req, res) => {
   var tituloItem = req.body.itemCadastrado.tituloItem;
   var descricao = req.body.itemCadastrado.descricao;
   var marca = req.body.itemCadastrado.marca;

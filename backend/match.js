@@ -109,7 +109,7 @@ function rodarMatch(item) {
                         id_usuario: item.usuario_perda
                       }
                     }).then(usuario => {
-                        enviarEmailItemEstoque(usuario.mail, usuario.nome, item.titulo, itensEstoque)
+                        enviarEmailItemEstoque(usuario.email, usuario.nome, item.titulo, itensEstoque)
 
                     }).catch(error => {
                       console.log("erro no disparo de email" +  error )
