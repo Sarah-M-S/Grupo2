@@ -2,7 +2,15 @@ const transporter = require('./nodemailerTransporter');
 const path = require('path');
 const fs = require('fs');
 
-function enviarEmailItemEstoque(email, nome, itemPerdido, itemEncontrado) {
+function gerarListaItensHTML(itensEstoque) {
+    return `
+        <ul>
+            ${itensEstoque.map(item => `<li><strong>${item.titulo}</strong> - semelhaça: ${item.potencialMatch}%</li>`).join('')}
+        </ul>
+    `;
+}
+
+function enviarEmailItemEstoque(email, nome, itemPerdido, itensEstoque) {
     const templatePath = path.join(__dirname, 'templates', 'email-item-semelhante-template-estoque.html');
     fs.readFile(templatePath, 'utf8', (err, data) => {
         if (err) {
@@ -10,12 +18,14 @@ function enviarEmailItemEstoque(email, nome, itemPerdido, itemEncontrado) {
             return;
         }
 
+        // Gera a lista de itens em formato HTML
+        const itensEncontradosHTML = gerarListaItensHTML(itensEstoque);
+
         // Substitui os placeholders pelo conteúdo dinâmico
         const htmlContent = data
             .replace(/{{nome}}/g, nome)
             .replace(/{{itemPerdido}}/g, itemPerdido)
-            .replace(/{{itemEncontrado}}/g, itemEncontrado);
-            
+            .replace(/{{itemEncontrado}}/g, itensEncontradosHTML);
 
         const mailOptions = {
             from: "'Equipe iChei' grupo2pi1a5@gmail.com",
@@ -40,6 +50,5 @@ function enviarEmailItemEstoque(email, nome, itemPerdido, itemEncontrado) {
         });
     });
 }
-
 
 module.exports = enviarEmailItemEstoque;
