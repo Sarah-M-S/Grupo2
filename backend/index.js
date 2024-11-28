@@ -58,7 +58,7 @@ i18next.init({
 //rotas
 //itens----------------------------------------------------------------------------
 //Listar itens no estoque
-app.get("/list/item/achados", (req, res) => {
+app.get("/api/list/item/achados", (req, res) => {
   item.findAll({
     where : {
       situacao : 2 //encontrado
@@ -75,7 +75,7 @@ app.get("/list/item/achados", (req, res) => {
 });
 
 //listar achados com filtro
-app.get('/list/item/achados/filtro', async (req, res) => {
+app.get('/api/list/item/achados/filtro', async (req, res) => {
   try {
     // Desestruturação dos filtros da query string
     const { 
@@ -145,7 +145,7 @@ app.get('/list/item/achados/filtro', async (req, res) => {
 
 
 //Listar categoria de itens
-app.get("/list/item/categorias", (req, res) => {
+app.get("/api/list/item/categorias", (req, res) => {
   categoria.findAll(
  ).then(categorias => {
     res.json({ categorias: categorias });
@@ -155,7 +155,7 @@ app.get("/list/item/categorias", (req, res) => {
 });
 
 //Listar cores de itens
-app.get("/list/item/cores", (req, res) => {
+app.get("/api/list/item/cores", (req, res) => {
   cor.findAll(
  ).then(cor => {
     res.json({ cor: cor });
@@ -166,7 +166,7 @@ app.get("/list/item/cores", (req, res) => {
 
 //locais----------------------------------------------------------------------------
 //Listar locais
-app.get("/list/locais", (req, res) => {
+app.get("/api/list/locais", (req, res) => {
   local.findAll(
  ).then(locais => {
     res.json({ locais: locais });
@@ -176,7 +176,7 @@ app.get("/list/locais", (req, res) => {
 });
 
 // Listar dependências filtradas por local_pai
-app.get("/list/locais/dependencias/:id", (req, res) => {
+app.get("/api/list/locais/dependencias/:id", (req, res) => {
   const localPaiId = req.params.id;
 
   dependencia.findAll({
@@ -192,7 +192,7 @@ app.get("/list/locais/dependencias/:id", (req, res) => {
 
 //---------------------------------------------------------------------------
 //Listar cursos
-app.get("/list/cursos", (req, res) => {
+app.get("/api/list/cursos", (req, res) => {
   curso.findAll(
  ).then(curso => {
     res.json({ curso: curso });
@@ -203,7 +203,7 @@ app.get("/list/cursos", (req, res) => {
 
 // Formulario ---------------------------------------------------------------
 //editar senha
-app.post('/editSenha', (req, res) => {
+app.post('/api/editSenha', (req, res) => {
   var idUsuario = req.body.usuario.idUsuario;
   var senha = req.body.usuario.senha;
 
@@ -241,7 +241,7 @@ app.post('/editSenha', (req, res) => {
 });
 
 // Reportar item perdido - Usario comum
-app.post("/cadastrarPerda", (req, res) => {
+app.post("/api/cadastrarPerda", (req, res) => {
   var tituloItem = req.body.itemPerdido.tituloItem;
   var descricao = req.body.itemPerdido.descricao;
   var categoria = req.body.itemPerdido.categoria;
@@ -298,12 +298,12 @@ app.post("/cadastrarPerda", (req, res) => {
     });
 });
 
-app.get("/session", (req, res)=>{
+app.get("/api/session", (req, res)=>{
   req.session.nome = "teste usuario"
   res.send("ok")
 })
 
-app.get("/leitura", (req, res)=>{
+app.get("/api/leitura", (req, res)=>{
   res.json({
     nome: req.session.nome
   })
@@ -313,24 +313,24 @@ app.get("/leitura", (req, res)=>{
 
 //formularios de perda
 //rotas do i18next
-app.get("/formularioPerda", (req, res) => {
+app.get("/api/formularioPerda", (req, res) => {
   res.render("formularioPerda", { i18next: i18next });
   i18next.changeLanguage('pt');
 });
 
-app.get("/formularioPerda/en", (req, res) => {
+app.get("/api/formularioPerda/en", (req, res) => {
   res.render("formularioPerda", {i18next: i18next});
   i18next.changeLanguage('en')
 })
 
-app.get("/formularioPerda/zh", (req, res) => {
+app.get("/api/formularioPerda/zh", (req, res) => {
   res.render("formularioPerda", { i18next: i18next });
   i18next.changeLanguage("zh");
 });
 
 
 //rota botão login
- app.get("/logar", (req, res) => {
+ app.get("/api/logar", (req, res) => {
   res.render("login")
 });
 

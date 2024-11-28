@@ -45,7 +45,7 @@ router.use(
 //=================================================================================
 //itens----------------------------------------------------------------------------
 //Listar itens perdidos
-router.get("/admin/list/item/perdidos", (req, res) => {
+router.get("/api/admin/list/item/perdidos", (req, res) => {
   item
     .findAll({
       where: {
@@ -62,7 +62,7 @@ router.get("/admin/list/item/perdidos", (req, res) => {
 });
 
 //Listar itens achados
-router.get("/admin/list/item/devolvido", (req, res) => {
+router.get("/api/admin/list/item/devolvido", (req, res) => {
   item
     .findAll({
       where: {
@@ -79,7 +79,7 @@ router.get("/admin/list/item/devolvido", (req, res) => {
 });
 
 //listar itens perdidos com filtro
-router.get("/admin/list/item/perdidos/filtro", async (req, res) => {
+router.get("/api/admin/list/item/perdidos/filtro", async (req, res) => {
 
   try {
     // Desestruturação dos filtros da query string
@@ -148,7 +148,7 @@ router.get("/admin/list/item/perdidos/filtro", async (req, res) => {
 });
 
 //listar itens devolvidos com filtro
-router.get("/admin/list/item/devolvidos/filtro", async (req, res) => {
+router.get("/api/admin/list/item/devolvidos/filtro", async (req, res) => {
 
   try {
     // Desestruturação dos filtros da query string
@@ -220,7 +220,7 @@ router.get("/admin/list/item/devolvidos/filtro", async (req, res) => {
 
 
 //Listar itens por id
-router.get("/admin/list/item/:id", (req, res) => {
+router.get("/api/admin/list/item/:id", (req, res) => {
   const { id } = req.params;
 
   item.findAll({
@@ -238,7 +238,7 @@ router.get("/admin/list/item/:id", (req, res) => {
 });
 
 //editar info itens
-router.post('/admin/editItem', (req, res) => {
+router.post('/api/admin/editItem', (req, res) => {
   var idItem = req.body.item.idItem;
   var titulo = req.body.item.titulo;
   var descricao = req.body.item.descricao;
@@ -306,7 +306,7 @@ router.post('/admin/editItem', (req, res) => {
 
 //usuarios--------------------------------------------------------------------------
 //Listar usuarios
-router.get("/admin/list/usuarios", (req, res) => {
+router.get("/api/admin/list/usuarios", (req, res) => {
   usuario
     .findAll({})
     .then((usuario) => {
@@ -318,7 +318,7 @@ router.get("/admin/list/usuarios", (req, res) => {
 });
 
 //listar usuario por id
-router.get("/admin/list/usuarios/:id", (req, res) => {
+router.get("/api/admin/list/usuarios/:id", (req, res) => {
   const id = req.params.id;
 
   usuario
@@ -335,7 +335,7 @@ router.get("/admin/list/usuarios/:id", (req, res) => {
 });
 
 //procurar usuario por nome
-router.get("/admin/search/usuario/", (req, res) => {
+router.get("/api/admin/search/usuario/", (req, res) => {
   const { nome } = req.query; // Obtém o nome da query string na URL (ex: ?nome=João)
   console.log(nome)
   console.log("teste")
@@ -359,7 +359,7 @@ router.get("/admin/search/usuario/", (req, res) => {
 //formularios--------------------------------------------------------------------------
 
 // Adicionar achado
-router.post("/admin/adicionarAchado", (req, res) => {
+router.post("/api/admin/adicionarAchado", (req, res) => {
   var tituloItem = req.body.achado.tituloItem;
   var descricao = req.body.achado.descricao;
   var categoria = req.body.achado.categoria;
@@ -409,7 +409,7 @@ router.post("/admin/adicionarAchado", (req, res) => {
 });
 
 // reportar perda sendo admin
-router.post("/admin/reportarPerda", (req, res) => {
+router.post("/api/admin/reportarPerda", (req, res) => {
   var tituloItem = req.body.itemPerdido.tituloItem;
   var descricao = req.body.itemPerdido.descricao;
   var categoria = req.body.itemPerdido.categoria;
@@ -474,7 +474,7 @@ router.post("/admin/reportarPerda", (req, res) => {
 // Devolver item ------------------------------------------------------------------------------------
 
 // retornar perdidos baseado no usuario
-router.get("/admin/reportesUser/:idUser", (req, res) => {
+router.get("/api/admin/reportesUser/:idUser", (req, res) => {
   const { idUser } = req.params;
   console.log(idUser)
 
@@ -493,7 +493,7 @@ router.get("/admin/reportesUser/:idUser", (req, res) => {
     });
 });
 
-router.post("/admin/devolverItem", (req, res) => {
+router.post("/api/admin/devolverItem", (req, res) => {
 
   var idReporte = req.body.devolucao.reporte;
   var idAchado = req.body.devolucao.achado;
@@ -551,7 +551,7 @@ router.post("/admin/devolverItem", (req, res) => {
 });
 
 //inativar item
-router.get("/admin/delete/item/:id", (req, res) => {
+router.get("/api/admin/delete/item/:id", (req, res) => {
 
   const { id } = req.params;
 
@@ -579,7 +579,7 @@ router.get("/admin/delete/item/:id", (req, res) => {
  })
 // Editar Usuário -----------------------------------------------------------------------------------
 
-router.post("/admin/editUsuario", (req, res) => {
+router.post("/api/admin/editUsuario", (req, res) => {
   var idUsuario = req.body.usuario.idUsuario;
   var nome = req.body.usuario.nomeUsuario;
   var email = req.body.usuario.email;
@@ -636,7 +636,7 @@ router.post("/admin/editUsuario", (req, res) => {
 
 
 // add locais 
-router.post('/admin/addLocal', (req, res) => {
+router.post('/api/admin/addLocal', (req, res) => {
   const { titulo } = req.body;
   console.log("ok")
   // Verifica se o título foi fornecido
@@ -667,7 +667,7 @@ router.post('/admin/addLocal', (req, res) => {
 });
 
 // add dependencia -----------------------------------------------------------
-router.post('/admin/addDependencia', (req, res) => {
+router.post('/api/admin/addDependencia', (req, res) => {
   const { titulo, local_pai } = req.body;
 
   // Verifica se o título e o local_pai foram fornecidos
