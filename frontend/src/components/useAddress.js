@@ -1,5 +1,5 @@
 
 export default function useAddress() {
-  const backend = "https://backend";
+  const backend = "backend";
   return { backend };
 }
