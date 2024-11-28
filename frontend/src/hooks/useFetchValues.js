@@ -12,8 +12,6 @@ const useFetchValues = (id_local) => {
   const [courses, setCourses] = useState(null);
   const { backend } = useAddress()
 
-  console.log("endereço: ",backend)
-
   const fetchData = async () => {
     setError(null);
     setLoading(true);

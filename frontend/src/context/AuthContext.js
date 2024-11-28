@@ -63,8 +63,7 @@ export const AuthContextProvider = ({ children }) => {
     unsub();
   }, []);
 
-  console.log("Auth State", state, );
-  console.log("endereço: ", backend)
+  // console.log("Auth State", state, );
 
 
   return (
