@@ -12,6 +12,8 @@ const useFetchValues = (id_local) => {
   const [courses, setCourses] = useState(null);
   const { backend } = useAddress()
 
+  console.log(backend)
+
   const fetchData = async () => {
     setError(null);
     setLoading(true);
@@ -42,6 +44,7 @@ const useFetchValues = (id_local) => {
     setLoading(true);
 
     try {
+      console.log(backend + "/list/item/categorias")
       const response = await fetch(
         backend + "/list/item/categorias"
       );
@@ -161,6 +164,7 @@ const useFetchValues = (id_local) => {
   useEffect(() => {
     setIsCanceled(false);
     fetchData();
+    console.log(backend)
     return () => setIsCanceled(true);
   }, [id_local]);
 
