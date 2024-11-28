@@ -14,7 +14,7 @@ function enviarEmailItemSemelhante(email, nome, itemPerdido, porcentagemSemelhan
         const htmlContent = data
             .replace(/{{nome}}/g, nome)
             .replace(/{{itemPerdido}}/g, itemPerdido)
-            //.replace(/{{itemEncontrado}}/g, itemEncontrado)
+            .replace(/{{itemEncontrado}}/g, itemEncontrado)
             .replace(/{{porcentagemSemelhanca}}/g, porcentagemSemelhanca);
 
         const mailOptions = {

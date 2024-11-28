@@ -101,7 +101,7 @@ function rodarMatch(item) {
                 })
                 console.log(itensEstoque)
 
-                if(itensEstoque != []){
+                if(itensEstoque.length != 0){
                   
                     usuario
                     .findOne({

@@ -26,7 +26,7 @@ const rodarMatch = require("../match");
 //=================================================================================
 
 //Config da router
-const allowedOrigins = ["http://localhost:3000", "http://frontend", "https://ichei-app.com", "http://ichei-app.com", "frontend"];
+const allowedOrigins = ["http://frontend:3000", "http://frontend", "https://ichei-app.com", "http://ichei-app.com", "frontend"];
 router.use(
   cors({
     origin: (origin, callback) => {
