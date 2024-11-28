@@ -10,7 +10,7 @@ const useFetchValues = (id_local) => {
   const [dependencies, setDependencies] = useState(null);
   const [colors, setColors] = useState(null);
   const [courses, setCourses] = useState(null);
-  const { backend } = useAddress()
+  const backend = "https://ichei-app.com/api"
 
   console.log(backend)
 
